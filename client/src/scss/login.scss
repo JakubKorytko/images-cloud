@@ -1,0 +1,33 @@
+html,
+body,
+#root,
+.App {
+  height: 100%;
+}
+
+body {
+  background-color: #f5f6fa;
+}
+
+#loginContainer {
+  background-color: white;
+  width: 350px;
+  height: 350px;
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0px 0px 26px -9px rgba(105, 105, 105, 1);
+}
+
+#login_row {
+  margin-bottom: 20px;
+  border-bottom: 1px solid white;
+}
+
+#login_col {
+  text-align: center;
+  color: white;
+}
+
+.w-250px {
+  width: 250px;
+}

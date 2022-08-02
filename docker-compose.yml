@@ -1,0 +1,34 @@
+
+services:
+
+  server:
+    container_name: server
+    build: "./server"
+    expose:
+      - ${SERVER_PORT}
+    environment:
+      SERVER_URL: ${SERVER_URL}
+      APP_SECRET: ${APP_SECRET}
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    volumes:
+      - ./server/src:/app/server/src
+      - ./server/test:/app/server/test
+    command: npm run dev
+
+  client:
+    container_name: client
+    build: "./client"
+    expose:
+      - ${CLIENT_PORT}
+    environment:
+      REACT_APP_CONNECTION_TEST_INTERVAL: ${CONNECTION_TEST_INTERVAL}
+      REACT_APP_SERVER_URL: ${SERVER_URL}
+    ports:
+      - ${CLIENT_PORT}:${CLIENT_PORT}
+    volumes:
+      - ./client/src:/app/client/src
+      - ./client/public:/app/client/public
+    links:
+      - server
+    command: npm start

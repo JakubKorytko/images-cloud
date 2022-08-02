@@ -1,0 +1,49 @@
+.file-hold, .file-over {
+    pointer-events: none;
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#sortByMenu .dropdown-menu {
+    position: absolute;
+    right: 0;
+    left: auto;
+    margin-top:0;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-frame .file-hold {
+    display: block;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-frame .file-over, .file-drop > .file-drop-target.file-drop-dragging-over-frame .no-file {
+    display: none;
+}
+  
+.file-drop > .file-drop-target.file-drop-dragging-over-target .file-over {
+    display: block;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-target .file-hold, .file-drop > .file-drop-target.file-drop-dragging-over-target .no-file {
+    display: none;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-frame .card-img-overlay {
+    border: 3px dotted red;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-target .card-img-overlay {
+    border: 3px dashed lime;
+}
+
+#uploadDiv {
+    width: 80%;
+    height: 40%;
+    position: absolute;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
