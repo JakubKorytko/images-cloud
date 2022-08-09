@@ -24,7 +24,7 @@ const storage = multer.diskStorage({
 
 const multerConfig = multer({
     storage: storage,
-    limits: { fileSize: 209715200 },
+    limits: { fileSize: 20971520 },
     fileFilter: function (req: Request, file: Express.Multer.File, cb: FileFilterCallback) {
         const allowedFormats = ["image/png", "image/jpeg"];
         if (allowedFormats.includes(file.mimetype)) {
