@@ -32,7 +32,7 @@ Your personal cloud-based images gallery.
     - [❌ Deleting](#-deleting)
     - [⬇️ Downloading](#️-downloading)
     - [📝 Editing](#-editing)
-  - [🔜 Upcoming things](#-upcoming-things)
+- [🔜 Upcoming things](#-upcoming-things)
 
 
 ## 🔧 Tech Stack
@@ -45,7 +45,7 @@ Your personal cloud-based images gallery.
 
 ## 🔍 Demo
 
-❗Both demo and "stanley" sample user uses images from https://unsample.net, list of pictures authors [here](./__credits.json) 
+❗ Both demo and "stanley" sample user uses images from https://unsample.net, list of pictures authors [here](./__credits.json) 
 
 You can check this app on https://imagescloud.korytko.me
 
@@ -244,7 +244,7 @@ You can download images from your cloud.
 
 Editing is provided by `@toast-ui/react-image-editor`
 
-### 🔜 Upcoming things
+## 🔜 Upcoming things
 
 - Compression on upload
 - Authentication on server side
