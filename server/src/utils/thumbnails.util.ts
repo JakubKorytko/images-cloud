@@ -3,6 +3,7 @@ import path from "path";
 const fs = require('fs');
 const sharp = require("sharp");
 const sizeOf = require('image-size');
+const Folders = require("./folders.util");
 
 const Thumbnails = {
     
@@ -15,7 +16,7 @@ const Thumbnails = {
         
         await Promise.all(fs.readdirSync(images_path).map( async (username: string) => {
             // if its running as test it shouldn't check all users
-            if (data.test && username != "_test_thumbnails_util_generateAll") return false;
+            if ((data.test && username != "_test_thumbnails_util_generateAll") || username == "_test_sample") return false;
 
             const photos_path = path.join(images_path, `/${username}/photos`);
 
@@ -56,6 +57,7 @@ const Thumbnails = {
                 .toBuffer()
                 .then((x: Buffer) => {
                     const thumbs_path = path.join(__dirname, "..", `/images/${username}/photos_thumb/${name}`);
+                    if (!fs.existsSync(thumbs_path)) Folders.create(username)
                     fs.writeFileSync(thumbs_path, x);
                     resolve(true)
                 });
@@ -67,6 +69,7 @@ const Thumbnails = {
                 .toBuffer()
                 .then((x: Buffer) => {
                     const progressive_path = path.join(__dirname, "..", `/images/${username}/progressive_thumb/${name}`);
+                    if (!fs.existsSync(progressive_path)) Folders.create(username)
                     fs.writeFileSync(progressive_path, x);
                     resolve(true)
                 });
@@ -83,8 +86,10 @@ const Thumbnails = {
 
         fs.readdirSync(src).forEach((username: string) => {
             // if its running as test it shouldn't check all users
-            if (data.test && username != "_test_thumbnails_util_delete") {return false};
+            if ((data.test && username != "_test_thumbnails_util_delete") || username == "_test_sample") {return false};
             const thumbs_path = path.join(__dirname, "..", `/images/${username}/photos_thumb`);
+
+            if (!fs.existsSync(thumbs_path)) Folders.create(username)
 
             fs.readdirSync(thumbs_path).forEach((file: string) => {
                 const photo_path = path.join(__dirname, "..", `/images/${username}/photos/${file}`)
@@ -100,6 +105,8 @@ const Thumbnails = {
             // if its running as test it shouldn't check all users
             if (data.test && username != "_test_thumbnails_util_delete") return false;
             const progressive_path = path.join(__dirname, "..", `/images/${username}/progressive_thumb`);
+
+            if (!fs.existsSync(progressive_path)) Folders.create(username)
 
             fs.readdirSync(progressive_path).forEach((file: string) => {
                 const photo_path = path.join(__dirname, "..", `/images/${username}/photos/${file}`)
