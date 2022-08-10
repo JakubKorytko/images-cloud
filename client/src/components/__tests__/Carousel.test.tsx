@@ -9,8 +9,6 @@ const numberOfImages = 6;
 
 const images: Photo[] = testImages(numberOfImages)
 
-console.log(images);
-
 const empty = (): false => {
     return false;
 }

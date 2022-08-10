@@ -1,7 +1,8 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT;
 const thumbnails = require("./src/utils/thumbnails.util");
 const multerErrorHandler = require("./src/errors/multer.errorHandler");
 const bodyParser = require("body-parser");

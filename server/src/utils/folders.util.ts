@@ -12,12 +12,13 @@ const Folders = {
     },
 
     create(username: string) {
+        let created = 0;
         const folders = ["/", "/photos", "/photos_thumb", "/progressive_thumb"];
         for (let i = 0; i < 4; i++) {
             const src = path.join(__dirname, "..", `/images/${username}${folders[i]}`);
-            if (!fs.existsSync(src)) fs.mkdirSync(src);
+            if (!fs.existsSync(src)) {fs.mkdirSync(src); created++};
         }
-        return true;
+        return created>0;
     },
 
     delete(username: string) {
