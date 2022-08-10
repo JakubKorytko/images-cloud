@@ -10,32 +10,32 @@ Your personal cloud-based images gallery.
 - [🔍 Demo](#-demo)
 - [🎉 Cool features](#-cool-features)
 - [🔑 Environment Variables](#-environment-variables)
-  - [💙 With docker](#-with-docker)
-    - [Create .env file in root directory `images-cloud/`](#create-env-file-in-root-directory-images-cloud)
-  - [💔 Without docker](#-without-docker)
-    - [Create .env file in root directory of client `images-cloud/client`](#create-env-file-in-root-directory-of-client-images-cloudclient)
-    - [Create .env file in root directory of server `images-cloud/server`](#create-env-file-in-root-directory-of-server-images-cloudserver)
+    - [💙 With docker](#-with-docker)
+      - [Create .env file in root directory `images-cloud/`](#create-env-file-in-root-directory-images-cloud)
+    - [💔 Without docker](#-without-docker)
+      - [Create .env file in root directory of client `images-cloud/client`](#create-env-file-in-root-directory-of-client-images-cloudclient)
+      - [Create .env file in root directory of server `images-cloud/server`](#create-env-file-in-root-directory-of-server-images-cloudserver)
 - [🏃 Run Locally](#-run-locally)
-  - [💙 Run app with docker](#-run-app-with-docker)
-  - [💔 Run app without docker](#-run-app-without-docker)
-    - [📟 Server](#-server)
-    - [💻 Client](#-client)
+    - [💙 Run app with docker](#-run-app-with-docker)
+    - [💔 Run app without docker](#-run-app-without-docker)
+      - [📟 Server](#-server)
+      - [💻 Client](#-client)
 - [👷 Running Tests](#-running-tests)
-  - [💙 Test app with docker](#-test-app-with-docker)
-  - [💔 Test app without docker](#-test-app-without-docker)
+    - [💙 Test app with docker](#-test-app-with-docker)
+    - [💔 Test app without docker](#-test-app-without-docker)
 - [🔨 Usage](#-usage)
-  - [🏥 Healthcheck](#-healthcheck)
-  - [👨 Users](#-users)
-  - [🔒 Authentication](#-authentication)
-  - [📁 Uploading images](#-uploading-images)
-  - [🔧 Images tools](#-images-tools)
-    - [❌ Deleting](#-deleting)
-    - [⬇️ Downloading](#️-downloading)
-    - [📝 Editing](#-editing)
+    - [🏥 Healthcheck](#-healthcheck)
+    - [👨 Users](#-users)
+    - [🔒 Authentication](#-authentication)
+    - [📁 Uploading images](#-uploading-images)
+    - [🔧 Images tools](#-images-tools)
+      - [❌ Deleting](#-deleting)
+      - [⬇️ Downloading](#️-downloading)
+      - [📝 Editing](#-editing)
 - [🔜 Upcoming things](#-upcoming-things)
 
 
-## 🔧 Tech Stack
+# 🔧 Tech Stack
 
 **Both**: Typescript, Docker, Docker-Compose, Jest
 
@@ -43,7 +43,7 @@ Your personal cloud-based images gallery.
 
 **Server:** Node, Express, SQLite, EJS
 
-## 🔍 Demo
+# 🔍 Demo
 
 ❗ Both demo and "stanley" sample user uses images from https://unsample.net, list of pictures authors [here](./__credits.json) 
 
@@ -57,7 +57,7 @@ password: qwerty123
 
 Deleting and uploading images functions are blocked on demo version for safety reasons
     
-## 🎉 Cool features
+# 🎉 Cool features
 
 - Images 
 	- Images load in the specific order:
@@ -71,7 +71,7 @@ Deleting and uploading images functions are blocked on demo version for safety r
 - When server is down, client will automatically redirect user to website where you can check when server will be up again
 
 
-## 🔑 Environment Variables
+# 🔑 Environment Variables
 
 To run this project, you will need to add the following environment variables to your .env file or files
 
@@ -129,7 +129,7 @@ JWT_EXPIRATION=30
 PORT=3001
 ```
 
-## 🏃 Run Locally
+# 🏃 Run Locally
 
 Clone the project
 
@@ -169,7 +169,7 @@ Both server and client is needed for app to work properly. You need to run it in
   npm install
   npm start
 ```
-## 👷 Running Tests
+# 👷 Running Tests
 
 ### 💙 Test app with docker
 
@@ -189,7 +189,7 @@ Run the following command in server or client directory
   npm run test
 ```
 
-## 🔨 Usage
+# 🔨 Usage
 
 ### 🏥 Healthcheck
 
@@ -248,7 +248,7 @@ You can download images from your cloud.
 
 Editing is provided by `@toast-ui/react-image-editor`
 
-## 🔜 Upcoming things
+# 🔜 Upcoming things
 
 - Compression on upload
 - Authentication on server side
