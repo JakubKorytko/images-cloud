@@ -201,6 +201,8 @@ You can check if server is up on client side at `/status`
 
 ## 👨 Users
 
+❗ Every time you run `npm run build`/`npm run copy`/`npm run dev` it will copy and overwrite sqlite database - if you want to keep created users you need to exclude "data.db" from `copy` script in server package.json
+
 To use images-cloud you need to create user. There are two default users in database. One is test user needed for testing purposes - don't delete it or tests will break. The other one is stanley - made to test things out, it even has some images uploaded already.
 
 | Username             | Password                                                                |
