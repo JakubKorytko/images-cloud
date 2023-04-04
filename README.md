@@ -10,19 +10,19 @@ Your personal cloud-based images gallery.
 - [🔍 Demo](#-demo)
 - [🎉 Cool features](#-cool-features)
 - [🔑 Environment Variables](#-environment-variables)
-  - [💙 With docker](#-with-docker)
+  - [With docker](#with-docker)
       - [Create .env file in root directory `images-cloud/`](#create-env-file-in-root-directory-images-cloud)
-  - [💔 Without docker](#-without-docker)
+  - [Without docker](#without-docker)
       - [Create .env file in root directory of client `images-cloud/client`](#create-env-file-in-root-directory-of-client-images-cloudclient)
       - [Create .env file in root directory of server `images-cloud/server`](#create-env-file-in-root-directory-of-server-images-cloudserver)
 - [🏃 Run Locally](#-run-locally)
-  - [💙 Run app with docker](#-run-app-with-docker)
-  - [💔 Run app without docker](#-run-app-without-docker)
+  - [Run app with docker](#run-app-with-docker)
+  - [Run app without docker](#run-app-without-docker)
       - [📟 Server](#-server)
       - [💻 Client](#-client)
 - [👷 Running Tests](#-running-tests)
-  - [💙 Test app with docker](#-test-app-with-docker)
-  - [💔 Test app without docker](#-test-app-without-docker)
+  - [Test app with docker](#test-app-with-docker)
+  - [Test app without docker](#test-app-without-docker)
 - [🔨 Usage](#-usage)
   - [🏥 Healthcheck](#-healthcheck)
   - [👨 Users](#-users)
@@ -75,7 +75,7 @@ Deleting and uploading images functions are blocked on demo version for safety r
 
 To run this project, you will need to add the following environment variables to your .env file or files
 
-## 💙 With docker
+## With docker
 
 #### Create .env file in root directory `images-cloud/`
 
@@ -97,7 +97,7 @@ JWT_EXPIRATION=30
 APP_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0NDIyNTQyMCwiaWF0IjoxNjQ0MjI1NDIwfQ.zUaDZTIgA0HEiBGzkJXbpcoWq63DoU4gO6wUZo4a_iI
 ```
 
-## 💔 Without docker
+## Without docker
 
 #### Create .env file in root directory of client `images-cloud/client`
 
@@ -144,14 +144,14 @@ Go to the project directory
 ```
 App is dockerized and its supposed to run on docker but you can run it without it
 
-## 💙 Run app with docker
+## Run app with docker
 
 Start both server & client
 
 ```bash
   docker-compose up -d --build
 ```
-## 💔 Run app without docker
+## Run app without docker
 
 Both server and client is needed for app to work properly. You need to run it in separate instances
 
@@ -171,7 +171,7 @@ Both server and client is needed for app to work properly. You need to run it in
 ```
 # 👷 Running Tests
 
-## 💙 Test app with docker
+## Test app with docker
 
 Test server
 ```bash
@@ -181,7 +181,7 @@ Test client
 ```bash
   docker-compose exec client npm test
 ```
-## 💔 Test app without docker
+## Test app without docker
 
 Run the following command in server or client directory
 
