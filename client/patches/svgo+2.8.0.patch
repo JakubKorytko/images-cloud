@@ -1,0 +1,76 @@
+diff --git a/node_modules/svgo/lib/css-tools.js b/node_modules/svgo/lib/css-tools.js
+index a59aae6..8a9228f 100644
+--- a/node_modules/svgo/lib/css-tools.js
++++ b/node_modules/svgo/lib/css-tools.js
+@@ -2,7 +2,6 @@
+ 
+ var csstree = require('css-tree'),
+   List = csstree.List,
+-  stable = require('stable'),
+   specificity = require('csso/lib/restructure/prepare/specificity');
+ 
+ /**
+@@ -162,7 +161,8 @@ function _bySelectorSpecificity(selectorA, selectorB) {
+  * @return {Array} Stable sorted selectors
+  */
+ function sortSelectors(selectors) {
+-  return stable(selectors, _bySelectorSpecificity);
++  // return stable(selectors, _bySelectorSpecificity);
++  return [...selectors].sort(_bySelectorSpecificity);
+ }
+ 
+ /**
+diff --git a/node_modules/svgo/lib/style.js b/node_modules/svgo/lib/style.js
+index 1873e7b..d575631 100644
+--- a/node_modules/svgo/lib/style.js
++++ b/node_modules/svgo/lib/style.js
+@@ -13,7 +13,6 @@
+  * @typedef {import('./types').XastChild} XastChild
+  */
+ 
+-const stable = require('stable');
+ const csstree = require('css-tree');
+ // @ts-ignore not defined in @types/csso
+ const specificity = require('csso/lib/restructure/prepare/specificity');
+@@ -249,9 +248,7 @@ const collectStylesheet = (root) => {
+     },
+   });
+   // sort by selectors specificity
+-  stable.inplace(rules, (a, b) =>
+-    compareSpecificity(a.specificity, b.specificity)
+-  );
++  rules.sort((a, b) => compareSpecificity(a.specificity, b.specificity));
+   return { rules, parents };
+ };
+ exports.collectStylesheet = collectStylesheet;
+diff --git a/node_modules/svgo/plugins/inlineStyles.js b/node_modules/svgo/plugins/inlineStyles.js
+index a19f3fb..bdd5090 100644
+--- a/node_modules/svgo/plugins/inlineStyles.js
++++ b/node_modules/svgo/plugins/inlineStyles.js
+@@ -9,7 +9,6 @@
+ const csstree = require('css-tree');
+ // @ts-ignore not defined in @types/csso
+ const specificity = require('csso/lib/restructure/prepare/specificity');
+-const stable = require('stable');
+ const {
+   visitSkip,
+   querySelectorAll,
+@@ -200,11 +199,13 @@ exports.fn = (root, params) => {
+           return;
+         }
+         // stable sort selectors
+-        const sortedSelectors = stable(selectors, (a, b) => {
+-          const aSpecificity = specificity(a.item.data);
+-          const bSpecificity = specificity(b.item.data);
+-          return compareSpecificity(aSpecificity, bSpecificity);
+-        }).reverse();
++        const sortedSelectors = [...selectors]
++          .sort((a, b) => {
++            const aSpecificity = specificity(a.item.data);
++            const bSpecificity = specificity(b.item.data);
++            return compareSpecificity(aSpecificity, bSpecificity);
++          })
++          .reverse();
+ 
+         for (const selector of sortedSelectors) {
+           // match selectors
