@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const users = require("../utils/users.util");
 require('dotenv').config();
 const SERVER_URL = process.env.SERVER_URL;
+const JWT_EXPIRATION = Number(process.env.JWT_EXPIRATION);
 
 const encode = (secret: string) => async (username: string, password: string) => {
     const user = await users.loginUser(username, password)
@@ -18,7 +19,7 @@ const encode = (secret: string) => async (username: string, password: string) =>
         {
             issuer: SERVER_URL,
             subject: `${user.id}`,
-            expiresIn: 30 * 60,
+            expiresIn: JWT_EXPIRATION * 60,
         }
     );
 };
