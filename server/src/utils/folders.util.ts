@@ -11,12 +11,11 @@ const Folders = {
         await this.fillMissing();
     },
 
-    create (username: string) {
-        if (this.exists(username)) return false;
+    create(username: string) {
         const folders = ["/", "/photos", "/photos_thumb", "/progressive_thumb"];
         for (let i = 0; i < 4; i++) {
             const src = path.join(__dirname, "..", `/images/${username}${folders[i]}`);
-            fs.mkdirSync(src);
+            if (!fs.existsSync(src)) fs.mkdirSync(src);
         }
         return true;
     },
@@ -37,7 +36,7 @@ const Folders = {
     async fillMissing() {
         const usrs = await users.getAll();
         usrs.forEach((user: {id: number, username: string, password: string}) => {
-            if (!this.exists(user.username)) {
+            if (user.username != "_testuser") {
                 this.create(user.username);
             }
         });
@@ -47,7 +46,7 @@ const Folders = {
         const src = path.join(__dirname, "..", `/images`);
         const folders = fs.readdirSync(src);
         folders.forEach(async (folder: string) => {
-            if (!(await users.userExists(folder))) {
+            if (!(await users.userExists(folder)) && folder != "_test_sample") {
                 this.delete(folder);
             }
         });  
