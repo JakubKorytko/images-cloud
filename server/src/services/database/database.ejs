@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imagesCloud database</title>
+    <style>
+        thead>tr {
+            background: rgb(255, 255, 255);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(164, 164, 164, 1) 100%);
+        }
+
+        tr:nth-child(even) {
+            background-color: lightgray;
+        }
+
+        td {
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/addUser" id="addUser" method="POST">
+        <input placeholder="username" id="username" required minlength="6" maxlength="20" name="username" type="text" />
+        <input placeholder="password" id="password" required minlength="6" maxlength="40" name="password"
+            type="password" />
+        <button type="submit">Add user</button>
+    </form>
+    <table style="width: 400px; margin-top: 20px; text-align: center; border-collapse: collapse;">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>username</th>
+                <th>password</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <% users.forEach((user)=> { %>
+                <tr>
+                    <% if (user.username !="_testuser" ) { %>
+                        <td>
+                            <%= user.id %>
+                        </td>
+                        <td>
+                            <%= user.username %>
+                        </td>
+                        <td>
+                            <%= user.password %>
+                        </td>
+                        <td><button username="<%= user.username %>" class="delete">delete</button></td>
+                        <% } else { %>
+                            <td>
+                                <%= user.id %>
+                            </td>
+                            <td>test user</td>
+                            <td></td>
+                            <td><button onmouseover="toggleTestUserInfo(true)"
+                                    onmouseout="toggleTestUserInfo(false)" style="cursor: help;border: 1px solid buttonborder;background-color: buttonface;">
+                                    ?</button></td>
+                            <% } %>
+                </tr>
+                <% }); %>
+        </tbody>
+    </table>
+
+    <code id="testUserInfo"
+        style="background-color: lightgray; padding: 0 10px 10px 10px; margin-top: 10px; display: none; width: 400px;">
+        <span style=" color: red; font-weight: bold; font-size: 30px;">!</span>
+        this user is used for testing purpouses, if u delete it - it will break tests!
+        if you still want to do it, use sqlite3 database binary to open db and delete user with '_testuser' username.
+        you can also remove code line creating this user from /src/services/database, delete /src/services/data.db
+        and restart server.</code>
+
+    <script>
+        const toggleTestUserInfo = (vis) => {
+            document.getElementById("testUserInfo").style.display = vis ? "block" : "none"
+        }
+
+        document.getElementById("addUser").addEventListener("submit", async (ev) => {
+            ev.preventDefault();
+            const response = await fetch("/addUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: document.getElementById("username").value,
+                    password: document.getElementById("password").value,
+                })
+            });
+            const text = await response.text();
+            alert(`Code ${response.status} (${response.statusText}): ${text}`);
+            if (response.status == 200) window.location.reload();
+        })
+
+        Array.from(document.getElementsByClassName("delete")).forEach((x) => {
+            x.addEventListener("click", async (ev) => {
+                ev.preventDefault();
+                const response = await fetch("/deleteUser", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        username: x.getAttribute("username"),
+                    })
+                });
+                const text = await response.text();
+                alert(`Code ${response.status} (${response.statusText}): ${text}`);
+                if (response.status == 200) window.location.reload();
+            })
+        })
+    </script>
+</body>
+
+</html>
