@@ -104,11 +104,13 @@ APP_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJV
 ```
 REACT_APP_CONNECTION_TEST_INTERVAL // interval of testing if server is working and user is authenticated (in ms)
 REACT_APP_SERVER_URL // url of server app
+PORT // port of client app
 ```
 Example (you can copy these values to test things out):
 ```
 REACT_APP_CONNECTION_TEST_INTERVAL=5000
 REACT_APP_SERVER_URL=http://localhost:3001
+PORT=3000
 ```
 
 #### Create .env file in root directory of server `images-cloud/server`
@@ -117,12 +119,14 @@ REACT_APP_SERVER_URL=http://localhost:3001
 APP_SECRET // jwt web token
 SERVER_URL // url of server app
 JWT_EXPIRATION // time until jwt token expire (in minutes)
+PORT // port of server app
 ```
 Example (you can copy these values to test things out):
 ```
 APP_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0NDIyNTQyMCwiaWF0IjoxNjQ0MjI1NDIwfQ.zUaDZTIgA0HEiBGzkJXbpcoWq63DoU4gO6wUZo4a_iI
 SERVER_URL=http://localhost:3001
 JWT_EXPIRATION=30
+PORT=3001
 ```
 
 ## 🏃 Run Locally
