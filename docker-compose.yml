@@ -9,6 +9,7 @@ services:
     environment:
       SERVER_URL: ${SERVER_URL}
       APP_SECRET: ${APP_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     volumes:
