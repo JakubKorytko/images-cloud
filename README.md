@@ -6,7 +6,6 @@
 
 Your personal cloud-based images gallery.
 
-
 - [🔧 Tech Stack](#-tech-stack)
 - [🔍 Demo](#-demo)
 - [🎉 Cool features](#-cool-features)
@@ -33,6 +32,7 @@ Your personal cloud-based images gallery.
     - [❌ Deleting](#-deleting)
     - [⬇️ Downloading](#️-downloading)
     - [📝 Editing](#-editing)
+  - [🔜 Upcoming things](#-upcoming-things)
 
 
 ## 🔧 Tech Stack
@@ -45,7 +45,17 @@ Your personal cloud-based images gallery.
 
 ## 🔍 Demo
 
-Insert gif or link to demo
+❗Both demo and "stanley" sample user uses images from https://unsample.net, list of pictures authors [here](./__credits.json) 
+
+You can check this app on https://imagescloud.korytko.me
+
+Login data:
+```bash
+username: test
+password: qwerty123
+```
+
+Deleting and uploading images functions are blocked on demo version for safety reasons
     
 ## 🎉 Cool features
 
@@ -199,7 +209,7 @@ You can create or delete users at server url
   e.g. http://localhost:3001/
 ```
 
-⚠️There is not authentication on server side to manipulate users, if you want to deploy this app, you should add some for safety!
+⚠️ There is not authentication on server side to manipulate users, if you want to deploy this app, you should add some for safety!
 
 ### 🔒 Authentication
 
@@ -218,6 +228,8 @@ There are two requirements to upload a image:
 1. Max size is 20MB (defined by multer - but can be limited by server its hosted on)
 2. File must have a png/jpg/jpeg extension
 
+⚠️ Uploading images in other way than build-in uploader may cause problems (thumbnails will not generate)
+
 ### 🔧 Images tools
 
 #### ❌ Deleting
@@ -231,3 +243,8 @@ You can download images from your cloud.
 #### 📝 Editing
 
 Editing is provided by `@toast-ui/react-image-editor`
+
+### 🔜 Upcoming things
+
+- Compression on upload
+- Authentication on server side
