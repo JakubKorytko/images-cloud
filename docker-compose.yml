@@ -7,6 +7,7 @@ services:
     expose:
       - ${SERVER_PORT}
     environment:
+      PORT: ${SERVER_PORT}
       SERVER_URL: ${SERVER_URL}
       APP_SECRET: ${APP_SECRET}
       JWT_EXPIRATION: ${JWT_EXPIRATION}
@@ -23,6 +24,7 @@ services:
     expose:
       - ${CLIENT_PORT}
     environment:
+      PORT: ${CLIENT_PORT}
       REACT_APP_CONNECTION_TEST_INTERVAL: ${CONNECTION_TEST_INTERVAL}
       REACT_APP_SERVER_URL: ${SERVER_URL}
     ports:
