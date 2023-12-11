@@ -35,8 +35,11 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
             })
         }, connection_test_interval)
         window.addEventListener('resize', (): void => { this.setState({ innerWidth: window.innerWidth })});
-        await this.setState({ images: await fetchImages() })
-        this.resortGallery();
+        const images = await fetchImages();
+        this.setState({ images: images }, () => {
+            this.resortGallery();
+        })
+
     }
 
     // --- simple state setters & togglers ---
@@ -118,9 +121,14 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
             this.carousel.current.flkty && 
             this.carousel.current.flkty.selectedElement
         ) {
-            return (this.carousel.current.flkty.selectedElement as HTMLElement).getAttribute("name");
+            const element: unknown = this.carousel.current.flkty.selectedElement;
+
+            const elementWithAttributeGetter = element as unknown & { getAttribute: (x: string) => string|null};
+            if (elementWithAttributeGetter.getAttribute !== undefined) {
+               return elementWithAttributeGetter.getAttribute("name");
+            }
         }
-        else return false;
+        return false;
     }
 
     resetProgress = (): void => {

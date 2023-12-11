@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, {AxiosProgressEvent} from "axios";
 import Token from '../token.util';
 import { fetchBlob } from '../fetchBlob.util';
 import { downloadFile } from '../download.util';
@@ -96,8 +96,9 @@ export async function sendImage(app: GalleryRoute, file: File): Promise<boolean>
             "Content-Type": "multipart/form-data",
             'Authorization': `Bearer ${Token.value}`
         },
-        onUploadProgress: (data: {loaded: number, total: number}): void => {
-            app.setProgress(Math.round(100 * (data.loaded / data.total)));
+        onUploadProgress: (data: AxiosProgressEvent): void => {
+            const total = data.total ? data.total : 1;
+            app.setProgress(Math.round(100 * (data.loaded / total)));
         }
     }).catch(err => {
         console.log(err.response.data)

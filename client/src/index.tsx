@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './scss/index.scss';
 import {
   BrowserRouter,
@@ -11,7 +11,8 @@ import GalleryRoute from './routes/GalleryRoute';
 import LoginRoute from './routes/LoginRoute';
 import HealthCheck from './routes/HealthCheck';
 
-ReactDOM.render(
+const root = createRoot(document.getElementById('root') as Element);
+root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
@@ -20,6 +21,5 @@ ReactDOM.render(
         <Route path="/status" element={<HealthCheck />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );

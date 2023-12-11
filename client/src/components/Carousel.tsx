@@ -32,7 +32,14 @@ class Carousel extends React.Component<CarouselProps, CarouselState> {
         if (!this.flkty) return false;
         this.flkty.select(x, true, true);
         this.flkty.viewFullscreen();
-        (this.flkty.selectedElement as HTMLElement).focus();
+
+        const element: unknown = this.flkty.selectedElement;
+
+        const elementWithFocusMethod = element as unknown & { focus: () => void};
+        if (elementWithFocusMethod.focus !== undefined) {
+            elementWithFocusMethod.focus();
+        }
+
         return true;
     }
 
