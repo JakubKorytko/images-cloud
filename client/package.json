@@ -64,6 +64,8 @@
   },
   "devDependencies": {
     "@types/webpack-env": "^1.16.3",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "stylelint": "^15.11.0",
+    "stylelint-config-standard-scss": "^11.1.0"
   }
 }
