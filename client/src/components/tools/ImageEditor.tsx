@@ -20,7 +20,7 @@ class ImageEditor extends Component<ImageEditorProps, ImageEditorState> {
         />
 
         return (
-            <div id="imageEditor" className={`d-${editorDisplay}`}>
+            <div id="image-editor" className={`d-${editorDisplay}`}>
                 {renderItem}
             </div>
         );

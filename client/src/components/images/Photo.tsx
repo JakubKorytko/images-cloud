@@ -24,12 +24,12 @@ class Photo extends Component<PhotoProps, PhotoState> {
 
     render() {
 
-        const checked =  (this.props.checkedState) ? "_checked" : "";
+        const checked =  (this.props.checkedState) ? "-checked" : "";
         const iconDisplay = (this.state.checkMarkDisplay || this.props.checkedState) ? "block" : "none";
 
         return (
             <div data-testid="photo" className={`photo${checked}`} onMouseOver={(): void => { this.setState({ checkMarkDisplay: true }) }} onMouseOut={(): void => { this.setState({ checkMarkDisplay: false }) }} >
-                <CheckCircleFill data-testid="imageSelectIcon" aria-label="Select image" onClick={this.selectImage} className={`selection photo_icon${checked} d-${iconDisplay}`} />
+                <CheckCircleFill data-testid="imageSelectIcon" aria-label="Select image" onClick={this.selectImage} className={`selection photo-icon${checked} d-${iconDisplay}`} />
                 <ProgressiveImage imageSize={this.props.imageSize} placeholder={this.props.progressiveThumbPath} checkState={this.props.checkedState} src={this.props.thumbPath} imageId={this.props.id} click={this.openImage} name={"User image thumbnail"}></ProgressiveImage>
             </div>
         );

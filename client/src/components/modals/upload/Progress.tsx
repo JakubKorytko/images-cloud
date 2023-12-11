@@ -18,8 +18,8 @@ class Progress extends Component<ProgressProps, ProgressState> {
                         <Modal.Title>Uploading in progress...</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <div className="progress_div">
-                            <ProgressBar id="progressBar" aria-label="Progress bar" now={this.props.percentage} label={this.props.percentage + "%"}></ProgressBar>
+                        <div className="progress-div">
+                            <ProgressBar id="progress-bar" aria-label="Progress bar" now={this.props.percentage} label={this.props.percentage + "%"}></ProgressBar>
                         </div>
                     </Modal.Body>
                 </Modal>

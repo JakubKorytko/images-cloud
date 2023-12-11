@@ -77,7 +77,7 @@ test("Selecting images should change its icon", () => {
     const photos_beforeSelecting = getAllByTestId("photo");
 
     photos_beforeSelecting.forEach((photo): void => {
-        expect(photo).not.toHaveClass("photo_checked");
+        expect(photo).not.toHaveClass("photo-checked");
     })
 
     icons.forEach((icon): void => {
@@ -91,7 +91,7 @@ test("Selecting images should change its icon", () => {
     const photos_afterSelecting = component.getAllByTestId("photo");
 
     photos_afterSelecting.forEach((photo): void => {
-        expect(photo).toHaveClass("photo_checked");
+        expect(photo).toHaveClass("photo-checked");
     })
 
 })

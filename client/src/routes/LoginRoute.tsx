@@ -151,12 +151,12 @@ class App extends React.Component<LoginRouteProps, LoginRouteState> {
 
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <div className="center wh-100">
-          <Container className="center bg-dark" id="loginContainer">
+          <Container className="center bg-dark" id="login-container">
             <div>
-              <Row id="login_row">
-                <Col id="login_col" className="mb-4">
+              <Row id="login-row">
+                <Col id="login-col" className="mb-4">
                   <NavbarBrand><CloudFill /> images-cloud</NavbarBrand>
                 </Col>
               </Row>

@@ -1,6 +1,7 @@
 $form-select-indicator-color: white;
 $btn-active-box-shadow: none;
 $dropdown-link-hover-bg: transparent;
+
 @import "~bootstrap/scss/bootstrap";
 
 .flickity-fullscreen-button {
@@ -17,8 +18,7 @@ $dropdown-link-hover-bg: transparent;
   height: 100%;
   background-color: #e5e5f7;
   opacity: 0.1;
-  background-image: -o-radial-gradient(center center, circle, #000000, #e5e5f7), -o-repeating-radial-gradient(center center, circle, #000000, #000000, 40px, transparent 80px, transparent 40px);
-  background-image: radial-gradient(circle at center center, #000000, #e5e5f7), repeating-radial-gradient(circle at center center, #000000, #000000, 40px, transparent 80px, transparent 40px);
+  background-image: radial-gradient(circle at center center, #000, #e5e5f7), repeating-radial-gradient(circle at center center, #000, #000 40px, transparent 80px, transparent 40px);
   background-blend-mode: multiply;
 }
 
@@ -30,7 +30,7 @@ $dropdown-link-hover-bg: transparent;
 html,
 body,
 #root,
-.App {
+.app {
   width: 100%;
   margin: 0 !important;
 }
@@ -43,7 +43,7 @@ body,
   box-shadow: none !important;
 }
 
-.nav_button {
+.nav-button {
   background-color: transparent;
   border: none;
   color: white;
@@ -54,22 +54,30 @@ body,
   margin-left: 1.3em;
 }
 
-.nav_arrow {
+.nav-arrow {
   background-color: transparent;
   border: 0;
   border-bottom: 1px solid white;
   border-radius: 0;
 }
 
-.nav_select:hover,
-.nav_select:active,
-.nav_select:focus,
-.nav_arrow:hover,
-.nav_arrow:active,
-.nav_arrow:focus,
-.nav_button:hover,
-.nav_button:active,
-.nav_button:focus {
+.nav-select {
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-bottom: 1px solid white;
+  border-radius: 0;
+}
+
+.nav-select:hover,
+.nav-select:active,
+.nav-select:focus,
+.nav-arrow:hover,
+.nav-arrow:active,
+.nav-arrow:focus,
+.nav-button:hover,
+.nav-button:active,
+.nav-button:focus {
   background-color: transparent;
   color: white;
   box-shadow: none;
@@ -77,47 +85,39 @@ body,
   outline: 0;
 }
 
-.nav_button:hover,
-.nav_arrow:hover,
-.nav_select:hover {
+.nav-button:hover,
+.nav-arrow:hover,
+.nav-select:hover {
   border-bottom-color: blue;
 }
 
-.nav_button:active,
-.nav_arrow:active,
-.nav_select:active {
+.nav-button:active,
+.nav-arrow:active,
+.nav-select:active {
   border-bottom-color: aqua;
 }
 
-.nav_select {
-  background-color: transparent;
-  border: none;
-  color: white;
-  border-bottom: 1px solid white;
-  border-radius: 0;
-}
-
-.dropdown_select .dropdown-menu {
+.dropdown-select .dropdown-menu {
   background-color: transparent;
   border: none;
 }
 
-.dropdown_select .dropdown-item {
-  background-color: rgb(33, 37, 41);
+.dropdown-select .dropdown-item {
+  background-color: rgb(33 37 41);
   color: white;
   border-bottom: white 1px solid;
 }
 
-.dropdown_select .dropdown-item:hover {
+.dropdown-select .dropdown-item:hover {
   border-color: blue;
 }
 
-.dropdown_select .dropdown-item:active {
+.dropdown-select .dropdown-item:active {
   border-color: aqua;
 }
 
-.sort_label {
-  padding: 0.375rem 0rem 0.375rem 0.75rem;
+.sort-label {
+  padding: 0.375rem 0 0.375rem 0.75rem;
   border-bottom: 1px solid white;
   margin-right: 0;
 }
@@ -144,7 +144,7 @@ body,
   align-items: center;
 }
 
-#imageViewer {
+#image-viewer {
   height: 400px;
   position: relative;
 }
@@ -186,12 +186,12 @@ body,
 
 .thumbnail:hover {
   transform: scale(1.01);
-  box-shadow: 0px 0px 9px 7px rgba(255, 255, 255, 1);
+  box-shadow: 0 0 9px 7px rgb(255 255 255 / 100%);
   z-index: 2;
 }
 
 #carousel-custom-buttons {
-  color: hsla(0, 0%, 100%, .75);
+  color: hsl(0deg 0% 100% / 75%);
   position: fixed;
   width: 100%;
   top: 0;
@@ -234,11 +234,11 @@ body,
   z-index: 2;
   font-size: 44px;
   opacity: 0.8;
-  color: hsla(0, 0%, 100%, .75);
+  color: hsl(0deg 0% 100% / 75%);
   user-select: none;
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (width <= 992px) {
   #carousel-custom-buttons {
     font-size: 38px;
   }
@@ -249,7 +249,7 @@ body,
   }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (width <= 768px) {
   #carousel-custom-buttons {
     font-size: 34px;
   }
@@ -260,14 +260,14 @@ body,
   }
 }
 
-#logoutIcon {
+#logout-icon {
   margin-left: 4px;
   vertical-align: sub;
   width: 20px;
   height: 20px;
 }
 
-.photo_checked {
+.photo-checked {
   position: relative;
   transform: scale(0.985);
   border: 3px solid blue;
@@ -277,30 +277,30 @@ body,
   position: relative;
 }
 
-.photo_icon_checked {
+.photo-icon-checked {
   filter: drop-shadow(1px 1px 6px white);
   color: blue;
 }
 
-.photo_icon {
+.photo-icon {
   filter: drop-shadow(1px 1px 6px black);
   color: white;
 }
 
-.progressiveImage {
+.progressive-image {
   margin-bottom: 0.5rem;
   transition: opacity .15s linear;
-  box-shadow: 0px 0px 10px 4px rgba(202, 202, 202, 1);
+  box-shadow: 0 0 10px 4px rgb(202 202 202 / 100%);
 }
 
-.progressiveImage_checked {
+.progressive-image-checked {
   margin-bottom: 0;
   transform: none;
   box-shadow: none;
   transition: opacity .15s linear;
 }
 
-#imageEditor {
+#image-editor {
   position: fixed;
   z-index: 9;
   top: 0;
@@ -309,15 +309,15 @@ body,
   height: 100%;
 }
 
-#progress_div {
-  height: "20px";
-  flex-direction: "column";
-  align-items: "center";
-  justify-content: "center";
+#progress-div {
+  height: 20px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   display: flex;
 }
 
-#progressBar {
+#progress-bar {
   width: 100%;
   height: 20px
 }
@@ -344,15 +344,14 @@ body,
   color: #ffd3d3;
 }
 
-#upload_select_buttons {
-  flex-wrap: wrap;
+#upload-select-buttons {
+  flex-flow: row wrap;
   display: flex;
-  flex-direction: row;
   justify-content: space-evenly;
   width: 60%
 }
 
-#transferFile {
+#transfer-file {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;

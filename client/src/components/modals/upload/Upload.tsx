@@ -70,11 +70,11 @@ class Upload extends Component<UploadProps, UploadState> {
                                 </fieldset>
                             </div>
                         </FileDrop>
-                        <div id="transferFile" className={`d-${transferDisplay}`}>
+                        <div id="transfer-file" className={`d-${transferDisplay}`}>
                             <div className="m-2">
                                 File selected! Click button below to transfer file
                             </div>
-                            <div id="upload_select_buttons">
+                            <div id="upload-select-buttons">
                                 <Button onClick={this.uploadFile} className="m-2" variant="primary" disabled={!this.state.fileAttached}>
                                     <span className="no-break">Upload file</span>
                                 </Button>

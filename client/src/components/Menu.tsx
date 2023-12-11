@@ -21,13 +21,13 @@ class Menu extends React.Component<MenuProps, MenuState> {
             <Navbar.Collapse>
               <Nav>
               <Nav.Item className="text-white mx-2">
-                    <Button variant="light" className="nav_button shadow-none nw" onClick={this.props.logOut}>Logout <BoxArrowRight id={"logoutIcon"}/></Button>
+                    <Button variant="light" className="nav-button shadow-none nw" onClick={this.props.logOut}>Logout <BoxArrowRight id={"logout-icon"}/></Button>
                   </Nav.Item>
                   <Nav.Item className="mx-2">
-                    <Stack direction="horizontal" id="sortByMenu" className="text-light">
-                      <FormLabel className="ml-2 mb-0 sort_label nw">Sort by:</FormLabel>
-                      <Dropdown className="dropdown_select">
-                        <DropdownToggle className="w-auto d-inline-block nav_select shadow-none">
+                    <Stack direction="horizontal" id="sort-by-menu" className="text-light">
+                      <FormLabel className="ml-2 mb-0 sort-label nw">Sort by:</FormLabel>
+                      <Dropdown className="dropdown-select">
+                        <DropdownToggle className="w-auto d-inline-block nav-select shadow-none">
                           {this.props.sortBy}
                         </DropdownToggle>
                         <DropdownMenu>
@@ -36,23 +36,23 @@ class Menu extends React.Component<MenuProps, MenuState> {
                           <DropdownItem onClick={async (): Promise<void> => { this.props.sortEvent("Size") }}>Size</DropdownItem>
                         </DropdownMenu>
                       </Dropdown>
-                      <Button className="nav_arrow shadow-none" onClick={this.props.reverseEvent}> {this.props.reverse ? <ArrowDown /> : <ArrowUp />}</Button>
+                      <Button className="nav-arrow shadow-none" onClick={this.props.reverseEvent}> {this.props.reverse ? <ArrowDown /> : <ArrowUp />}</Button>
                     </Stack>
                   </Nav.Item>
                   <Nav.Item className="mx-2">
-                    <Button variant="light" onClick={this.props.uploadModal} className="nav_button shadow-none nw">Upload new image</Button>
+                    <Button variant="light" onClick={this.props.uploadModal} className="nav-button shadow-none nw">Upload new image</Button>
                   </Nav.Item>
 
                   <Nav.Item className={`mx-2 ${btnClass}`}>
-                    <Button variant="danger" className="nav_button shadow-none nw" aria-label="Delete selected" onClick={this.props.deleteModal}>Delete</Button>
+                    <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={this.props.deleteModal}>Delete</Button>
                   </Nav.Item>
 
                   <Nav.Item className={`mx-2 ${btnClass}`}>
-                    <Button variant="light" className="nav_button shadow-none nw" onClick={this.props.selectAllPhotos}>Select all</Button>
+                    <Button variant="light" className="nav-button shadow-none nw" onClick={this.props.selectAllPhotos}>Select all</Button>
                   </Nav.Item>
 
                   <Nav.Item className={`mx-2 ${btnClass}`}>
-                    <Button variant="light" className="nav_button shadow-none nw" onClick={this.props.deselectPhotos}>Cancel selection</Button>
+                    <Button variant="light" className="nav-button shadow-none nw" onClick={this.props.deselectPhotos}>Cancel selection</Button>
                   </Nav.Item>
 
                   <Nav.Item className={`mx-2 text-light d-flex justify-content-center align-items-center nw ${btnClass}`}>

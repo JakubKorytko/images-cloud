@@ -154,7 +154,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
         const props = GalleryRouteComponentsProps(this);
 
         return (
-            <div className="App">
+            <div className="app">
 
                 <DeleteModal {...props.DeleteModal} />
 

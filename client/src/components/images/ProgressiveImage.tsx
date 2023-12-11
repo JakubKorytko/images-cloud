@@ -73,13 +73,13 @@ class ProgressiveImage extends Component<ProgressiveImageProps, ProgressiveImage
     const { loading } = this.state;
 
     const opacity = loading ? 50 : 100
-    const checked = (this.props.checkState) ? "_checked" : ""
+    const checked = (this.props.checkState) ? "-checked" : ""
 
     return (
       <img
         data-testid="proggresive_img" 
         src={this.state.currentSrc}
-        className={`opacity-${opacity} progressiveImage${checked} thumbnail w-100`}
+        className={`opacity-${opacity} progressive-image${checked} thumbnail w-100`}
         image-id={this.props.imageId}
         alt={this.props.name}
         onClick={this.props.click}
