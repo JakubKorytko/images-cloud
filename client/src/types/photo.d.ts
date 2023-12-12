@@ -11,8 +11,3 @@ export type PhotoProps = {
     progressiveThumbPath: string,
     imageSize: string
 };
-
-export type PhotoState = {
-    checked: boolean,
-    checkMarkDisplay: boolean
-};

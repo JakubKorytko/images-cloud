@@ -5,9 +5,11 @@ import Token from "../../utils/token.util";
 
 const ProgressiveImage = (props: ProgressiveImageProps) => {
 
+    const {id, name, size, placeholder, src} = props.data;
+
     const [imgPlaceholder, setImgPlaceholder] = useState("");
     const [imgSrc, setImgSrc] = useState({
-        url: `https://via.placeholder.com/${props.imageSize}`,
+        url: `https://via.placeholder.com/${size}`,
         loading: true
     });
 
@@ -16,7 +18,6 @@ const ProgressiveImage = (props: ProgressiveImageProps) => {
         const requestHeaders: HeadersInit = new Headers();
         requestHeaders.set('Authorization', `Bearer ${Token.value}`);
 
-        const { src } = props;
         const imageToLoad = new Image();
         fetch(src, { headers: requestHeaders })
           .then(response => {
@@ -40,9 +41,9 @@ const ProgressiveImage = (props: ProgressiveImageProps) => {
     }
 
     useEffect(() => {
-        if (imgPlaceholder !== props.placeholder) {
-            setImgPlaceholder(props.placeholder);
-            fetchBlob(props.placeholder).then(
+        if (imgPlaceholder !== placeholder) {
+            setImgPlaceholder(placeholder);
+            fetchBlob(placeholder).then(
                 blob => {
                     setImgSrc({...imgSrc, url: blob});
                     refreshPhoto();
@@ -64,11 +65,11 @@ const ProgressiveImage = (props: ProgressiveImageProps) => {
         className: imgClassNames.join(" "),
         onClick: props.click,
         "data-testid": "proggresive_img",
-        "image-id": props.imageId,
+        "image-id": id,
     }
 
     return (
-        <img {...imgAttributes} alt={props.name} />
+        <img {...imgAttributes} alt={name} />
     )
 }
 

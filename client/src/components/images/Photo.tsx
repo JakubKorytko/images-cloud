@@ -1,39 +1,48 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
 import ProgressiveImage from './ProgressiveImage';
-import { PhotoProps, PhotoState } from '../../types/photo';
+import { PhotoProps } from '../../types/photo';
 
-class Photo extends Component<PhotoProps, PhotoState> {
+const Photo = (props: PhotoProps) => {
 
-    constructor(props: PhotoProps) {
-        super(props);
-        this.state = {
-            checked: false,
-            checkMarkDisplay: false
-        }
+    const [checkMarkDisplay, displayCheckMark] = useState(false);
+
+    const imageData = {
+        id: props.id,
+        name: `User photo ${props.id}`,
+        size: props.imageSize,
+        placeholder: props.progressiveThumbPath,
+        src: props.thumbPath,
     }
 
-    selectImage = (): void => {
-        this.props.selectImageFunction(this.props.id, !this.props.checkedState);
+    const selectImage = () => props.selectImageFunction(props.id, !props.checkedState);
+
+    const openImage = () => {
+        if (props.selectedImages.length === 0) props.select(props.carrouselId)
+        else selectImage();
     }
 
-    openImage = (): void => {
-        if(this.props.selectedImages.length === 0) this.props.select(this.props.carrouselId)
-        else this.selectImage();
+    const checked =  (props.checkedState) ? "-checked" : "";
+    const iconDisplay = (checkMarkDisplay || props.checkedState) ? "block" : "none";
+
+    const circleAttributes = {
+        "data-testid": "imageSelectIcon",
+        "aria-label": "Select image",
+        className: [`selection photo-icon${checked}`, `d-${iconDisplay}`].join(" ")
     }
 
-    render() {
-
-        const checked =  (this.props.checkedState) ? "-checked" : "";
-        const iconDisplay = (this.state.checkMarkDisplay || this.props.checkedState) ? "block" : "none";
-
-        return (
-            <div data-testid="photo" className={`photo${checked}`} onMouseOver={(): void => { this.setState({ checkMarkDisplay: true }) }} onMouseOut={(): void => { this.setState({ checkMarkDisplay: false }) }} >
-                <CheckCircleFill data-testid="imageSelectIcon" aria-label="Select image" onClick={this.selectImage} className={`selection photo-icon${checked} d-${iconDisplay}`} />
-                <ProgressiveImage imageSize={this.props.imageSize} placeholder={this.props.progressiveThumbPath} checkState={this.props.checkedState} src={this.props.thumbPath} imageId={this.props.id} click={this.openImage} name={"User image thumbnail"}></ProgressiveImage>
-            </div>
-        );
+    const divAttributes = {
+        "data-testid": "photo",
+        className: `photo${checked}`
     }
+
+    return (
+        <div {...divAttributes} onMouseOver={() => displayCheckMark(true)} onMouseOut={() => displayCheckMark(false)} >
+            <CheckCircleFill {...circleAttributes} onClick={selectImage} />
+            <ProgressiveImage data={imageData} checkState={props.checkedState} click={openImage}></ProgressiveImage>
+        </div>
+    );
+
 }
 
 export default Photo;

@@ -1,20 +1,15 @@
 import { Blob } from "buffer";
 
-export type ProgressiveImageProps = {
-    imageId: number,
+export type ProgressiveImageData = {
+    id: number,
     name: string,
-    click: MouseEventHandler<HTMLImageElement>,
-    placeholder: string,
     src: string,
-    checkState: boolean,
-    imageSize: string
-};
+    placeholder: string,
+    size: string,
+}
 
-export type ProgressiveImageState = {
-    loading: boolean,
-    currentSrc: string,
-    preBlob: string,
-    currentName: string,
-    loadingImage: string,
-    fetching: boolean
+export type ProgressiveImageProps = {
+    click: MouseEventHandler<HTMLImageElement>,
+    checkState: boolean,
+    data: ProgressiveImageData,
 };
