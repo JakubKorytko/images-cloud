@@ -1,4 +1,6 @@
 import { Photo } from './photoObject';
+import {FlktyObject} from "./flickity";
+import Flickity from "react-flickity-component";
 
 export type GalleryRouteState = {
   showProgress: boolean,
@@ -16,7 +18,9 @@ export type GalleryRouteState = {
   images: Photo[],
   reverse: boolean,
   navbarDisplay: string,
-  uploadModalShow: boolean
+  uploadModalShow: boolean,
+  flkty: FlktyObject | null,
+  carouselCurrent: string
 };
 
 export type GalleryRouteProps = {

@@ -6,18 +6,16 @@ function getCookie(name: string) {
   return '';
 }
 
-class Token {
-  static get value() {
-    return getCookie('token');
-  }
-
-  static set value(token) {
-    document.cookie = `token=${token}`;
-  }
-
-  static remove() {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-  }
-}
+const Token = {
+    get value() {
+        return getCookie('token');
+    },
+    set value(token) {
+        document.cookie = `token=${token}`;
+    },
+    remove() {
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    }
+};
 
 export default Token;

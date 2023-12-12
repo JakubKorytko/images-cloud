@@ -1,4 +1,5 @@
 import { Photo } from './photoObject';
+import Flickity from "react-flickity-component";
 
 export type CarouselProps = {
   deleteModal: React.MouseEventHandler<SVGElement>,
@@ -6,7 +7,8 @@ export type CarouselProps = {
   download: React.MouseEventHandler<SVGElement>
   images: Photo[],
   buttonsDisplay: Function,
-  display: string
+  display: string,
+  passFlkty: Function,
 };
 
 export type CarouselState = {

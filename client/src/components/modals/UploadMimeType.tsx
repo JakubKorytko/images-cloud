@@ -3,7 +3,7 @@ import type { RootState } from '../../app/store'
 import { useSelector, useDispatch } from 'react-redux'
 import { setUploadMimeTypeModal } from '../../features/uploadMimeType'
 
-function UploadMimeType() {
+const UploadMimeType = () => {
 
     const uploadModalShow = useSelector((state: RootState) => state.uploadMimeType.showUploadMimeTypeModal);
     const dispatch = useDispatch();

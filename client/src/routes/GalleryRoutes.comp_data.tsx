@@ -15,4 +15,6 @@ export default {
   sortBy: 'Date',
   deleteModalDisplay: false,
   uploadModalShow: false,
+  flkty: null,
+  carouselCurrent: '',
 };

@@ -12,6 +12,7 @@ import {
   deleteImage, deleteImages, downloadImage, editImage, fetchImages, sendImage,
 } from '../utils/GalleryRoute/images.util';
 import { GalleryRouteProps, GalleryRouteState } from '../types/galleryRoute';
+import { FlktyObject } from '../types/flickity';
 import {
   refreshGallery, resortGallery, reverseEvent, sortEvent,
 } from '../utils/GalleryRoute/sorting.util';
@@ -21,17 +22,16 @@ import {
 import Token from '../utils/token.util';
 import UploadMimeType from '../components/modals/UploadMimeType';
 import GalleryRouteComponentState from './GalleryRoutes.comp_data';
+import Flickity from "react-flickity-component";
 
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
 class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
-  public carousel: React.RefObject<Carousel>;
 
   constructor(props: GalleryRouteProps) {
     super(props);
 
     this.state = GalleryRouteComponentState;
-    this.carousel = React.createRef();
   }
 
   async componentDidMount() {
@@ -49,7 +49,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
 
   // --- simple state setters & togglers ---
 
-  exitFlickityFullscreen = (): void => { if (this.carousel.current && this.carousel.current.flkty) this.carousel.current.flkty.exitFullscreen(); };
+  exitFlickityFullscreen = (): void => { if (this.state.flkty) this.state.flkty.exitFullscreen(); };
 
   toggleUpload = (): void => { this.setState({ showUpload: !this.state.showUpload }); };
 
@@ -107,8 +107,8 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
   };
 
   showCarousel = (x: number): void => {
-    if (this.carousel.current) {
-      this.carousel.current.show(x);
+    if (this.state.flkty) {
+      this.state.flkty.show(x);
     }
   };
 
@@ -123,11 +123,9 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
   };
 
   carouselCurrent = (): string | false | null => {
-    if (this.carousel.current
-            && this.carousel.current.flkty
-            && this.carousel.current.flkty.selectedElement
-    ) {
-      const element: unknown = this.carousel.current.flkty.selectedElement;
+    console.log(this.state.carouselCurrent);
+    if (this.state.flkty && this.state.flkty.ref) {
+      const element: unknown = this.state.flkty.ref.selectedElement;
 
       const elementWithAttributeGetter = element as unknown & { getAttribute: (x: string) => string | null };
       if (elementWithAttributeGetter.getAttribute !== undefined) {
@@ -141,6 +139,12 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
     this.setState({ fileSending: false });
     this.setState({ uploadingPercentage: 0 });
   };
+
+  getFlkty = (flkty: FlktyObject): void => {
+    if (flkty) {
+      this.setState({ flkty });
+    }
+  }
 
   logOut = (): void => {
     Token.remove();
@@ -190,8 +194,8 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
         editPhoto: this.editPhoto,
         download: this.downloadPhoto,
         images,
-        ref: this.carousel,
         buttonsDisplay: this.changeButtonsVisibility,
+        passFlkty: this.getFlkty,
       },
       ImageEditor: {
         toggleDisplay: this.toggleDisplay,

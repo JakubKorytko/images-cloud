@@ -3,7 +3,7 @@ import { ProgressiveImageProps } from '../../types/progressiveImage';
 import fetchB from '../../utils/fetchBlob.util';
 import Token from '../../utils/token.util';
 
-function ProgressiveImage(props: ProgressiveImageProps) {
+const ProgressiveImage = (props: ProgressiveImageProps) => {
   const {
     id, name, size, placeholder, src,
   } = props.data;

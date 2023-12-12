@@ -1,28 +1,23 @@
-import { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-class SessionExpired extends Component<{ show: boolean, closeHandler: Function }, {}> {
-  closeHandler = (): void => {
-    this.props.closeHandler();
-  };
+const SessionExpired = (props: { show: boolean, closeHandler: Function }) => {
+    const closeHandler = (): void => {
+        props.closeHandler();
+    };
 
-  render() {
     return (
-      <div>
-        <Modal centered show={this.props.show} onHide={this.closeHandler} animation={false}>
-          <Modal.Header closeButton>
+        <Modal centered show={props.show} onHide={closeHandler} animation={false}>
+        <Modal.Header closeButton>
             <Modal.Title>Your session expired!</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Please login again</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.closeHandler}>
-              Okay!
+        </Modal.Header>
+        <Modal.Body>Please login again</Modal.Body>
+        <Modal.Footer>
+            <Button variant="secondary" onClick={closeHandler}>
+            Okay!
             </Button>
-          </Modal.Footer>
+        </Modal.Footer>
         </Modal>
-      </div>
     );
-  }
 }
 
 export default SessionExpired;

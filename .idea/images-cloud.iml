@@ -5,6 +5,11 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/client/src/components/__tests__" />
+      <excludeFolder url="file://$MODULE_DIR$/client/src/components/__tests_helpers__" />
+      <excludeFolder url="file://$MODULE_DIR$/client/src/components/modals/__tests__" />
+      <excludeFolder url="file://$MODULE_DIR$/client/src/components/modals/upload/__tests__" />
+      <excludeFolder url="file://$MODULE_DIR$/server/dist" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, useState, useEffect } from 'react';
 import '../scss/App.scss';
 import '../scss/login.scss';
 import {
@@ -14,192 +14,173 @@ import SessionExpired from '../components/modals/SessionExpired';
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
-class App extends React.Component<LoginRouteProps, LoginRouteState> {
-  constructor(props: LoginRouteProps) {
-    super(props);
-    this.state = {
-      username: '',
-      password: '',
-      usernameValid: true,
-      passwordValid: true,
-      logged: false,
-      showExpiredModal: false,
-      showWrongModal: false,
+const App = (props: LoginRouteProps) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [usernameValid, setUsernameValid] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(true);
+    const [logged, setLogged] = useState(false);
+    const [showExpiredModal, setShowExpiredModal] = useState(false);
+    const [showWrongModal, setShowWrongModal] = useState(false);
+
+    useEffect(() => {
+        if (window.location.search === '?redirected') setShowExpiredModal(true);
+        setInterval((): void => {
+        authTest().then((res): void => {
+            if (res.redirect
+            && (res.resCode === 'AUTH_ERROR' || res.resCode === 'SERVER_DOWN' || res.resCode === 'AUTH_OK')
+            ) window.location.href = res.redirect;
+        });
+        }, connection_test_interval);
+    }, []);
+
+    // --- password, username setters ---
+
+    const updateUsername = (ev: ChangeEvent<HTMLInputElement>): boolean => {
+        if (!ev) return false;
+
+        const val: string = ev.currentTarget.value;
+
+        setUsernameValid(true);
+
+        setUsername(val);
+
+        return true;
     };
-  }
 
-  componentDidMount() {
-    if (window.location.search === '?redirected') this.setState({ showExpiredModal: true });
-    setInterval((): void => {
-      authTest().then((res): void => {
-        if (res.redirect
-          && (res.resCode === 'AUTH_ERROR' || res.resCode === 'SERVER_DOWN' || res.resCode === 'AUTH_OK')
-        ) window.location.href = res.redirect;
-      });
-    }, connection_test_interval);
-  }
+    const updatePassword = (ev: ChangeEvent<HTMLInputElement>): boolean => {
+        if (!ev) return false;
 
-  // --- password, username setters ---
+        const val: string = ev.target.value;
 
-  updateUsername = (ev: ChangeEvent<HTMLInputElement>): boolean => {
-    if (!ev) return false;
+        setPasswordValid(true);
 
-    const val: string = ev.currentTarget.value;
+        setPassword(val);
 
-    this.setState({ usernameValid: true });
+        return true;
+    };
 
-    this.setState({
-      username: val,
-    });
+    // ---
 
-    return true;
-  };
+    // --- validation & authentication ---
 
-  updatePassword = (ev: ChangeEvent<HTMLInputElement>): boolean => {
-    if (!ev) return false;
+    const validateForms = (): void => {
+        if (!username) {
+        setUsernameValid(false);
+        } else {
+        setUsernameValid(true);
+        }
 
-    const val: string = ev.target.value;
+        if (!password) {
+        setPasswordValid(false);
+        } else {
+        setPasswordValid(true);
+        }
+    };
 
-    this.setState({ passwordValid: true });
+    const authenticate = async (): Promise<boolean> => {
+        const response = await fetch(`${serverUrl}/login`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            username,
+            password,
+        }),
+        });
+        const json = await response.json();
+        if (json.token === false) {
+        setShowWrongModal(true);
+        return false;
+        }
+        Token.value = json.token;
+        loginValidation();
+        return true;
+    };
 
-    this.setState({
-      password: val,
-    });
+    // ---
 
-    return true;
-  };
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>): boolean => {
+        const form = event.currentTarget;
 
-  // ---
+        event.preventDefault();
+        event.stopPropagation();
 
-  // --- validation & authentication ---
+        validateForms();
 
-  validateForms = (): void => {
-    if (!this.state.username) {
-      this.setState({
-        usernameValid: false,
-      });
-    } else {
-      this.setState({
-        usernameValid: true,
-      });
+        if (form.checkValidity() === false) {
+            return false;
+        }
+
+        authenticate();
+
+        return true;
     }
 
-    if (!this.state.password) {
-      this.setState({
-        passwordValid: false,
-      });
-    } else {
-      this.setState({
-        passwordValid: true,
-      });
-    }
-  };
+    const loginValidation = (): void => {
+        window.open('/', '_self');
+    };
 
-  authenticate = async (): Promise<boolean> => {
-    const response = await fetch(`${serverUrl}/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password,
-      }),
-    });
-    const json = await response.json();
-    if (json.token === false) {
-      this.setState({ showWrongModal: true });
-      return false;
-    }
-    Token.value = json.token;
-    this.loginValidation();
-    return true;
-  };
+    const handleExpiredClose = (): void => {
+        setShowExpiredModal(false);
+    };
 
-  // ---
+    const handleWrongClose = (): void => {
+        setShowWrongModal(false);
+    };
 
-  handleSubmit = (event: React.FormEvent<HTMLFormElement>): boolean => {
-    const form = event.currentTarget;
-
-    event.preventDefault();
-    event.stopPropagation();
-
-    this.validateForms();
-
-    if (form.checkValidity() === false) {
-      return false;
-    }
-
-    this.authenticate();
-
-    return true;
-  };
-
-  loginValidation = (): void => {
-    window.open('/', '_self');
-  };
-
-  handleExpiredClose = (): void => {
-    this.setState({ showExpiredModal: false });
-  };
-
-  handleWrongClose = (): void => {
-    this.setState({ showWrongModal: false });
-  };
-
-  render() {
     return (
-      <div className="app">
+        <div className="app">
         <div className="center wh-100">
-          <Container className="center bg-dark" id="login-container">
+            <Container className="center bg-dark" id="login-container">
             <div>
-              <Row id="login-row">
+                <Row id="login-row">
                 <Col id="login-col" className="mb-4">
-                  <NavbarBrand>
+                    <NavbarBrand>
                     <CloudFill />
                     {' '}
                     images-cloud
-                  </NavbarBrand>
+                    </NavbarBrand>
                 </Col>
-              </Row>
-              <hr />
-              <Row>
+                </Row>
+                <hr />
+                <Row>
                 <Col className="text-center">
-                  <Form noValidate onSubmit={this.handleSubmit}>
+                    <Form noValidate onSubmit={handleSubmit}>
                     <Form.Group>
-                      <InputGroup hasValidation>
-                        <Form.Control required isInvalid={!this.state.usernameValid} type="text" aria-label="Username" className="form-control w-250px" placeholder="Username" value={this.state.username} onChange={this.updateUsername} />
+                        <InputGroup hasValidation>
+                        <Form.Control required isInvalid={!usernameValid} type="text" aria-label="Username" className="form-control w-250px" placeholder="Username" value={username} onChange={updateUsername} />
                         <Form.Control.Feedback className="c-ffd3d3" type="invalid">
-                          Please choose a username.
+                            Please choose a username.
                         </Form.Control.Feedback>
-                      </InputGroup>
+                        </InputGroup>
                     </Form.Group>
                     <br />
 
                     <Form.Group>
-                      <InputGroup hasValidation>
-                        <Form.Control required isInvalid={!this.state.passwordValid} type="password" aria-label="Password" className="form-control w-250px" placeholder="Password" value={this.state.password} onChange={this.updatePassword} />
+                        <InputGroup hasValidation>
+                        <Form.Control required isInvalid={!passwordValid} type="password" aria-label="Password" className="form-control w-250px" placeholder="Password" value={password} onChange={updatePassword} />
                         <Form.Control.Feedback className="c-ffd3d3" type="invalid">
-                          Please choose a password.
+                            Please choose a password.
                         </Form.Control.Feedback>
-                      </InputGroup>
+                        </InputGroup>
                     </Form.Group>
                     <br />
                     <Button className="btn btn-light" aria-label="Login button" type="submit">Let me in!</Button>
-                  </Form>
+                    </Form>
                 </Col>
-              </Row>
+                </Row>
             </div>
-          </Container>
+            </Container>
         </div>
 
-        <SessionExpired show={this.state.showExpiredModal} closeHandler={this.handleExpiredClose} />
+        <SessionExpired show={showExpiredModal} closeHandler={handleExpiredClose} />
 
-        <InvalidLoginData show={this.state.showWrongModal} closeHandler={this.handleWrongClose} />
+        <InvalidLoginData show={showWrongModal} closeHandler={handleWrongClose} />
 
-      </div>
+        </div>
     );
-  }
 }
 
 export default App;

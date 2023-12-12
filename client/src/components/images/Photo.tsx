@@ -3,7 +3,7 @@ import { CheckCircleFill } from 'react-bootstrap-icons';
 import ProgressiveImage from './ProgressiveImage';
 import { PhotoProps } from '../../types/photo';
 
-function Photo(props: PhotoProps) {
+const Photo = (props: PhotoProps) => {
   const [checkMarkDisplay, displayCheckMark] = useState(false);
 
   const imageData = {
