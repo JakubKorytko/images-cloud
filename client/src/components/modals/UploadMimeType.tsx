@@ -1,28 +1,21 @@
-import { Component } from 'react';
+import { MouseEventHandler } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
-class UploadMimeType extends Component<{show: boolean, closeHandler: Function}, {}> {
-
-    closeHandler = (): void => {
-        this.props.closeHandler();
-    }
-
-    render() {
-        return (
-            <Modal centered show={this.props.show} onHide={this.closeHandler}>
+const UploadMimeType = (props: {show: boolean, closeHandler: MouseEventHandler}) => {
+    return (
+        <Modal centered show={props.show} onHide={() => props.closeHandler}>
             <Modal.Header closeButton>
               <Modal.Title className="text-danger">Wrong file uploaded!</Modal.Title>
             </Modal.Header>
             <Modal.Body>Only JPG, PNG and JPEG files allowed!</Modal.Body>
             <Modal.Footer>
-              <Button variant="secondary" onClick={this.closeHandler}>
+              <Button variant="secondary" onClick={props.closeHandler}>
                 Okay...
               </Button>
             </Modal.Footer>
           </Modal>
-  
-        );
-    }
+    );
+
 }
 
 export default UploadMimeType;
