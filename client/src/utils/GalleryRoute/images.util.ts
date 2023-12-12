@@ -86,7 +86,7 @@ export async function sendImage(app: GalleryRoute, file: File): Promise<boolean>
   await app.setState({ fileSending: true });
   app.toggleUpload();
   app.toggleProgress();
-  axiosIstance.post(`${serverUrl}/upload`, form, {
+  const res = await axiosIstance.post(`${serverUrl}/upload`, form, {
     headers: {
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${Token.value}`,
@@ -95,13 +95,17 @@ export async function sendImage(app: GalleryRoute, file: File): Promise<boolean>
       const total = data.total ? data.total : 1;
       app.setProgress(Math.round(100 * (data.loaded / total)));
     },
-  }).catch((err) => {
+  }).then(() => {
+    return true;
+  })
+  .catch((err) => {
     console.log(err.response.data);
     if (err.response.data === 'Wrong mime-type') {
-      app.wrongMimeType();
+      return false;
     }
   });
-  return true;
+  return Boolean(res);
+
 }
 
 export async function downloadImage(app: GalleryRoute): Promise<boolean> {

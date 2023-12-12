@@ -147,20 +147,12 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
     window.location.href = '/login';
   };
 
-  wrongMimeType = (): void => {
-    this.setState({ uploadModalShow: true });
-  };
-
-  uploadModalClose = (): void => {
-    this.setState({ uploadModalShow: false });
-  };
-
   render() {
     const {
       imageEditorDisplay, innerWidth: sinnerWidth, showUpload,
       showProgress, uploadingPercentage, imageEditorSrc,
       buttonsDisplay, navbarDisplay, images, selectedImages,
-      reverse, sortBy, deleteModalDisplay, uploadModalShow,
+      reverse, sortBy, deleteModalDisplay,
     } = this.state;
 
     const props = {
@@ -217,10 +209,6 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
         percentage: uploadingPercentage,
         show: showProgress,
       },
-      UploadMimeType: {
-        show: uploadModalShow,
-        closeHandler: this.uploadModalClose,
-      },
     };
 
     return (
@@ -240,7 +228,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
 
         <Progress {...props.Progress} />
 
-        <UploadMimeType {...props.UploadMimeType} />
+        <UploadMimeType />
 
       </div>
     );

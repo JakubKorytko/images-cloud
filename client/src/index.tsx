@@ -6,6 +6,8 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+import { store } from './app/store'
+import { Provider } from 'react-redux'
 import Authorization from './routes/Authorization';
 import GalleryRoute from './routes/GalleryRoute';
 import LoginRoute from './routes/LoginRoute';
@@ -14,6 +16,7 @@ import HealthCheck from './routes/HealthCheck';
 const root = createRoot(document.getElementById('root') as Element);
 root.render(
   <React.StrictMode>
+    <Provider store={store}>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Authorization loginPage={false} path={<GalleryRoute />} />} />
@@ -21,5 +24,6 @@ root.render(
         <Route path="/status" element={<HealthCheck />} />
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+    </Provider>
+    </React.StrictMode>,
 );

@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
+    "@reduxjs/toolkit": "^2.0.1",
     "@testing-library/jest-dom": "^6.1.5",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.43",
@@ -51,6 +52,7 @@
     "react-flickity-component": "^3.6.2",
     "react-konva": "^18.2.10",
     "react-loader-spinner": "^6.1.0",
+    "react-redux": "^9.0.4",
     "react-router": "^6.20.1",
     "react-router-dom": "^6.20.1",
     "sass": "^1.69.5",

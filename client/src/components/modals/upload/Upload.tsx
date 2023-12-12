@@ -1,46 +1,49 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import { FileDrop } from 'react-file-drop';
 import { Modal, Button } from 'react-bootstrap';
 import '../../../scss/upload.scss';
-import { UploadProps, UploadState } from '../../../types/upload';
+import { UploadProps } from '../../../types/upload';
+import { RootState} from "../../../app/store";
+import { useSelector, useDispatch } from "react-redux";
+import { setUploadMimeTypeModal } from "../../../features/uploadMimeType";
 
-class Upload extends Component<UploadProps, UploadState> {
-  constructor(props: UploadProps) {
-    super(props);
-    this.state = {
-      fileAttached: false,
-      file: undefined,
+const Upload = (props: UploadProps) => {
+  const [fileAttached, setFileAttached] = useState(false);
+    const [file, setFile] = useState<File | undefined>(undefined);
+
+    const uploadModalShow = useSelector((state: RootState) => state.uploadMimeType.showUploadMimeTypeModal);
+    const dispatch = useDispatch();
+
+    const transferFile = (x: FileList | null): void => {
+      if (x) {
+        setFile(x[0]);
+        setFileAttached(true);
+      }
     };
-  }
 
-  transferFile = (x: FileList | null): void => {
-    if (x) {
-      this.setState({ file: x[0] });
-      this.setState({ fileAttached: true });
-    }
-  };
+    const cancelFile = (): void => {
+      setFile(undefined);
+      setFileAttached(false);
+    };
 
-  cancelFile = (): void => {
-    this.setState({ file: undefined });
-    this.setState({ fileAttached: false });
-  };
+    const uploadFile = async (): Promise<void> => {
+      const res = await props.imageUpload(file);
+      if (!res) {
+        dispatch(setUploadMimeTypeModal(true));
+      }
+      cancelFile();
+    };
 
-  uploadFile = async (): Promise<void> => {
-    await this.props.imageUpload(this.state.file);
-    this.cancelFile();
-  };
-
-  render() {
-    const transferDisplay = this.state.fileAttached ? 'flex' : 'none';
-    const cardDisplay = this.state.fileAttached ? 'none' : 'flex';
-    const bodyHeight = this.state.fileAttached ? 'fit' : '110px';
+    const transferDisplay = fileAttached ? 'flex' : 'none';
+    const cardDisplay = fileAttached ? 'none' : 'flex';
+    const bodyHeight = fileAttached ? 'fit' : '110px';
 
     return (
       <Modal
         backdrop="static"
-        show={this.props.show}
+        show={props.show}
         keyboard={false}
-        onHide={this.props.toggle}
+        onHide={props.toggle}
         centered
       >
         <Modal.Header closeButton>
@@ -48,13 +51,13 @@ class Upload extends Component<UploadProps, UploadState> {
         </Modal.Header>
         <Modal.Body>
           <div className={`h-${bodyHeight}`}>
-            <FileDrop onDrop={this.transferFile}>
+            <FileDrop onDrop={transferFile}>
               <div className={`card-img-overlay center d-${cardDisplay} text-center`}>
                 <fieldset id="zone">
 
                   <div className="no-file">
                     <legend>Drop a file inside&hellip;</legend>
-                    <input data-testid="upload" className="text-last-center" onChange={(ev): void => { this.transferFile(ev.target.files); ev.target.value = ''; }} aria-label="Select file to upload" type="file" />
+                    <input data-testid="upload" className="text-last-center" onChange={(ev): void => { transferFile(ev.target.files); ev.target.value = ''; }} aria-label="Select file to upload" type="file" />
                     <p>
                       Or click button to
                       <em>Browse</em>
@@ -78,10 +81,10 @@ class Upload extends Component<UploadProps, UploadState> {
                 File selected! Click button below to transfer file
               </div>
               <div id="upload-select-buttons">
-                <Button onClick={this.uploadFile} className="m-2" variant="primary" disabled={!this.state.fileAttached}>
+                <Button onClick={uploadFile} className="m-2" variant="primary" disabled={!fileAttached}>
                   <span className="no-break">Upload file</span>
                 </Button>
-                <Button onClick={this.cancelFile} className="m-2" variant="primary" disabled={!this.state.fileAttached}>
+                <Button onClick={cancelFile} className="m-2" variant="primary" disabled={!fileAttached}>
                   <span className="no-break">Select other file</span>
                 </Button>
               </div>
@@ -90,7 +93,6 @@ class Upload extends Component<UploadProps, UploadState> {
         </Modal.Body>
       </Modal>
     );
-  }
 }
 
 export default Upload;
