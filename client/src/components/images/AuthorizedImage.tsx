@@ -1,19 +1,18 @@
-import React, { useEffect, useState} from 'react';
-import { fetchBlob } from '../../utils/fetchBlob.util';
+import React, { useEffect, useState } from 'react';
+import fetchB from '../../utils/fetchBlob.util';
 
-type Props = { src: string, className: string, alt: string }
+type Props = { src: string, className: string, alt: string };
 
-const AuthorizedImage = (props: Props) => {
+function AuthorizedImage(props: Props) {
+  const [url, setUrl] = useState('');
 
-    const [url, setUrl] = useState("")
+  useEffect(() => {
+    fetchB(props.src).then((url) => setUrl(url));
+  }, [props.src]);
 
-    useEffect(() => {
-        fetchBlob(props.src).then(url => setUrl(url))
-    }, [props.src])
-
-    return (
-        <img src={url} alt={props.alt} className={props.className} />
-    )
+  return (
+    <img src={url} alt={props.alt} className={props.className} />
+  );
 }
 
 export default AuthorizedImage;

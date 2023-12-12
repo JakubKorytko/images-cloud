@@ -1,25 +1,23 @@
-import { fireEvent, render} from "@testing-library/react";
+import { fireEvent, render } from '@testing-library/react';
 
-import UploadMimeType from "../UploadMimeType";
+import UploadMimeType from '../UploadMimeType';
 
-test("Mime type modal is closing properly", () => {
+test('Mime type modal is closing properly', () => {
+  let display = true;
 
-    let display = true;
+  const hideModal = (): void => {
+    display = false;
+  };
 
-    const hideModal = (): void => {
-        display = false
-    }
+  const { getByText, unmount } = render(<UploadMimeType closeHandler={hideModal} show={display} />);
 
-    const { getByText, unmount } = render(<UploadMimeType closeHandler={hideModal} show={display} />)
+  expect(getByText('Wrong file uploaded!')).toBeInTheDocument();
 
-    expect(getByText("Wrong file uploaded!")).toBeInTheDocument();
-    
-    fireEvent.click(getByText("Okay..."));
+  fireEvent.click(getByText('Okay...'));
 
-    unmount();
+  unmount();
 
-    const modal = render(<UploadMimeType closeHandler={hideModal} show={display} />);
+  const modal = render(<UploadMimeType closeHandler={hideModal} show={display} />);
 
-    expect(modal.queryByText("Wrong file uploaded!")).toBeNull();
-
-})
+  expect(modal.queryByText('Wrong file uploaded!')).toBeNull();
+});

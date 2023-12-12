@@ -5,15 +5,12 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "airbnb-typescript"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 15,
-        "sourceType": "module"
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "react",

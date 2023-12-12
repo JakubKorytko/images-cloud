@@ -1,25 +1,23 @@
-import { fireEvent, render} from "@testing-library/react";
+import { fireEvent, render } from '@testing-library/react';
 
-import SessionExpired from "../SessionExpired";
+import SessionExpired from '../SessionExpired';
 
-test("Session expired modal is closing properly", () => {
+test('Session expired modal is closing properly', () => {
+  let display = true;
 
-    let display = true;
+  const hideModal = (): void => {
+    display = false;
+  };
 
-    const hideModal = (): void => {
-        display = false
-    }
+  const { getByText, unmount } = render(<SessionExpired closeHandler={hideModal} show={display} />);
 
-    const { getByText, unmount } = render(<SessionExpired closeHandler={hideModal} show={display} />)
+  expect(getByText('Your session expired!')).toBeInTheDocument();
 
-    expect(getByText("Your session expired!")).toBeInTheDocument();
-    
-    fireEvent.click(getByText("Okay!"));
+  fireEvent.click(getByText('Okay!'));
 
-    unmount();
+  unmount();
 
-    const modal = render(<SessionExpired closeHandler={hideModal} show={display} />);
+  const modal = render(<SessionExpired closeHandler={hideModal} show={display} />);
 
-    expect(modal.queryByText("Your session expired!")).toBeNull();
-
-})
+  expect(modal.queryByText('Your session expired!')).toBeNull();
+});

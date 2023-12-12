@@ -2,10 +2,9 @@ import { Component } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 
 class SessionExpired extends Component<{ show: boolean, closeHandler: Function }, {}> {
-
   closeHandler = (): void => {
     this.props.closeHandler();
-  }
+  };
 
   render() {
     return (

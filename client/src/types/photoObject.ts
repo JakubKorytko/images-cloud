@@ -1,13 +1,13 @@
-export type Photo = { 
-    imageId: number,
-    name: string,
-    size: number,
-    width: number,
-    height: number,
-    date: number,
-    ratioY: number,
+export type Photo = {
+  imageId: number,
+  name: string,
+  size: number,
+  width: number,
+  height: number,
+  date: number,
+  ratioY: number,
 
-    path: string,
-    thumb_path?: string,
-    progressive_path?: string
+  path: string,
+  thumb_path?: string,
+  progressive_path?: string
 };

@@ -8,173 +8,243 @@ import DeleteModal from '../components/modals/DeleteModal';
 import Upload from '../components/modals/upload/Upload';
 import Progress from '../components/modals/upload/Progress';
 import { authTest } from '../utils/connectionTest.util';
-import { deleteImage, deleteImages, downloadImage, editImage, fetchImages, sendImage } from '../utils/GalleryRoute/images.util';
+import {
+  deleteImage, deleteImages, downloadImage, editImage, fetchImages, sendImage,
+} from '../utils/GalleryRoute/images.util';
 import { GalleryRouteProps, GalleryRouteState } from '../types/galleryRoute';
-import { refreshGallery, resortGallery, reverseEvent, sortEvent } from '../utils/GalleryRoute/sorting.util';
-import { deselectAllphotos, photoSelected, selectAll, selectImage } from '../utils/GalleryRoute/selecting.util';
+import {
+  refreshGallery, resortGallery, reverseEvent, sortEvent,
+} from '../utils/GalleryRoute/sorting.util';
+import {
+  deselectAllphotos, photoSelected, selectAll, selectImage,
+} from '../utils/GalleryRoute/selecting.util';
 import Token from '../utils/token.util';
 import UploadMimeType from '../components/modals/UploadMimeType';
-import { GalleryRouteComponentsProps, GalleryRouteComponentState } from './GalleryRoutes.comp_data';
+import GalleryRouteComponentState from './GalleryRoutes.comp_data';
+
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
 class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
+  public carousel: React.RefObject<Carousel>;
 
-    public carousel: React.RefObject<Carousel>;
+  constructor(props: GalleryRouteProps) {
+    super(props);
 
-    constructor(props: GalleryRouteProps) {
-        super(props)
+    this.state = GalleryRouteComponentState;
+    this.carousel = React.createRef();
+  }
 
-        this.state = GalleryRouteComponentState
-        this.carousel = React.createRef();
+  async componentDidMount() {
+    setInterval((): void => {
+      authTest().then((res): void => {
+        if (res.resCode === 'AUTH_ERROR' || res.resCode === 'SERVER_DOWN' || res.resCode === 'UNAUTH') window.location.href = res.redirect;
+      });
+    }, connection_test_interval);
+    window.addEventListener('resize', (): void => { this.setState({ innerWidth: window.innerWidth }); });
+    const images = await fetchImages();
+    this.setState({ images }, () => {
+      this.resortGallery();
+    });
+  }
+
+  // --- simple state setters & togglers ---
+
+  exitFlickityFullscreen = (): void => { if (this.carousel.current && this.carousel.current.flkty) this.carousel.current.flkty.exitFullscreen(); };
+
+  toggleUpload = (): void => { this.setState({ showUpload: !this.state.showUpload }); };
+
+  toggleProgress = (): void => { this.setState({ showProgress: !this.state.showProgress }); };
+
+  toggleDisplay = (): void => { this.setState({ imageEditorDisplay: false }); };
+
+  deleteModal = (): void => { this.setState({ deleteModalDisplay: true }); };
+
+  hideDeleteModal = (): void => { this.setState({ deleteModalDisplay: false }); };
+
+  // ---
+
+  // --- gallery functions - included in /src/utils/GalleryRoute/images.util.ts ---
+
+  downloadPhoto = async (): Promise<boolean> => downloadImage(this);
+
+  sendImage = async (file: File): Promise<boolean> => sendImage(this, file);
+
+  deletePhotos = async (): Promise<void> => deleteImages(this);
+
+  deletePhoto = async (): Promise<boolean> => deleteImage(this);
+
+  editPhoto = async (): Promise<boolean> => editImage(this);
+
+  // ---
+
+  // --- sorting && refreshing gallery - included in /src/utils/GalleryRoute/sorting.util.ts ---
+
+  resortGallery = (): void => resortGallery(this);
+
+  refreshGallery = async (): Promise<void> => refreshGallery(this);
+
+  sortEvent = async (x: string): Promise<void> => sortEvent(this, x);
+
+  reverseEvent = async (): Promise<void> => reverseEvent(this);
+
+  // ---
+
+  // --- selecting images - included in /src/utils/GalleryRoute/selecting.util.ts ---
+
+  selectAll = (): void => selectAll(this);
+
+  selectImage = (id: number, action: boolean): void => selectImage(this, id, action);
+
+  photoSelected = (id: number): boolean => photoSelected(this, id);
+
+  deselectAllphotos = (): void => deselectAllphotos(this);
+
+  // ---
+
+  changeButtonsVisibility = (x: boolean): void => {
+    this.setState({ buttonsDisplay: x ? 'block' : 'none' });
+    this.setState({ navbarDisplay: x ? 'none' : 'block' });
+  };
+
+  showCarousel = (x: number): void => {
+    if (this.carousel.current) {
+      this.carousel.current.show(x);
     }
+  };
 
-    async componentDidMount() {
-        setInterval((): void => {
-            authTest().then((res): void => {
-                if (res.resCode === "AUTH_ERROR" || res.resCode === "SERVER_DOWN" || res.resCode === "UNAUTH") window.location.href = res.redirect
-            })
-        }, connection_test_interval)
-        window.addEventListener('resize', (): void => { this.setState({ innerWidth: window.innerWidth })});
-        const images = await fetchImages();
-        this.setState({ images: images }, () => {
-            this.resortGallery();
-        })
-
+  setProgress = async (x: number): Promise<void> => {
+    await this.setState({ uploadingPercentage: x });
+    if (x === 100) {
+      this.refreshGallery();
+      setTimeout((): void => {
+        this.toggleProgress();
+      }, 300);
     }
+  };
 
-    // --- simple state setters & togglers ---
+  carouselCurrent = (): string | false | null => {
+    if (this.carousel.current
+            && this.carousel.current.flkty
+            && this.carousel.current.flkty.selectedElement
+    ) {
+      const element: unknown = this.carousel.current.flkty.selectedElement;
 
-    exitFlickityFullscreen = (): void => {if (this.carousel.current && this.carousel.current.flkty) this.carousel.current.flkty.exitFullscreen(); }
-
-    toggleUpload = (): void => { this.setState({ showUpload: !this.state.showUpload }); }
-
-    toggleProgress = (): void => { this.setState({ showProgress: !this.state.showProgress }); }
-
-    toggleDisplay = (): void => { this.setState({ imageEditorDisplay: false }) }
-
-    deleteModal = (): void => { this.setState({ deleteModalDisplay: true }) }
-
-    hideDeleteModal = (): void => { this.setState({ deleteModalDisplay: false }); }
-
-    // ---
-
-    // --- gallery functions - included in /src/utils/GalleryRoute/images.util.ts ---
-
-    downloadPhoto = async (): Promise<boolean> => { return await downloadImage(this) }
-
-    sendImage = async (file: File): Promise<boolean> => { return await sendImage(this, file) }
-
-    deletePhotos = async (): Promise<void> => { return await deleteImages(this) }
-
-    deletePhoto = async (): Promise<boolean> => { return await deleteImage(this) }
-
-    editPhoto = async (): Promise<boolean> => { return await editImage(this) }
-
-    // ---
-
-    // --- sorting && refreshing gallery - included in /src/utils/GalleryRoute/sorting.util.ts ---
-
-    resortGallery = (): void => { return resortGallery(this)}
-
-    refreshGallery = async (): Promise<void> => { return await refreshGallery(this) }
-
-    sortEvent = async (x: string): Promise<void> => {return await sortEvent(this, x)}
-
-    reverseEvent = async (): Promise<void> => {return await reverseEvent(this)}
-
-    // ---
-
-    // --- selecting images - included in /src/utils/GalleryRoute/selecting.util.ts ---
-
-    selectAll = (): void => { return selectAll(this) }
-
-    selectImage = (id: number, action: boolean): void => { return selectImage(this, id, action)}
-
-    photoSelected = (id: number): boolean => { return photoSelected(this, id) }
-
-    deselectAllphotos = (): void => { return deselectAllphotos(this) }
-
-    // ---
-
-    changeButtonsVisibility = (x: boolean): void => {
-        this.setState({ buttonsDisplay: x ? "block" : "none" })
-        this.setState({ navbarDisplay: x ? "none" : "block" })
+      const elementWithAttributeGetter = element as unknown & { getAttribute: (x: string) => string | null };
+      if (elementWithAttributeGetter.getAttribute !== undefined) {
+        return elementWithAttributeGetter.getAttribute('name');
+      }
     }
+    return false;
+  };
 
-    showCarousel = (x: number): void => {
-        if (this.carousel.current) {
-            this.carousel.current.show(x)
-        };
-    }
+  resetProgress = (): void => {
+    this.setState({ fileSending: false });
+    this.setState({ uploadingPercentage: 0 });
+  };
 
-    setProgress = async (x: number): Promise<void> => {
-        await this.setState({ uploadingPercentage: x })
-        if (x === 100) {
-            this.refreshGallery();
-            setTimeout((): void => {
-                this.toggleProgress();
-            }, 300)
-        }
-    }
-    carouselCurrent = (): string|false|null => {
-        if (this.carousel.current && 
-            this.carousel.current.flkty && 
-            this.carousel.current.flkty.selectedElement
-        ) {
-            const element: unknown = this.carousel.current.flkty.selectedElement;
+  logOut = (): void => {
+    Token.remove();
+    window.location.href = '/login';
+  };
 
-            const elementWithAttributeGetter = element as unknown & { getAttribute: (x: string) => string|null};
-            if (elementWithAttributeGetter.getAttribute !== undefined) {
-               return elementWithAttributeGetter.getAttribute("name");
-            }
-        }
-        return false;
-    }
+  wrongMimeType = (): void => {
+    this.setState({ uploadModalShow: true });
+  };
 
-    resetProgress = (): void => {
-        this.setState({ fileSending: false })
-        this.setState({ uploadingPercentage: 0 })
-    }
+  uploadModalClose = (): void => {
+    this.setState({ uploadModalShow: false });
+  };
 
-    logOut = (): void => {
-        Token.remove();
-        window.location.href = "/login";
-    }
+  render() {
+    const {
+      imageEditorDisplay, innerWidth: sinnerWidth, showUpload,
+      showProgress, uploadingPercentage, imageEditorSrc,
+      buttonsDisplay, navbarDisplay, images, selectedImages,
+      reverse, sortBy, deleteModalDisplay, uploadModalShow,
+    } = this.state;
 
-    wrongMimeType = (): void => {
-        this.setState({uploadModalShow: true})
-    }
+    const props = {
+      DeleteModal: {
+        deletePhotos: this.deletePhotos,
+        multiDelete: selectedImages.length,
+        deletePhoto: this.deletePhoto,
+        hideDeleteModal: this.hideDeleteModal,
+        deleteModalDisplay,
+      },
+      Menu: {
+        logOut: this.logOut,
+        uploadModal: this.toggleUpload,
+        deleteModal: this.deleteModal,
+        selectAllPhotos: this.selectAll,
+        selectionCount: selectedImages.length,
+        deselectPhotos: this.deselectAllphotos,
+        reverse,
+        reverseEvent: this.reverseEvent,
+        sortEvent: this.sortEvent,
+        sortBy,
+        navbarDisplay,
+      },
+      Gallery: {
+        innerWidth: sinnerWidth,
+        photoSelected: this.photoSelected,
+        selectedImages,
+        images,
+        selectImageFunction: this.selectImage,
+        selectFunction: this.showCarousel,
+      },
+      Carousel: {
+        display: buttonsDisplay,
+        deleteModal: this.deleteModal,
+        editPhoto: this.editPhoto,
+        download: this.downloadPhoto,
+        images,
+        ref: this.carousel,
+        buttonsDisplay: this.changeButtonsVisibility,
+      },
+      ImageEditor: {
+        toggleDisplay: this.toggleDisplay,
+        display: imageEditorDisplay,
+        src: imageEditorSrc,
+      },
+      Upload: {
+        toggle: this.toggleUpload,
+        show: showUpload,
+        imageUpload: this.sendImage,
+      },
+      Progress: {
+        reset: this.resetProgress,
+        toggle: this.toggleProgress,
+        percentage: uploadingPercentage,
+        show: showProgress,
+      },
+      UploadMimeType: {
+        show: uploadModalShow,
+        closeHandler: this.uploadModalClose,
+      },
+    };
 
-    uploadModalClose = (): void => {
-        this.setState({uploadModalShow: false})
-    }
+    return (
+      <div className="app">
 
-    render() {
+        <DeleteModal {...props.DeleteModal} />
 
-        const props = GalleryRouteComponentsProps(this);
+        <Menu {...props.Menu} />
 
-        return (
-            <div className="app">
+        <Gallery {...props.Gallery} />
 
-                <DeleteModal {...props.DeleteModal} />
+        <Carousel {...props.Carousel} />
 
-                <Menu {...props.Menu} />
+        <ImageEditor {...props.ImageEditor} />
 
-                <Gallery {...props.Gallery} />
+        <Upload {...props.Upload} />
 
-                <Carousel {...props.Carousel} />
+        <Progress {...props.Progress} />
 
-                <ImageEditor {...props.ImageEditor} />
+        <UploadMimeType {...props.UploadMimeType} />
 
-                <Upload {...props.Upload} />
-
-                <Progress {...props.Progress} />
-
-                <UploadMimeType {...props.UploadMimeType} />
-
-            </div>
-        );
-    }
+      </div>
+    );
+  }
 }
 
 export default GalleryRoute;

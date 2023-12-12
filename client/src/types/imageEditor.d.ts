@@ -1,7 +1,7 @@
 export type ImageEditorProps = {
-    src: string,
-    display: boolean,
-    toggleDisplay: Function
+  src: string,
+  display: boolean,
+  toggleDisplay: Function
 };
 
 export type ImageEditorState = {

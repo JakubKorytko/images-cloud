@@ -1,48 +1,42 @@
-import { fireEvent, render} from "@testing-library/react";
+import { fireEvent, render } from '@testing-library/react';
 
-import DeleteModal from "../DeleteModal";
+import DeleteModal from '../DeleteModal';
 
+const empty = (): true => true;
 
-const empty = (): true => {
-    return true;
-}
+test('Delete modal displays proper form based on number of images', () => {
+  const { getByText, rerender, queryByText } = render(<DeleteModal deleteModalDisplay deletePhoto={empty} deletePhotos={empty} hideDeleteModal={empty} multiDelete={2} />);
 
+  expect(getByText(/delete these images/)).toBeInTheDocument();
+  expect(queryByText(/delete this image/)).toBeNull();
 
-test("Delete modal displays proper form based on number of images", () => {
-    const { getByText, rerender, queryByText } = render(<DeleteModal deleteModalDisplay={true} deletePhoto={empty} deletePhotos={empty} hideDeleteModal={empty} multiDelete={2} />)
+  rerender(<DeleteModal deleteModalDisplay deletePhoto={empty} deletePhotos={empty} hideDeleteModal={empty} multiDelete={1} />);
 
-    expect(getByText(/delete these images/)).toBeInTheDocument();
-    expect(queryByText(/delete this image/)).toBeNull();
+  expect(getByText(/delete this image/)).toBeInTheDocument();
+  expect(queryByText(/delete these images/)).toBeNull();
+});
 
-    rerender(<DeleteModal deleteModalDisplay={true} deletePhoto={empty} deletePhotos={empty} hideDeleteModal={empty} multiDelete={1} />)
+test('Delete modal is closing properly', () => {
+  let display = true;
 
-    expect(getByText(/delete this image/)).toBeInTheDocument();
-    expect(queryByText(/delete these images/)).toBeNull();
-})
+  const hideModal = (): void => {
+    display = false;
+  };
 
-test("Delete modal is closing properly", () => {
+  const options = {
+    deletePhoto: empty,
+    deletePhotos: empty,
+    hideDeleteModal: hideModal,
+    multiDelete: 2,
+  };
 
-    let display = true;
+  const { getByText, unmount } = render(<DeleteModal {...options} deleteModalDisplay={display} />);
 
-    const hideModal = (): void => {
-        display = false
-    }
+  fireEvent.click(getByText("Don't delete it!"));
 
-    const options = {
-        deletePhoto: empty,
-        deletePhotos: empty,
-        hideDeleteModal: hideModal,
-        multiDelete: 2
-    }
+  unmount();
 
-    const { getByText, unmount } = render(<DeleteModal {...options} deleteModalDisplay={display} />)
-    
-    fireEvent.click(getByText("Don't delete it!"));
+  const modal = render(<DeleteModal {...options} deleteModalDisplay={display} />);
 
-    unmount();
-
-    const modal = render(<DeleteModal {...options} deleteModalDisplay={display} />);
-
-    expect(modal.queryByText("Delete image")).toBeNull();
-
-})
+  expect(modal.queryByText('Delete image')).toBeNull();
+});

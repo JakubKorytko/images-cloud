@@ -1,4 +1,4 @@
-import Token from "./token.util";
+import Token from './token.util';
 
 // //===================================================\\
 // ||                  FETCH FILE UTIL                  ||
@@ -7,14 +7,11 @@ import Token from "./token.util";
 // || and returns generated link for blob version of it ||
 // \\===================================================//
 
+export default async function fetchBlob(src: string): Promise<string> {
+  const requestHeaders: HeadersInit = new Headers();
+  requestHeaders.set('Authorization', `Bearer ${Token.value}`);
 
-export async function fetchBlob(src: string): Promise<string> {
-
-    const requestHeaders: HeadersInit = new Headers();
-    requestHeaders.set('Authorization', `Bearer ${Token.value}`);
-
-    const response = await fetch(src, { headers: requestHeaders })
-    const blob = await response.blob();
-    const url = URL.createObjectURL(blob);
-    return url;
+  const response = await fetch(src, { headers: requestHeaders });
+  const blob = await response.blob();
+  return URL.createObjectURL(blob);
 }

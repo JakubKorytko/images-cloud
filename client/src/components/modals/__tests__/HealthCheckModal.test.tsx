@@ -1,25 +1,23 @@
-import { fireEvent, render} from "@testing-library/react";
+import { fireEvent, render } from '@testing-library/react';
 
-import HealthCheckModal from "../HealthCheckModal";
+import HealthCheckModal from '../HealthCheckModal';
 
-test("Healthcheck modal is closing properly", () => {
+test('Healthcheck modal is closing properly', () => {
+  let display = true;
 
-    let display = true;
+  const hideModal = (): void => {
+    display = false;
+  };
 
-    const hideModal = (): void => {
-        display = false
-    }
+  const { getByText, unmount } = render(<HealthCheckModal closeHandler={hideModal} show={display} />);
 
-    const { getByText, unmount } = render(<HealthCheckModal closeHandler={hideModal} show={display} />)
+  expect(getByText('Whoops! Server sent some errors...')).toBeInTheDocument();
 
-    expect(getByText("Whoops! Server sent some errors...")).toBeInTheDocument();
-    
-    fireEvent.click(getByText("Okay!"));
+  fireEvent.click(getByText('Okay!'));
 
-    unmount();
+  unmount();
 
-    const modal = render(<HealthCheckModal closeHandler={hideModal} show={display} />);
+  const modal = render(<HealthCheckModal closeHandler={hideModal} show={display} />);
 
-    expect(modal.queryByText("Whoops! Server sent some errors...")).toBeNull();
-
-})
+  expect(modal.queryByText('Whoops! Server sent some errors...')).toBeNull();
+});
