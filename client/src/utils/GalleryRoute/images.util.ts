@@ -84,7 +84,6 @@ export async function sendImage(app: GalleryRoute, file: File): Promise<boolean>
   form.append('name', file.name);
   form.append('image', file);
   await app.setState({ fileSending: true });
-  app.toggleUpload();
   app.toggleProgress();
   const res = await axiosIstance.post(`${serverUrl}/upload`, form, {
     headers: {

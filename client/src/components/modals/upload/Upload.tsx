@@ -3,16 +3,18 @@ import { FileDrop } from 'react-file-drop';
 import { Modal, Button } from 'react-bootstrap';
 import '../../../scss/upload.scss';
 import { UploadProps } from '../../../types/upload';
-import { RootState} from "../../../app/store";
+
 import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../../app/store";
+import { toggleUploadModal} from "../../../features/upload";
 import { setUploadMimeTypeModal } from "../../../features/uploadMimeType";
 
 const Upload = (props: UploadProps) => {
   const [fileAttached, setFileAttached] = useState(false);
     const [file, setFile] = useState<File | undefined>(undefined);
 
-    const uploadModalShow = useSelector((state: RootState) => state.uploadMimeType.showUploadMimeTypeModal);
     const dispatch = useDispatch();
+    const show = useSelector((state: RootState) => state.uploadModal.showUploadModal);
 
     const transferFile = (x: FileList | null): void => {
       if (x) {
@@ -27,6 +29,7 @@ const Upload = (props: UploadProps) => {
     };
 
     const uploadFile = async (): Promise<void> => {
+      dispatch(toggleUploadModal());
       const res = await props.imageUpload(file);
       if (!res) {
         dispatch(setUploadMimeTypeModal(true));
@@ -41,9 +44,9 @@ const Upload = (props: UploadProps) => {
     return (
       <Modal
         backdrop="static"
-        show={props.show}
+        show={show}
         keyboard={false}
-        onHide={props.toggle}
+        onHide={() => dispatch(toggleUploadModal())}
         centered
       >
         <Modal.Header closeButton>

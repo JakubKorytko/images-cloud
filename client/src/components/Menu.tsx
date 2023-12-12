@@ -10,9 +10,14 @@ import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import DropdownToggle from 'react-bootstrap/DropdownToggle';
 import { MenuProps } from '../types/menu';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../app/store';
+import { toggleUploadModal } from "../features/upload";
 
 const Menu = (props: MenuProps) => {
     const btnClass = `d-${props.selectionCount > 0 ? 'flex' : 'none'}`;
+
+    const dispatch = useDispatch();
 
     return (
         <header className={`sticky-top d-${props.navbarDisplay}`}>
@@ -52,7 +57,7 @@ const Menu = (props: MenuProps) => {
                     </Stack>
                 </Nav.Item>
                 <Nav.Item className="mx-2">
-                    <Button variant="light" onClick={props.uploadModal} className="nav-button shadow-none nw">Upload new image</Button>
+                    <Button variant="light" onClick={() => dispatch(toggleUploadModal())} className="nav-button shadow-none nw">Upload new image</Button>
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>

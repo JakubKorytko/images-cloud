@@ -9,19 +9,16 @@ const initialState: UploadMimeTypeState = {
     showUploadMimeTypeModal: false
 }
 
-export const uploadModalSlice = createSlice({
+export const uploadModalMimeTypeSlice = createSlice({
     name: 'uploadMimeType',
     initialState,
     reducers: {
-        toggleUploadMimeTypeModal: (state) => {
-            state.showUploadMimeTypeModal = !state.showUploadMimeTypeModal
-        },
         setUploadMimeTypeModal: (state, action: PayloadAction<boolean>) => {
             state.showUploadMimeTypeModal = action.payload
         },
     },
 })
 
-export const { toggleUploadMimeTypeModal, setUploadMimeTypeModal } = uploadModalSlice.actions
+export const { setUploadMimeTypeModal } = uploadModalMimeTypeSlice.actions
 
-export default uploadModalSlice.reducer
+export default uploadModalMimeTypeSlice.reducer

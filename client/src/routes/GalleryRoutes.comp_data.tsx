@@ -1,7 +1,6 @@
 export default {
   imageEditorDisplay: false,
   innerWidth: window.innerWidth,
-  showUpload: false,
   showProgress: false,
   uploadingPercentage: 0,
   fileSending: false,

@@ -6,7 +6,6 @@ export type GalleryRouteState = {
   showProgress: boolean,
   uploadingPercentage: number,
   fileSending: boolean,
-  showUpload: boolean,
   innerWidth: number,
   selectedImages: number[],
   deleteModalDisplay: boolean,

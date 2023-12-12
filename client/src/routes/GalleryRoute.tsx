@@ -51,8 +51,6 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
 
   exitFlickityFullscreen = (): void => { if (this.state.flkty) this.state.flkty.exitFullscreen(); };
 
-  toggleUpload = (): void => { this.setState({ showUpload: !this.state.showUpload }); };
-
   toggleProgress = (): void => { this.setState({ showProgress: !this.state.showProgress }); };
 
   toggleDisplay = (): void => { this.setState({ imageEditorDisplay: false }); };
@@ -153,7 +151,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
 
   render() {
     const {
-      imageEditorDisplay, innerWidth: sinnerWidth, showUpload,
+      imageEditorDisplay, innerWidth: sinnerWidth,
       showProgress, uploadingPercentage, imageEditorSrc,
       buttonsDisplay, navbarDisplay, images, selectedImages,
       reverse, sortBy, deleteModalDisplay,
@@ -169,7 +167,6 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
       },
       Menu: {
         logOut: this.logOut,
-        uploadModal: this.toggleUpload,
         deleteModal: this.deleteModal,
         selectAllPhotos: this.selectAll,
         selectionCount: selectedImages.length,
@@ -202,11 +199,6 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
         display: imageEditorDisplay,
         src: imageEditorSrc,
       },
-      Upload: {
-        toggle: this.toggleUpload,
-        show: showUpload,
-        imageUpload: this.sendImage,
-      },
       Progress: {
         reset: this.resetProgress,
         toggle: this.toggleProgress,
@@ -228,7 +220,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
 
         <ImageEditor {...props.ImageEditor} />
 
-        <Upload {...props.Upload} />
+        <Upload imageUpload={this.sendImage} />
 
         <Progress {...props.Progress} />
 

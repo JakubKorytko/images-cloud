@@ -1,5 +1,4 @@
 export type MenuProps = {
-  uploadModal: React.MouseEventHandler<HTMLButtonElement>,
   deleteModal: React.MouseEventHandler<HTMLButtonElement>,
   selectAllPhotos: React.MouseEventHandler<HTMLButtonElement>,
   reverseEvent: React.MouseEventHandler<HTMLButtonElement>
