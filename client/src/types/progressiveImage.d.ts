@@ -1,5 +1,3 @@
-import { Blob } from "buffer";
-
 export type ProgressiveImageData = {
     id: number,
     name: string,
