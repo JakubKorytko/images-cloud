@@ -7,7 +7,8 @@
     "eject": "react-scripts eject",
     "postinstall": "patch-package",
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx src",
   },
   "browserslist": {
     "production": [
@@ -19,12 +20,6 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
     ]
   },
   "resolutions": {
@@ -73,6 +68,17 @@
     "@testing-library/user-event": "^14.5.1",
     "@types/jest": "^29.5.11",
     "@types/webpack-env": "^1.18.4",
+    "@typescript-eslint/eslint-plugin": "6.4.0",
+    "@typescript-eslint/parser": "6.0.0",
+    "eslint": "8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-standard-with-typescript": "^42.0.0",
+    "eslint-plugin-import": "2.25.3",
+    "eslint-plugin-jsx-a11y": "6.5.1",
+    "eslint-plugin-n": "15.0.0",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "4.3.0",
     "react-scripts": "^5.0.1",
     "stylelint": "^16.0.2",
     "stylelint-config-standard-scss": "^12.0.0"
