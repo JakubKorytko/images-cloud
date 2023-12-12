@@ -1,32 +1,19 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState} from 'react';
 import { fetchBlob } from '../../utils/fetchBlob.util';
 
 type Props = { src: string, className: string, alt: string }
-type State = { currentSrc: string, currentName: string }
 
-class AuthorizedImage extends Component<Props, State> {
+const AuthorizedImage = (props: Props) => {
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            currentName: "",
-            currentSrc: ""
-        }
-    }
+    const [url, setUrl] = useState("")
 
-    async componentDidUpdate() {
-        if (this.props.src !== this.state.currentName) {
-            this.setState({ currentName: this.props.src });
-            const url = await fetchBlob(this.props.src);
-            this.setState({ currentSrc: url })
-        };
-    }
+    useEffect(() => {
+        fetchBlob(props.src).then(url => setUrl(url))
+    }, [props.src])
 
-    render() {
-        return (
-            <img src={this.state.currentSrc} alt={this.props.alt} className={this.props.className} />
-        );
-    }
+    return (
+        <img src={url} alt={props.alt} className={props.className} />
+    )
 }
 
 export default AuthorizedImage;
