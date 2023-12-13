@@ -1,11 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import uploadMimeTypeReducer from "../features/uploadMimeType";
-import uploadModalReducer from "../features/upload";
+import componentsVisibilityReducer from '../features/componentsVisibility'
 
 export const store = configureStore({
     reducer: {
-        uploadMimeType: uploadMimeTypeReducer,
-        uploadModal: uploadModalReducer
+        componentsVisibility: componentsVisibilityReducer,
     }
 })
 
