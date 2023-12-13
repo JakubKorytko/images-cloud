@@ -7,7 +7,6 @@ const deletePhoto = (req: Request, res: Response) => {
     const requestedFile = req.params.photo;
     // const fileUrl = `./src/images/${res.locals.auth.username}/photos/${decodeURI(requestedFile)}`;
     const fileUrl = path.join(__dirname, "..", `images/${res.locals.auth.username}/photos/${decodeURI(requestedFile)}`);
-    console.log(fileUrl);
     if (fs.existsSync(fileUrl)) {
         try {
             fs.unlinkSync(fileUrl);

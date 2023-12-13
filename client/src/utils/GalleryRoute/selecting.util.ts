@@ -1,19 +1,19 @@
 import { GalleryRouteComponent as GalleryRoute } from '../../routes/GalleryRoute';
+import {Photo} from "../../types/photoObject";
 
-export function selectAll(app: GalleryRoute): void {
-  const imgs = app.state.images;
-  const imgsSelected = app.state.selectedImages;
+export function selectAll(app: GalleryRoute, imgs: Photo[], imgsSelected: number[]): number[] {
+  const newImgsSelected: number[] = [...imgsSelected];
   for (let i = 0; i < imgs.length; i++) {
-    const index: number = imgsSelected.indexOf(i);
+    const index: number = newImgsSelected.indexOf(i);
     if (index === -1) {
-      imgsSelected.push(i);
+      newImgsSelected.push(i);
     }
   }
-  app.setState({ selectedImages: imgsSelected });
+  return newImgsSelected;
 }
 
-export function selectImage(app: GalleryRoute, id: number, action: boolean): void {
-  const arr = app.state.selectedImages;
+export function selectImage(app: GalleryRoute, id: number, action: boolean, selectedImages: number[]): number[] {
+  const arr = [...selectedImages];
   if (action) {
     arr.push(id);
   } else {
@@ -22,13 +22,5 @@ export function selectImage(app: GalleryRoute, id: number, action: boolean): voi
       arr.splice(index, 1);
     }
   }
-  app.setState({ selectedImages: arr });
-}
-
-export function photoSelected(app: GalleryRoute, id: number): boolean {
-  return app.state.selectedImages.includes(id);
-}
-
-export function deselectAllphotos(app: GalleryRoute): void {
-  app.setState({ selectedImages: [] });
+  return arr;
 }

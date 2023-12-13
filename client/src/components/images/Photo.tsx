@@ -2,9 +2,13 @@ import { useState } from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
 import ProgressiveImage from './ProgressiveImage';
 import { PhotoProps } from '../../types/photo';
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
 
 const Photo = (props: PhotoProps) => {
   const [checkMarkDisplay, displayCheckMark] = useState(false);
+
+  const selectedImages = useSelector((state: RootState) => state.images.selected);
 
   const imageData = {
     id: props.id,
@@ -17,7 +21,7 @@ const Photo = (props: PhotoProps) => {
   const selectImage = () => props.selectImageFunction(props.id, !props.checkedState);
 
   const openImage = () => {
-    if (props.selectedImages.length === 0) props.select(props.carrouselId);
+    if (selectedImages.length === 0) props.select(props.carrouselId);
     else selectImage();
   };
 

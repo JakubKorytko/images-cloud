@@ -33,7 +33,7 @@ const Carousel = (props: CarouselProps) => {
     props.passFlkty(flkty);
   }, []);
 
-    const imagesArray = props.images;
+    const imagesArray = useSelector((state: RootState) => state.images.list);
 
     const imagesList = imagesArray.map((x: Photo, index: number): JSX.Element => {
       const customProps = { name: x.name };

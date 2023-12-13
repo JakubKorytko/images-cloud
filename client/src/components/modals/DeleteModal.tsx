@@ -7,6 +7,7 @@ import { setShowDeleteModal } from "../../features/componentsVisibility";
 const DeleteModal = (props: DeleteModalProps) => {
 
     const display = useSelector((state: RootState) => state.componentsVisibility.showDeleteModal);
+    const selectedImages = useSelector((state: RootState) => state.images.selected);
     const dispatch = useDispatch();
     const hide = () => dispatch(setShowDeleteModal(false));
 
@@ -23,11 +24,11 @@ const DeleteModal = (props: DeleteModalProps) => {
         <Modal.Body>
             Are you sure that you want to delete
             {' '}
-            {props.multiDelete > 1 ? 'these images' : 'this image'}
+            {selectedImages.length > 1 ? 'these images' : 'this image'}
             ? You can't undo this action.
         </Modal.Body>
         <Modal.Footer>
-            <Button variant="danger" onClick={props.multiDelete > 0 ? props.deletePhotos : props.deletePhoto}>
+            <Button variant="danger" onClick={selectedImages.length > 0 ? props.deletePhotos : props.deletePhoto}>
             Delete
             </Button>
             <Button variant="secondary" onClick={hide}>Don't delete it!</Button>

@@ -3,9 +3,13 @@ import { Col, Container, Row } from 'react-bootstrap';
 import Photo from './images/Photo';
 import { Photo as PhotoType } from '../types/photoObject';
 import { GalleryProps, GalleryState } from '../types/gallery';
+import { useSelector } from "react-redux";
+import { RootState } from "../app/store";
 
 const Gallery = (props: GalleryProps) => {
-    const photoChecked = (id: number): boolean => props.photoSelected(id);
+
+    const selectedImages = useSelector((state: RootState) => state.images.selected);
+    const photoChecked = (id: number): boolean => selectedImages.includes(id);
 
     const placeholderSize = (image: PhotoType): { width: number, height: number, original_width: number, original_height: number } => {
         const placeholder = {
@@ -23,7 +27,7 @@ const Gallery = (props: GalleryProps) => {
         return placeholder;
     };
 
-    const imagesArray = props.images;
+    const imagesArray = useSelector((state: RootState) => state.images.list);
     const arr: JSX.Element[][] = [[], [], [], []];
     const sizes = [0, 0, 0, 0];
 
@@ -37,7 +41,7 @@ const Gallery = (props: GalleryProps) => {
         const photoProps = {
         key: i,
         checkedState: photoChecked(x.imageId),
-        selectedImages: props.selectedImages,
+        selectedImages: selectedImages,
         imageSize,
         name: x.name,
         thumbPath: (x.thumb_path ? x.thumb_path : ''),

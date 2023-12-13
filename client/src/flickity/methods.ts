@@ -2,6 +2,7 @@ import {FlktyObject} from "../types/flickity";
 
 export default {
     ref: null,
+    listener: false,
     next() {
         if (this.ref) {
             this.ref.next();
@@ -47,11 +48,12 @@ export default {
         return false;
     },
     setFullscreenEventListener(callback: Function) {
-        if (this.ref) {
+        if (this.ref && !this.listener) {
             this.ref.on('fullscreenChange', (isFullscreen: boolean): void => {
                 console.log("XD");
                 callback(isFullscreen);
             })
+            this.listener = true;
         }
         return !!this.ref;
     }

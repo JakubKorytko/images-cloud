@@ -14,16 +14,15 @@ import {
 import { GalleryRouteProps, GalleryRouteState } from '../types/galleryRoute';
 import { FlktyObject } from '../types/flickity';
 import {
-  refreshGallery, resortGallery, reverseEvent, sortEvent,
-} from '../utils/GalleryRoute/sorting.util';
-import {
-  deselectAllphotos, photoSelected, selectAll, selectImage,
+  selectAll, selectImage,
 } from '../utils/GalleryRoute/selecting.util';
 import Token from '../utils/token.util';
 import UploadMimeType from '../components/modals/UploadMimeType';
 import GalleryRouteComponentState from './GalleryRoutes.comp_data';
-import { useDispatch, connect } from "react-redux";
+import { useDispatch, connect, useSelector } from "react-redux";
 import { setShowProgressModal, setShowImageEditor, setShowDeleteModal } from "../features/componentsVisibility";
+import { setImages, sortImages, setSelected } from "../features/images";
+import {Photo} from "../types/photoObject";
 
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
@@ -31,6 +30,11 @@ type MappedProps = {
     setShowProgressModal: (val: boolean) => void;
     setShowImageEditor: (val: boolean) => void;
     setShowDeleteModal: (val: boolean) => void;
+    setImages: (val: Photo[]) => void;
+    sortImages: () => void;
+    setSelected: (val: number[]) => void;
+    selectedImages: number[];
+    images: Photo[];
 } & GalleryRouteProps;
 
 class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
@@ -49,26 +53,28 @@ class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
     }, connection_test_interval);
     window.addEventListener('resize', (): void => { this.setState({ innerWidth: window.innerWidth }); });
     const images = await fetchImages();
-    this.setState({ images }, () => {
-      this.resortGallery();
-    });
+    this.props.setImages(images);
   }
-
-  // --- simple state setters & togglers ---
-
-  exitFlickityFullscreen = (): void => { if (this.state.flkty) this.state.flkty.exitFullscreen(); };
-
-  // ---
 
   // --- gallery functions - included in /src/utils/GalleryRoute/images.util.ts ---
 
   downloadPhoto = async (): Promise<boolean> => downloadImage(this);
 
-  sendImage = async (file: File): Promise<boolean> => sendImage(this, file);
+  sendImage = async (file: File): Promise<boolean> => {
+    await sendImage(this, file);
+    const images = await fetchImages();
+    this.props.setImages(images);
+    return true;
+  }
 
   deletePhotos = async (): Promise<void> => {
-    await deleteImages(this);
-    this.resortGallery();
+    const selected = this.props.selectedImages;
+    const { images } = this.props;
+    this.props.setSelected([]);
+
+    await deleteImages(this, images, selected);
+
+    this.props.setImages(await fetchImages());
     this.props.setShowDeleteModal(false);
   }
 
@@ -77,15 +83,15 @@ class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
     if (!photo) return false;
 
     this.props.setShowDeleteModal(false);
-    this.exitFlickityFullscreen();
+    if (this.state.flkty) this.state.flkty.exitFullscreen();
 
     await deleteImage(this, photo);
+    this.props.setImages(await fetchImages());
     return true;
   };
 
   editPhoto = async (): Promise<boolean> => {
     const url = await editImage(this);
-    console.log(url);
     if (url != '') {
       this.setState({ imageEditorSrc: url });
       this.props.setShowImageEditor(true);
@@ -96,27 +102,20 @@ class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
 
   // ---
 
-  // --- sorting && refreshing gallery - included in /src/utils/GalleryRoute/sorting.util.ts ---
-
-  resortGallery = (): void => resortGallery(this);
-
-  refreshGallery = async (): Promise<void> => refreshGallery(this);
-
-  sortEvent = async (x: string): Promise<void> => sortEvent(this, x);
-
-  reverseEvent = async (): Promise<void> => reverseEvent(this);
-
-  // ---
-
   // --- selecting images - included in /src/utils/GalleryRoute/selecting.util.ts ---
 
-  selectAll = (): void => selectAll(this);
+  selectAll = (): void => {
+    const imgs= this.props.images;
+    const selected = this.props.selectedImages;
+    const newSelectedArray = selectAll(this, imgs, selected);
+    this.props.setSelected(newSelectedArray);
+  }
 
-  selectImage = (id: number, action: boolean): void => selectImage(this, id, action);
-
-  photoSelected = (id: number): boolean => photoSelected(this, id);
-
-  deselectAllphotos = (): void => deselectAllphotos(this);
+  selectImage = (id: number, action: boolean): void => {
+    const selected = this.props.selectedImages;
+    const newSelected = selectImage(this, id, action, selected);
+    this.props.setSelected(newSelected);
+  }
 
   // ---
 
@@ -129,7 +128,7 @@ class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
   setProgress = async (x: number): Promise<void> => {
     await this.setState({ uploadingPercentage: x });
     if (x === 100) {
-      this.refreshGallery();
+      this.props.setImages(await fetchImages());
       setTimeout((): void => {
         this.props.setShowProgressModal(false);
       }, 300);
@@ -162,54 +161,18 @@ class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
   };
 
   render() {
-    const {
-      innerWidth: sinnerWidth,
-      uploadingPercentage, imageEditorSrc, images, selectedImages,
-      reverse, sortBy
-    } = this.state;
-
-    const props = {
-      DeleteModal: {
-        deletePhotos: this.deletePhotos,
-        multiDelete: selectedImages.length,
-        deletePhoto: this.deletePhoto,
-      },
-      Menu: {
-        logOut: this.logOut,
-        selectAllPhotos: this.selectAll,
-        selectionCount: selectedImages.length,
-        deselectPhotos: this.deselectAllphotos,
-        reverse,
-        reverseEvent: this.reverseEvent,
-        sortEvent: this.sortEvent,
-        sortBy,
-      },
-      Gallery: {
-        innerWidth: sinnerWidth,
-        photoSelected: this.photoSelected,
-        selectedImages,
-        images,
-        selectImageFunction: this.selectImage,
-        selectFunction: this.showCarousel,
-      },
-      Carousel: {
-        editPhoto: this.editPhoto,
-        download: this.downloadPhoto,
-        images,
-        passFlkty: this.getFlkty,
-      },
-    };
+    const {innerWidth: sinnerWidth, uploadingPercentage, imageEditorSrc} = this.state;
 
     return (
       <div className="app">
 
-        <DeleteModal {...props.DeleteModal} />
+        <DeleteModal deletePhotos={this.deletePhotos} deletePhoto={this.deletePhoto} />
 
-        <Menu {...props.Menu} />
+        <Menu logOut={this.logOut} selectAllPhotos={this.selectAll} />
 
-        <Gallery {...props.Gallery} />
+        <Gallery innerWidth={sinnerWidth} selectImageFunction={this.selectImage} selectFunction={this.showCarousel} />
 
-        <Carousel {...props.Carousel} />
+        <Carousel editPhoto={this.editPhoto} download={this.downloadPhoto} passFlkty={this.getFlkty} />
 
         <ImageEditor src={imageEditorSrc} />
 
@@ -224,13 +187,23 @@ class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
   }
 }
 
+const mapStateToProps = (state: any) => {
+    return {
+        images: state.images.list,
+        selectedImages: state.images.selected,
+    };
+}
+
 const mapDispatchToProps = (dispatch: any) => {
     return {
         setShowProgressModal: (val: boolean) => dispatch(setShowProgressModal(val)),
         setShowImageEditor: (val: boolean) => dispatch(setShowImageEditor(val)),
         setShowDeleteModal: (val: boolean) => dispatch(setShowDeleteModal(val)),
+        setImages: (val: Photo[]) => dispatch(setImages(val)),
+        sortImages: () => dispatch(sortImages()),
+        setSelected: (val: number[]) => dispatch(setSelected(val)),
     };
 }
 
 export { GalleryRoute as GalleryRouteComponent };
-export default connect(null, mapDispatchToProps)(GalleryRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(GalleryRoute);

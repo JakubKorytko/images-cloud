@@ -9,24 +9,24 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const axiosIstance = axios.create({ baseURL: serverUrl });
 
-export function sortImages(images: Photo[], x: string, reverse: boolean = false): Photo[] {
-  let sorted: Photo[] = [];
-  switch (x.toLowerCase()) {
-    case 'size':
-      sorted = images.sort((a: Photo, b: Photo): number => b.size - a.size);
-      break;
-    case 'date':
-      sorted = images.sort((a: Photo, b: Photo): number => b.date - a.date);
-      break;
-    case 'name':
-      sorted = images.sort((a: Photo, b: Photo): number => a.name.localeCompare(b.name));
-      break;
-    default:
-      return images;
-  }
-  if (reverse === true) sorted = sorted.reverse();
-  return sorted;
-}
+// export function sortImages(images: Photo[], x: string, reverse: boolean = false): Photo[] {
+//   let sorted: Photo[] = [];
+//   switch (x.toLowerCase()) {
+//     case 'size':
+//       sorted = images.sort((a: Photo, b: Photo): number => b.size - a.size);
+//       break;
+//     case 'date':
+//       sorted = images.sort((a: Photo, b: Photo): number => b.date - a.date);
+//       break;
+//     case 'name':
+//       sorted = images.sort((a: Photo, b: Photo): number => a.name.localeCompare(b.name));
+//       break;
+//     default:
+//       return images;
+//   }
+//   if (reverse === true) sorted = sorted.reverse();
+//   return sorted;
+// }
 
 export async function fetchImages(): Promise<Photo[]> {
   const requestHeaders: HeadersInit = new Headers();
@@ -43,15 +43,11 @@ export async function deleteImage(app: GalleryRoute, photo: string): Promise<boo
   requestHeaders.set('Authorization', `Bearer ${Token.value}`);
 
   await fetch(`${serverUrl}/delete/${encodeURI(photo)}`, { headers: requestHeaders });
-  await app.setState({ images: await fetchImages() });
-  app.resortGallery();
   return true;
 }
 
-export async function deleteImages(app: GalleryRoute): Promise<void> {
-  const selected = app.state.selectedImages;
-  const { images } = app.state;
-  app.deselectAllphotos();
+export async function deleteImages(app: GalleryRoute, images: Photo[], selected: number[]): Promise<void> {
+
   const names: string[] = [];
   selected.forEach((x: number): void => {
     let y = images.map((z: Photo): string | undefined => {
@@ -67,8 +63,8 @@ export async function deleteImages(app: GalleryRoute): Promise<void> {
 
   names.forEach(async (photoName): Promise<void> => {
     await fetch(`${serverUrl}/delete/${encodeURI(photoName)}`, { headers: requestHeaders });
-    await app.setState({ images: await fetchImages() });
   });
+
 }
 
 export async function sendImage(app: GalleryRoute, file: File): Promise<boolean> {
