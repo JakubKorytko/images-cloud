@@ -1,7 +1,6 @@
-import { GalleryRouteComponent as GalleryRoute } from '../../routes/GalleryRoute';
 import {Photo} from "../../types/photoObject";
 
-export function selectAll(app: GalleryRoute, imgs: Photo[], imgsSelected: number[]): number[] {
+export function selectAllImages(imgs: Photo[], imgsSelected: number[]): number[] {
   const newImgsSelected: number[] = [...imgsSelected];
   for (let i = 0; i < imgs.length; i++) {
     const index: number = newImgsSelected.indexOf(i);
@@ -12,7 +11,7 @@ export function selectAll(app: GalleryRoute, imgs: Photo[], imgsSelected: number
   return newImgsSelected;
 }
 
-export function selectImage(app: GalleryRoute, id: number, action: boolean, selectedImages: number[]): number[] {
+export function selectImage(id: number, action: boolean, selectedImages: number[]): number[] {
   const arr = [...selectedImages];
   if (action) {
     arr.push(id);

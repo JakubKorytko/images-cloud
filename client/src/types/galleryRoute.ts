@@ -6,7 +6,6 @@ export type GalleryRouteState = {
   uploadingPercentage: number,
   innerWidth: number,
   imageEditorSrc: string,
-  tui: boolean,
   flkty: FlktyObject | null,
 };
 

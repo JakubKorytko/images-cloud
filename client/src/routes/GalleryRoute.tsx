@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import Gallery from '../components/Gallery';
 import Carousel from '../components/Carousel';
 import '../scss/App.scss';
@@ -7,203 +7,181 @@ import Menu from '../components/Menu';
 import DeleteModal from '../components/modals/DeleteModal';
 import Upload from '../components/modals/upload/Upload';
 import Progress from '../components/modals/upload/Progress';
-import { authTest } from '../utils/connectionTest.util';
+import {authTest} from '../utils/connectionTest.util';
 import {
-  deleteImage, deleteImages, downloadImage, editImage, fetchImages, sendImage,
+    deleteImage,
+    deleteImages,
+    downloadImage,
+    editImageUrl,
+    fetchImages,
+    sendImage,
 } from '../utils/GalleryRoute/images.util';
-import { GalleryRouteProps, GalleryRouteState } from '../types/galleryRoute';
-import { FlktyObject } from '../types/flickity';
-import {
-  selectAll, selectImage,
-} from '../utils/GalleryRoute/selecting.util';
+import {GalleryRouteProps, GalleryRouteState} from '../types/galleryRoute';
+import {FlktyObject} from '../types/flickity';
+import {selectAllImages, selectImage,} from '../utils/GalleryRoute/selecting.util';
 import Token from '../utils/token.util';
 import UploadMimeType from '../components/modals/UploadMimeType';
-import GalleryRouteComponentState from './GalleryRoutes.comp_data';
-import { useDispatch, connect, useSelector } from "react-redux";
-import { setShowProgressModal, setShowImageEditor, setShowDeleteModal } from "../features/componentsVisibility";
-import { setImages, sortImages, setSelected } from "../features/images";
+import {connect, useSelector, useDispatch} from "react-redux";
+import {setShowDeleteModal, setShowImageEditor, setShowProgressModal} from "../features/componentsVisibility";
+import {setImages, setSelected, sortImages} from "../features/images";
 import {Photo} from "../types/photoObject";
+import {AxiosProgressEvent} from "axios";
 
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
-type MappedProps = {
-    setShowProgressModal: (val: boolean) => void;
-    setShowImageEditor: (val: boolean) => void;
-    setShowDeleteModal: (val: boolean) => void;
-    setImages: (val: Photo[]) => void;
-    sortImages: () => void;
-    setSelected: (val: number[]) => void;
-    selectedImages: number[];
-    images: Photo[];
-} & GalleryRouteProps;
+const GalleryRoute = (props: GalleryRouteProps) => {
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+    const [uploadingPercentage, setUploadingPercentage] = useState(0);
+    const [imageEditorSrc, setImageEditorSrc] = useState('');
+    const [flkty, setFlkty] = useState<FlktyObject | null>(null);
 
-class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
+    const images = useSelector((state: any) => state.images.list);
+    const selectedImages = useSelector((state: any) => state.images.selected);
 
-  constructor(props: MappedProps) {
-    super(props);
+    const dispatch = useDispatch();
 
-    this.state = GalleryRouteComponentState;
-  }
+    useEffect(() => {
+        setInterval((): void => {
+            authTest().then((res): void => {
+                if (res.resCode === 'AUTH_ERROR' || res.resCode === 'SERVER_DOWN' || res.resCode === 'UNAUTH') window.location.href = res.redirect;
+            });
+        }, connection_test_interval);
+        window.addEventListener('resize', (): void => {
+            setInnerWidth(window.innerWidth);
+        });
+        fetchImages().then((images: Photo[]): void => {
+            dispatch(setImages(images));
+        });
+    }, []);
 
-  async componentDidMount() {
-    setInterval((): void => {
-      authTest().then((res): void => {
-        if (res.resCode === 'AUTH_ERROR' || res.resCode === 'SERVER_DOWN' || res.resCode === 'UNAUTH') window.location.href = res.redirect;
-      });
-    }, connection_test_interval);
-    window.addEventListener('resize', (): void => { this.setState({ innerWidth: window.innerWidth }); });
-    const images = await fetchImages();
-    this.props.setImages(images);
-  }
-
-  // --- gallery functions - included in /src/utils/GalleryRoute/images.util.ts ---
-
-  downloadPhoto = async (): Promise<boolean> => downloadImage(this);
-
-  sendImage = async (file: File): Promise<boolean> => {
-    await sendImage(this, file);
-    const images = await fetchImages();
-    this.props.setImages(images);
-    return true;
-  }
-
-  deletePhotos = async (): Promise<void> => {
-    const selected = this.props.selectedImages;
-    const { images } = this.props;
-    this.props.setSelected([]);
-
-    await deleteImages(this, images, selected);
-
-    this.props.setImages(await fetchImages());
-    this.props.setShowDeleteModal(false);
-  }
-
-  deletePhoto = async (): Promise<boolean> => {
-    const photo = this.carouselCurrent();
-    if (!photo) return false;
-
-    this.props.setShowDeleteModal(false);
-    if (this.state.flkty) this.state.flkty.exitFullscreen();
-
-    await deleteImage(this, photo);
-    this.props.setImages(await fetchImages());
-    return true;
-  };
-
-  editPhoto = async (): Promise<boolean> => {
-    const url = await editImage(this);
-    if (url != '') {
-      this.setState({ imageEditorSrc: url });
-      this.props.setShowImageEditor(true);
-      return true;
+    const downloadPhoto = async (): Promise<boolean> => {
+        const photo = carouselCurrent();
+        if (photo) {
+            return await downloadImage(photo);
+        }
+        return false;
     }
-    return false;
-  };
 
-  // ---
-
-  // --- selecting images - included in /src/utils/GalleryRoute/selecting.util.ts ---
-
-  selectAll = (): void => {
-    const imgs= this.props.images;
-    const selected = this.props.selectedImages;
-    const newSelectedArray = selectAll(this, imgs, selected);
-    this.props.setSelected(newSelectedArray);
-  }
-
-  selectImage = (id: number, action: boolean): void => {
-    const selected = this.props.selectedImages;
-    const newSelected = selectImage(this, id, action, selected);
-    this.props.setSelected(newSelected);
-  }
-
-  // ---
-
-  showCarousel = (x: number): void => {
-    if (this.state.flkty) {
-      this.state.flkty.show(x);
+    const sendPhoto = async (file: File): Promise<boolean> => {
+        const updateProgress = (data: AxiosProgressEvent): void => {
+            const total = data.total ? data.total : 1;
+            setProgress(Math.round(100 * (data.loaded / total)));
+        }
+        await sendImage(file, updateProgress);
+        const images = await fetchImages();
+        dispatch(setImages(images));
+        return true;
     }
-  };
 
-  setProgress = async (x: number): Promise<void> => {
-    await this.setState({ uploadingPercentage: x });
-    if (x === 100) {
-      this.props.setImages(await fetchImages());
-      setTimeout((): void => {
-        this.props.setShowProgressModal(false);
-      }, 300);
+    const deletePhotos = async (): Promise<void> => {
+        const selected = selectedImages;
+        dispatch(setSelected([]));
+
+        await deleteImages(images, selected);
+
+        dispatch(setImages(await fetchImages()));
+        dispatch(setShowDeleteModal(false));
     }
-  };
 
-  carouselCurrent = (): string | false | null => {
-    if (this.state.flkty && this.state.flkty.ref) {
-      const element: unknown = this.state.flkty.ref.selectedElement;
+    const deletePhoto = async (): Promise<boolean> => {
+        const photo = carouselCurrent();
+        if (!photo) return false;
 
-      const elementWithAttributeGetter = element as unknown & { getAttribute: (x: string) => string | null };
-      if (elementWithAttributeGetter.getAttribute !== undefined) {
-        return elementWithAttributeGetter.getAttribute('name');
-      }
+        dispatch(setShowDeleteModal(false));
+        if (flkty) flkty.exitFullscreen();
+
+        await deleteImage(photo);
+        dispatch(setImages(await fetchImages()));
+        return true;
+    };
+
+    const editPhoto = async (): Promise<boolean> => {
+        const photo = carouselCurrent();
+        if (!photo) return false;
+        const url = await editImageUrl(photo);
+        if (url != '') {
+            setImageEditorSrc(url);
+            dispatch(setShowImageEditor(true));
+            return true;
+        }
+        return false;
+    };
+
+    const selectAll = (): void => {
+        const imgs = images;
+        const selected = selectedImages;
+        const newSelectedArray = selectAllImages(imgs, selected);
+        dispatch(setSelected(newSelectedArray));
     }
-    return false;
-  };
 
-  resetProgress = (): void => this.setState({ uploadingPercentage: 0 });
-
-  getFlkty = (flkty: FlktyObject): void => {
-    if (flkty) {
-      this.setState({ flkty });
+    const selectPhoto = (id: number, action: boolean): void => {
+        const selected = selectedImages;
+        const newSelected = selectImage(id, action, selected);
+        dispatch(setSelected(newSelected));
     }
-  }
 
-  logOut = (): void => {
-    Token.remove();
-    window.location.href = '/login';
-  };
+    const showCarousel = (x: number): void => {
+        if (flkty) {
+            flkty.show(x);
+        }
+    };
 
-  render() {
-    const {innerWidth: sinnerWidth, uploadingPercentage, imageEditorSrc} = this.state;
+    const setProgress = async (x: number): Promise<void> => {
+        await setUploadingPercentage(x);
+        if (x === 100) {
+            dispatch(setImages(await fetchImages()));
+            setTimeout((): void => {
+                dispatch(setShowProgressModal(false));
+            }, 300);
+        }
+    };
+
+    const carouselCurrent = (): string | false | null => {
+        if (flkty && flkty.ref) {
+            const element: unknown = flkty.ref.selectedElement;
+
+            const elementWithAttributeGetter = element as unknown & { getAttribute: (x: string) => string | null };
+            if (elementWithAttributeGetter.getAttribute !== undefined) {
+                return elementWithAttributeGetter.getAttribute('name');
+            }
+        }
+        return false;
+    };
+
+    const resetProgress = (): void => setUploadingPercentage(0);
+
+    const getFlkty = (flkty: FlktyObject): void => {
+        if (flkty) {
+            setFlkty(flkty);
+        }
+    }
+
+    const logOut = (): void => {
+        Token.remove();
+        window.location.href = '/login';
+    };
 
     return (
-      <div className="app">
+        <div className="app">
 
-        <DeleteModal deletePhotos={this.deletePhotos} deletePhoto={this.deletePhoto} />
+            <DeleteModal deletePhotos={deletePhotos} deletePhoto={deletePhoto}/>
 
-        <Menu logOut={this.logOut} selectAllPhotos={this.selectAll} />
+            <Menu logOut={logOut} selectAllPhotos={selectAll}/>
 
-        <Gallery innerWidth={sinnerWidth} selectImageFunction={this.selectImage} selectFunction={this.showCarousel} />
+            <Gallery innerWidth={innerWidth} selectImageFunction={selectPhoto} selectFunction={showCarousel}/>
 
-        <Carousel editPhoto={this.editPhoto} download={this.downloadPhoto} passFlkty={this.getFlkty} />
+            <Carousel editPhoto={editPhoto} download={downloadPhoto} passFlkty={getFlkty}/>
 
-        <ImageEditor src={imageEditorSrc} />
+            <ImageEditor src={imageEditorSrc}/>
 
-        <Upload imageUpload={this.sendImage} />
+            <Upload imageUpload={sendPhoto}/>
 
-        <Progress value={uploadingPercentage} reset={this.resetProgress} />
+            <Progress value={uploadingPercentage} reset={resetProgress}/>
 
-        <UploadMimeType />
+            <UploadMimeType/>
 
-      </div>
+        </div>
     );
-  }
 }
 
-const mapStateToProps = (state: any) => {
-    return {
-        images: state.images.list,
-        selectedImages: state.images.selected,
-    };
-}
-
-const mapDispatchToProps = (dispatch: any) => {
-    return {
-        setShowProgressModal: (val: boolean) => dispatch(setShowProgressModal(val)),
-        setShowImageEditor: (val: boolean) => dispatch(setShowImageEditor(val)),
-        setShowDeleteModal: (val: boolean) => dispatch(setShowDeleteModal(val)),
-        setImages: (val: Photo[]) => dispatch(setImages(val)),
-        sortImages: () => dispatch(sortImages()),
-        setSelected: (val: number[]) => dispatch(setSelected(val)),
-    };
-}
-
-export { GalleryRoute as GalleryRouteComponent };
-export default connect(mapStateToProps, mapDispatchToProps)(GalleryRoute);
+export default GalleryRoute;

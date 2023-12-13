@@ -2,31 +2,11 @@ import axios, {AxiosProgressEvent} from 'axios';
 import Token from '../token.util';
 import fetchB from '../fetchBlob.util';
 import download from '../download.util';
-import {GalleryRouteComponent as GalleryRoute} from '../../routes/GalleryRoute';
 import {Photo} from '../../types/photoObject';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
 const axiosIstance = axios.create({ baseURL: serverUrl });
-
-// export function sortImages(images: Photo[], x: string, reverse: boolean = false): Photo[] {
-//   let sorted: Photo[] = [];
-//   switch (x.toLowerCase()) {
-//     case 'size':
-//       sorted = images.sort((a: Photo, b: Photo): number => b.size - a.size);
-//       break;
-//     case 'date':
-//       sorted = images.sort((a: Photo, b: Photo): number => b.date - a.date);
-//       break;
-//     case 'name':
-//       sorted = images.sort((a: Photo, b: Photo): number => a.name.localeCompare(b.name));
-//       break;
-//     default:
-//       return images;
-//   }
-//   if (reverse === true) sorted = sorted.reverse();
-//   return sorted;
-// }
 
 export async function fetchImages(): Promise<Photo[]> {
   const requestHeaders: HeadersInit = new Headers();
@@ -38,7 +18,7 @@ export async function fetchImages(): Promise<Photo[]> {
   return json;
 }
 
-export async function deleteImage(app: GalleryRoute, photo: string): Promise<boolean> {
+export async function deleteImage(photo: string): Promise<boolean> {
   const requestHeaders: HeadersInit = new Headers();
   requestHeaders.set('Authorization', `Bearer ${Token.value}`);
 
@@ -46,7 +26,7 @@ export async function deleteImage(app: GalleryRoute, photo: string): Promise<boo
   return true;
 }
 
-export async function deleteImages(app: GalleryRoute, images: Photo[], selected: number[]): Promise<void> {
+export async function deleteImages(images: Photo[], selected: number[]): Promise<void> {
 
   const names: string[] = [];
   selected.forEach((x: number): void => {
@@ -67,7 +47,7 @@ export async function deleteImages(app: GalleryRoute, images: Photo[], selected:
 
 }
 
-export async function sendImage(app: GalleryRoute, file: File): Promise<boolean> {
+export async function sendImage(file: File, progressFunc: (data: AxiosProgressEvent) => void): Promise<boolean> {
   const form = new FormData();
   form.append('name', file.name);
   form.append('image', file);
@@ -76,10 +56,7 @@ export async function sendImage(app: GalleryRoute, file: File): Promise<boolean>
       'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${Token.value}`,
     },
-    onUploadProgress: (data: AxiosProgressEvent): void => {
-      const total = data.total ? data.total : 1;
-      app.setProgress(Math.round(100 * (data.loaded / total)));
-    },
+    "onUploadProgress": progressFunc,
   }).then(() => {
     return true;
   })
@@ -93,18 +70,15 @@ export async function sendImage(app: GalleryRoute, file: File): Promise<boolean>
 
 }
 
-export async function downloadImage(app: GalleryRoute): Promise<boolean> {
-  const photo = app.carouselCurrent();
-  if (!photo) return false;
+export async function downloadImage(name: string): Promise<boolean> {
+  if (!name) return false;
 
-  const url = await fetchB(encodeURI(`${serverUrl}/photo/${encodeURI(photo)}`));
+  const url = await fetchB(encodeURI(`${serverUrl}/photo/${encodeURI(name)}`));
 
-  await download(url, photo);
+  await download(url, name);
   return true;
 }
 
-export async function editImage(app: GalleryRoute): Promise<string> {
-  const photo = app.carouselCurrent();
-  if (!photo) return '';
-  return await fetchB(encodeURI(`${serverUrl}/photo/${encodeURI(photo)}`));
+export async function editImageUrl(name: string): Promise<string> {
+  return await fetchB(encodeURI(`${serverUrl}/photo/${encodeURI(name)}`));
 }
