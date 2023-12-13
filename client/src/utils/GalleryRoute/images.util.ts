@@ -2,7 +2,7 @@ import axios, { AxiosProgressEvent } from 'axios';
 import Token from '../token.util';
 import fetchB from '../fetchBlob.util';
 import download from '../download.util';
-import GalleryRoute from '../../routes/GalleryRoute';
+import {GalleryRouteComponent as GalleryRoute } from '../../routes/GalleryRoute';
 import { Photo } from '../../types/photoObject';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
@@ -83,8 +83,6 @@ export async function sendImage(app: GalleryRoute, file: File): Promise<boolean>
   const form = new FormData();
   form.append('name', file.name);
   form.append('image', file);
-  await app.setState({ fileSending: true });
-  app.toggleProgress();
   const res = await axiosIstance.post(`${serverUrl}/upload`, form, {
     headers: {
       'Content-Type': 'multipart/form-data',

@@ -1,4 +1,4 @@
-import GalleryRoute from '../../routes/GalleryRoute';
+import { GalleryRouteComponent as GalleryRoute } from '../../routes/GalleryRoute';
 
 export function selectAll(app: GalleryRoute): void {
   const imgs = app.state.images;

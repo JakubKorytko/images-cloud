@@ -3,9 +3,7 @@ import {FlktyObject} from "./flickity";
 import Flickity from "react-flickity-component";
 
 export type GalleryRouteState = {
-  showProgress: boolean,
   uploadingPercentage: number,
-  fileSending: boolean,
   innerWidth: number,
   selectedImages: number[],
   deleteModalDisplay: boolean,
@@ -19,7 +17,6 @@ export type GalleryRouteState = {
   navbarDisplay: string,
   uploadModalShow: boolean,
   flkty: FlktyObject | null,
-  carouselCurrent: string
 };
 
 export type GalleryRouteProps = {

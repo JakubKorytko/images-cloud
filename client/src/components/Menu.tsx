@@ -12,7 +12,7 @@ import DropdownToggle from 'react-bootstrap/DropdownToggle';
 import { MenuProps } from '../types/menu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../app/store';
-import { toggleUploadModal } from "../features/upload";
+import { setShowUploadModal } from "../features/componentsVisibility";
 
 const Menu = (props: MenuProps) => {
     const btnClass = `d-${props.selectionCount > 0 ? 'flex' : 'none'}`;
@@ -57,7 +57,7 @@ const Menu = (props: MenuProps) => {
                     </Stack>
                 </Nav.Item>
                 <Nav.Item className="mx-2">
-                    <Button variant="light" onClick={() => dispatch(toggleUploadModal())} className="nav-button shadow-none nw">Upload new image</Button>
+                    <Button variant="light" onClick={() => dispatch(setShowUploadModal(true))} className="nav-button shadow-none nw">Upload new image</Button>
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>

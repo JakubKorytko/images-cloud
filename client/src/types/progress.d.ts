@@ -1,8 +1,6 @@
 export type ProgressProps = {
   reset: (node: HTMLElement) => void,
-  toggle: () => void,
-  percentage: number,
-  show: boolean
+  value: number,
 };
 
 export type ProgressState = {

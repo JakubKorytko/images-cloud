@@ -9,7 +9,7 @@ const initialState: UploadModalState = {
 }
 
 export const uploadModalSlice = createSlice({
-    name: 'uploadMimeType',
+    name: 'uploadModal',
     initialState,
     reducers: {
         toggleUploadModal: (state) => {

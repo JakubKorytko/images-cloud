@@ -1,12 +1,17 @@
 import { Modal, ProgressBar } from 'react-bootstrap';
 import '../../../scss/upload.scss';
 import { ProgressProps } from '../../../types/progress';
+import { useSelector } from "react-redux";
+import { RootState } from "../../../app/store";
 
 const Progress = (props: ProgressProps) => {
+
+  const show = useSelector((state: RootState) => state.componentsVisibility.showProgressModal);
+
   return (
     <Modal
       backdrop="static"
-      show={props.show}
+      show={show}
       keyboard={false}
       onExited={props.reset}
       centered
@@ -16,7 +21,7 @@ const Progress = (props: ProgressProps) => {
       </Modal.Header>
       <Modal.Body>
         <div className="progress-div">
-          <ProgressBar id="progress-bar" aria-label="Progress bar" now={props.percentage} label={`${props.percentage}%`} />
+          <ProgressBar id="progress-bar" aria-label="Progress bar" now={props.value} label={`${props.value}%`} />
         </div>
       </Modal.Body>
     </Modal>

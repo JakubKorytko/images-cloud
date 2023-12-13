@@ -22,13 +22,18 @@ import {
 import Token from '../utils/token.util';
 import UploadMimeType from '../components/modals/UploadMimeType';
 import GalleryRouteComponentState from './GalleryRoutes.comp_data';
-import Flickity from "react-flickity-component";
+import { useDispatch, connect } from "react-redux";
+import { setShowProgressModal } from "../features/componentsVisibility";
 
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
-class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
+type MappedProps = {
+    setShowProgressModal: (val: boolean) => void;
+} & GalleryRouteProps;
 
-  constructor(props: GalleryRouteProps) {
+class GalleryRoute extends Component<MappedProps, GalleryRouteState> {
+
+  constructor(props: MappedProps) {
     super(props);
 
     this.state = GalleryRouteComponentState;
@@ -50,8 +55,6 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
   // --- simple state setters & togglers ---
 
   exitFlickityFullscreen = (): void => { if (this.state.flkty) this.state.flkty.exitFullscreen(); };
-
-  toggleProgress = (): void => { this.setState({ showProgress: !this.state.showProgress }); };
 
   toggleDisplay = (): void => { this.setState({ imageEditorDisplay: false }); };
 
@@ -115,13 +118,12 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
     if (x === 100) {
       this.refreshGallery();
       setTimeout((): void => {
-        this.toggleProgress();
+        this.props.setShowProgressModal(false);
       }, 300);
     }
   };
 
   carouselCurrent = (): string | false | null => {
-    console.log(this.state.carouselCurrent);
     if (this.state.flkty && this.state.flkty.ref) {
       const element: unknown = this.state.flkty.ref.selectedElement;
 
@@ -133,10 +135,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
     return false;
   };
 
-  resetProgress = (): void => {
-    this.setState({ fileSending: false });
-    this.setState({ uploadingPercentage: 0 });
-  };
+  resetProgress = (): void => this.setState({ uploadingPercentage: 0 });
 
   getFlkty = (flkty: FlktyObject): void => {
     if (flkty) {
@@ -152,7 +151,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
   render() {
     const {
       imageEditorDisplay, innerWidth: sinnerWidth,
-      showProgress, uploadingPercentage, imageEditorSrc,
+      uploadingPercentage, imageEditorSrc,
       buttonsDisplay, navbarDisplay, images, selectedImages,
       reverse, sortBy, deleteModalDisplay,
     } = this.state;
@@ -199,12 +198,6 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
         display: imageEditorDisplay,
         src: imageEditorSrc,
       },
-      Progress: {
-        reset: this.resetProgress,
-        toggle: this.toggleProgress,
-        percentage: uploadingPercentage,
-        show: showProgress,
-      },
     };
 
     return (
@@ -222,7 +215,7 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
 
         <Upload imageUpload={this.sendImage} />
 
-        <Progress {...props.Progress} />
+        <Progress value={uploadingPercentage} reset={this.resetProgress} />
 
         <UploadMimeType />
 
@@ -231,4 +224,11 @@ class GalleryRoute extends Component<GalleryRouteProps, GalleryRouteState> {
   }
 }
 
-export default GalleryRoute;
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+        setShowProgressModal: (val: boolean) => dispatch(setShowProgressModal(val)),
+    };
+}
+
+export { GalleryRoute as GalleryRouteComponent };
+export default connect(null, mapDispatchToProps)(GalleryRoute);

@@ -1,4 +1,4 @@
-import GalleryRoute from '../../routes/GalleryRoute';
+import { GalleryRouteComponent as GalleryRoute } from '../../routes/GalleryRoute';
 import { fetchImages, sortImages } from './images.util';
 
 export async function refreshGallery(app: GalleryRoute): Promise<void> {

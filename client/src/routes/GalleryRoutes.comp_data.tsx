@@ -1,9 +1,7 @@
 export default {
   imageEditorDisplay: false,
   innerWidth: window.innerWidth,
-  showProgress: false,
   uploadingPercentage: 0,
-  fileSending: false,
   imageEditorSrc: '',
   buttonsDisplay: 'none',
   navbarDisplay: 'block',
@@ -15,5 +13,4 @@ export default {
   deleteModalDisplay: false,
   uploadModalShow: false,
   flkty: null,
-  carouselCurrent: '',
 };
