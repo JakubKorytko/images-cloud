@@ -1,9 +1,9 @@
-import axios, { AxiosProgressEvent } from 'axios';
+import axios, {AxiosProgressEvent} from 'axios';
 import Token from '../token.util';
 import fetchB from '../fetchBlob.util';
 import download from '../download.util';
-import {GalleryRouteComponent as GalleryRoute } from '../../routes/GalleryRoute';
-import { Photo } from '../../types/photoObject';
+import {GalleryRouteComponent as GalleryRoute} from '../../routes/GalleryRoute';
+import {Photo} from '../../types/photoObject';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 
@@ -38,13 +38,7 @@ export async function fetchImages(): Promise<Photo[]> {
   return json;
 }
 
-export async function deleteImage(app: GalleryRoute): Promise<boolean> {
-  const photo = app.carouselCurrent();
-  if (!photo) return false;
-
-  app.setState({ deleteModalDisplay: false });
-  app.exitFlickityFullscreen();
-
+export async function deleteImage(app: GalleryRoute, photo: string): Promise<boolean> {
   const requestHeaders: HeadersInit = new Headers();
   requestHeaders.set('Authorization', `Bearer ${Token.value}`);
 
@@ -75,8 +69,6 @@ export async function deleteImages(app: GalleryRoute): Promise<void> {
     await fetch(`${serverUrl}/delete/${encodeURI(photoName)}`, { headers: requestHeaders });
     await app.setState({ images: await fetchImages() });
   });
-  app.resortGallery();
-  app.hideDeleteModal();
 }
 
 export async function sendImage(app: GalleryRoute, file: File): Promise<boolean> {
@@ -115,10 +107,8 @@ export async function downloadImage(app: GalleryRoute): Promise<boolean> {
   return true;
 }
 
-export async function editImage(app: GalleryRoute): Promise<boolean> {
+export async function editImage(app: GalleryRoute): Promise<string> {
   const photo = app.carouselCurrent();
-  if (!photo) return false;
-  const url = await fetchB(encodeURI(`${serverUrl}/photo/${encodeURI(photo)}`));
-  await app.setState({ imageEditorSrc: url, imageEditorDisplay: true });
-  return true;
+  if (!photo) return '';
+  return await fetchB(encodeURI(`${serverUrl}/photo/${encodeURI(photo)}`));
 }

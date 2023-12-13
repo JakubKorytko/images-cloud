@@ -1,11 +1,19 @@
 import { Button, Modal } from 'react-bootstrap';
 import { DeleteModalProps } from '../../types/deleteModal';
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../app/store";
+import { setShowDeleteModal } from "../../features/componentsVisibility";
 
 const DeleteModal = (props: DeleteModalProps) => {
+
+    const display = useSelector((state: RootState) => state.componentsVisibility.showDeleteModal);
+    const dispatch = useDispatch();
+    const hide = () => dispatch(setShowDeleteModal(false));
+
     return (
         <Modal
-        show={props.deleteModalDisplay}
-        onHide={(): void => { props.hideDeleteModal(); }}
+        show={display}
+        onHide={hide}
         backdrop="static"
         keyboard={false}
         >
@@ -22,7 +30,7 @@ const DeleteModal = (props: DeleteModalProps) => {
             <Button variant="danger" onClick={props.multiDelete > 0 ? props.deletePhotos : props.deletePhoto}>
             Delete
             </Button>
-            <Button variant="secondary" onClick={(): void => { props.hideDeleteModal(); }}>Don't delete it!</Button>
+            <Button variant="secondary" onClick={hide}>Don't delete it!</Button>
         </Modal.Footer>
         </Modal>
     );

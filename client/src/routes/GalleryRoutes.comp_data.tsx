@@ -1,16 +1,12 @@
 export default {
-  imageEditorDisplay: false,
   innerWidth: window.innerWidth,
   uploadingPercentage: 0,
   imageEditorSrc: '',
-  buttonsDisplay: 'none',
-  navbarDisplay: 'block',
   tui: true,
   images: [],
   selectedImages: [],
   reverse: true,
   sortBy: 'Date',
-  deleteModalDisplay: false,
   uploadModalShow: false,
   flkty: null,
 };

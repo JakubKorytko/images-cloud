@@ -12,11 +12,22 @@ import flkty from '../flickity/methods'
 import { Photo } from '../types/photoObject';
 import { CarouselProps } from '../types/carousel';
 import AuthorizedImage from './images/AuthorizedImage';
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../app/store";
+import { setShowCarousel, setShowMenu, setShowDeleteModal } from "../features/componentsVisibility";
 
 const Carousel = (props: CarouselProps) => {
-  const [display, setDisplay] = useState(false);
 
-  useEffect(() => {flkty.setFullscreenEventListener(props.buttonsDisplay)}, [props]);
+  const display = useSelector((state: RootState) => state.componentsVisibility.showCarousel);
+  const displayClassName = display ? 'block' : 'none';
+  const dispatch = useDispatch();
+
+  const toggleMenuAndCarouselDisplay = (val: boolean) => {
+    dispatch(setShowCarousel(val));
+    dispatch(setShowMenu(!val));
+  }
+
+  useEffect(() => {flkty.setFullscreenEventListener(toggleMenuAndCarouselDisplay)}, [props]);
 
   useEffect(() => {
     props.passFlkty(flkty);
@@ -34,7 +45,7 @@ const Carousel = (props: CarouselProps) => {
         <Flickity flickityRef={(c) => flkty.ref = c} aria-label="Gallery" className="carousel" options={flickityOptions}>
           {imagesList}
         </Flickity>
-        <Navbar id="carousel-custom-buttons" className={`d-${display}`}>
+        <Navbar id="carousel-custom-buttons" className={`d-${displayClassName}`}>
           <Container fluid>
             <button className="flickity-button flickity-prev-next-button previous" type="button" aria-label="Previous" onClick={() => flkty.previous()}>
               <svg className="flickity-button-icon" viewBox="0 0 100 100">
@@ -42,7 +53,7 @@ const Carousel = (props: CarouselProps) => {
               </svg>
             </button>
 
-            <TrashFill className="carousel-button" aria-label="Delete image" onClick={props.deleteModal} />
+            <TrashFill className="carousel-button" aria-label="Delete image" onClick={() => dispatch(setShowDeleteModal(true))} />
 
             <CloudDownloadFill className="carousel-button" aria-label="Download image" onClick={props.download} />
 

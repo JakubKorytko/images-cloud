@@ -1,5 +1,4 @@
 export type MenuProps = {
-  deleteModal: React.MouseEventHandler<HTMLButtonElement>,
   selectAllPhotos: React.MouseEventHandler<HTMLButtonElement>,
   reverseEvent: React.MouseEventHandler<HTMLButtonElement>
   deselectPhotos: React.MouseEventHandler<HTMLButtonElement>,
@@ -7,14 +6,8 @@ export type MenuProps = {
   selectionCount: number,
   sortEvent: Function,
   sortBy: string,
-  navbarDisplay: string,
   reverse: boolean,
 };
 
 export type MenuState = {
-  sortBy: string,
-  buttonsDisplay: string,
-  images: [],
-  reverse: boolean,
-  navbarDisplay: string
 };

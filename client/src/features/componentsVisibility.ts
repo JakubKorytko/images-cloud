@@ -16,7 +16,7 @@ const initialState: ComponentsVisibilityState = {
     showUploadModal: false,
     showProgressModal: false,
     showImageEditor: false,
-    showMenu: false,
+    showMenu: true,
     showCarousel: false,
     showDeleteModal: false
 }

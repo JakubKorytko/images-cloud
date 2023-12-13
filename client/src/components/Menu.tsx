@@ -12,15 +12,18 @@ import DropdownToggle from 'react-bootstrap/DropdownToggle';
 import { MenuProps } from '../types/menu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../app/store';
-import { setShowUploadModal } from "../features/componentsVisibility";
+import { setShowUploadModal, setShowDeleteModal } from "../features/componentsVisibility";
 
 const Menu = (props: MenuProps) => {
     const btnClass = `d-${props.selectionCount > 0 ? 'flex' : 'none'}`;
 
+    const display = useSelector((state: RootState) => state.componentsVisibility.showMenu);
+    const displayClassName = display ? 'block' : 'none';
+
     const dispatch = useDispatch();
 
     return (
-        <header className={`sticky-top d-${props.navbarDisplay}`}>
+        <header className={`sticky-top d-${displayClassName}`}>
         <Navbar data-testid="menu" bg="dark" variant="dark" expand={props.selectionCount > 0 ? 'xl' : 'lg'}>
             <Container fluid>
             <Navbar.Brand className="my-1 mx-3" href="#">
@@ -61,7 +64,7 @@ const Menu = (props: MenuProps) => {
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>
-                    <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={props.deleteModal}>Delete</Button>
+                    <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={() => dispatch(setShowDeleteModal(true))}>Delete</Button>
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>
