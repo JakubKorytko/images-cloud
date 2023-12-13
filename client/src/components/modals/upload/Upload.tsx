@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { FileDrop } from 'react-file-drop';
 import { Modal, Button } from 'react-bootstrap';
 import '../../../scss/upload.scss';
@@ -7,13 +7,18 @@ import { UploadProps } from '../../../types/upload';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../app/store";
 import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from "../../../features/componentsVisibility";
+import {setImages} from "../../../features/images";
+import {fetchImages, sendImage} from "../../../utils/GalleryRoute/images.util";
+import {AxiosProgressEvent} from "axios/index";
+import Progress from "./Progress";
 
-const Upload = (props: UploadProps) => {
-  const [fileAttached, setFileAttached] = useState(false);
+const Upload = () => {
+    const [fileAttached, setFileAttached] = useState(false);
     const [file, setFile] = useState<File | undefined>(undefined);
+    const [uploadingPercentage, setUploadingPercentage] = useState(0);
 
-    const dispatch = useDispatch();
     const show = useSelector((state: RootState) => state.componentsVisibility.showUploadModal);
+    const dispatch = useDispatch();
 
     const transferFile = (x: FileList | null): void => {
       if (x) {
@@ -28,20 +33,49 @@ const Upload = (props: UploadProps) => {
     };
 
     const uploadFile = async (): Promise<void> => {
+      if (!file) return;
       dispatch(setShowUploadModal(false));
       dispatch(setShowProgressModal(true));
-      const res = await props.imageUpload(file);
+      console.log(file);
+      debugger;
+      const res = await sendPhoto(file);
       if (!res) {
         dispatch(setShowUploadMimeTypeModal(true));
       }
       cancelFile();
     };
 
+
+    const setProgress = async (x: number): Promise<void> => {
+      await setUploadingPercentage(x);
+      if (x === 100) {
+        dispatch(setImages(await fetchImages()));
+        setTimeout((): void => {
+          dispatch(setShowProgressModal(false));
+        }, 300);
+      }
+    };
+
+    const resetProgress = (): void => setUploadingPercentage(0);
+
+
+  const sendPhoto = async (file: File): Promise<boolean> => {
+    const updateProgress = (data: AxiosProgressEvent): void => {
+      const total = data.total ? data.total : 1;
+      setProgress(Math.round(100 * (data.loaded / total)));
+    }
+    await sendImage(file, updateProgress);
+    const images = await fetchImages();
+    dispatch(setImages(images));
+    return true;
+  }
+
     const transferDisplay = fileAttached ? 'flex' : 'none';
     const cardDisplay = fileAttached ? 'none' : 'flex';
     const bodyHeight = fileAttached ? 'fit' : '110px';
 
     return (
+        <>
       <Modal
         backdrop="static"
         show={show}
@@ -95,6 +129,8 @@ const Upload = (props: UploadProps) => {
           </div>
         </Modal.Body>
       </Modal>
+          <Progress value={uploadingPercentage} reset={resetProgress}/>
+          </>
     );
 }
 

@@ -14,9 +14,16 @@ import { CarouselProps } from '../types/carousel';
 import AuthorizedImage from './images/AuthorizedImage';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
-import { setShowCarousel, setShowMenu, setShowDeleteModal } from "../features/componentsVisibility";
+import {setShowCarousel, setShowMenu, setShowDeleteModal, setShowImageEditor} from "../features/componentsVisibility";
+import {deleteImage, downloadImage, editImageUrl, fetchImages} from "../utils/GalleryRoute/images.util";
+import ImageEditor from "./tools/ImageEditor";
+import {setImages} from "../features/images";
+import DeleteModal from "./modals/DeleteModal";
+import Gallery from "./Gallery";
 
 const Carousel = (props: CarouselProps) => {
+
+  const [imageEditorSrc, setImageEditorSrc] = useState('');
 
   const display = useSelector((state: RootState) => state.componentsVisibility.showCarousel);
   const displayClassName = display ? 'block' : 'none';
@@ -27,11 +34,59 @@ const Carousel = (props: CarouselProps) => {
     dispatch(setShowMenu(!val));
   }
 
+  const carouselCurrent = (): string | false | null => {
+    if (flkty && flkty.ref) {
+      const element: unknown = flkty.ref.selectedElement;
+
+      const elementWithAttributeGetter = element as unknown & { getAttribute: (x: string) => string | null };
+      if (elementWithAttributeGetter.getAttribute !== undefined) {
+        return elementWithAttributeGetter.getAttribute('name');
+      }
+    }
+    return false;
+  };
+
+  const downloadPhoto = async (): Promise<boolean> => {
+    const photo = carouselCurrent();
+    if (photo) {
+      return await downloadImage(photo);
+    }
+    return false;
+  }
+
+  const editPhoto = async (): Promise<boolean> => {
+    const photo = carouselCurrent();
+    if (!photo) return false;
+    const url = await editImageUrl(photo);
+    if (url != '') {
+      setImageEditorSrc(url);
+      dispatch(setShowImageEditor(true));
+      return true;
+    }
+    return false;
+  };
+
+
+  const deletePhoto = async (): Promise<boolean> => {
+    const photo = carouselCurrent();
+    if (!photo) return false;
+
+    dispatch(setShowDeleteModal(false));
+    if (flkty) flkty.exitFullscreen();
+
+    await deleteImage(photo);
+    dispatch(setImages(await fetchImages()));
+    return true;
+  };
+
   useEffect(() => {flkty.setFullscreenEventListener(toggleMenuAndCarouselDisplay)}, [props]);
 
-  useEffect(() => {
-    props.passFlkty(flkty);
-  }, []);
+
+  const showCarousel = (x: number): void => {
+    if (flkty) {
+      flkty.show(x);
+    }
+  };
 
     const imagesArray = useSelector((state: RootState) => state.images.list);
 
@@ -41,6 +96,7 @@ const Carousel = (props: CarouselProps) => {
     });
 
     return (
+        <>
       <div>
         <Flickity flickityRef={(c) => flkty.ref = c} aria-label="Gallery" className="carousel" options={flickityOptions}>
           {imagesList}
@@ -55,9 +111,9 @@ const Carousel = (props: CarouselProps) => {
 
             <TrashFill className="carousel-button" aria-label="Delete image" onClick={() => dispatch(setShowDeleteModal(true))} />
 
-            <CloudDownloadFill className="carousel-button" aria-label="Download image" onClick={props.download} />
+            <CloudDownloadFill className="carousel-button" aria-label="Download image" onClick={downloadPhoto} />
 
-            <PencilFill className="carousel-button" aria-label="Edit image" onClick={props.editPhoto} />
+            <PencilFill className="carousel-button" aria-label="Edit image" onClick={editPhoto} />
 
             <button className="flickity-button flickity-prev-next-button next" type="button" aria-label="Next" onClick={() => flkty.next()}>
               <svg className="flickity-button-icon" viewBox="0 0 100 100">
@@ -70,6 +126,11 @@ const Carousel = (props: CarouselProps) => {
           </Container>
         </Navbar>
       </div>
+
+  <ImageEditor src={imageEditorSrc}/>
+          <DeleteModal deletePhoto={deletePhoto}/>
+          <Gallery selectFunction={showCarousel}/>
+  </>
     );
 }
 

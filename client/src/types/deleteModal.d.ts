@@ -1,5 +1,4 @@
 export type DeleteModalProps = {
-  deletePhotos: React.MouseEventHandler<HTMLButtonElement>,
   deletePhoto: React.MouseEventHandler<HTMLButtonElement>
 };
 

@@ -1,15 +1,32 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import Photo from './images/Photo';
 import { Photo as PhotoType } from '../types/photoObject';
 import { GalleryProps, GalleryState } from '../types/gallery';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
+import {selectImage} from "../utils/GalleryRoute/selecting.util";
+import {setSelected} from "../features/images";
 
 const Gallery = (props: GalleryProps) => {
 
+    const [galleryWidth, setGalleryWidth] = useState(window.innerWidth);
+
     const selectedImages = useSelector((state: RootState) => state.images.selected);
     const photoChecked = (id: number): boolean => selectedImages.includes(id);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        window.addEventListener('resize', (): void => {
+            setGalleryWidth(window.innerWidth);
+        });
+    }, []);
+
+    const selectPhoto = (id: number, action: boolean): void => {
+        const selected = selectedImages;
+        const newSelected = selectImage(id, action, selected);
+        dispatch(setSelected(newSelected));
+    }
 
     const placeholderSize = (image: PhotoType): { width: number, height: number, original_width: number, original_height: number } => {
         const placeholder = {
@@ -36,7 +53,7 @@ const Gallery = (props: GalleryProps) => {
         const imageSize = `${placeholder.width}x${placeholder.height}?text=${placeholder.original_width}%20x%20${placeholder.original_height}`;
 
         let ind = sizes.indexOf(Math.min(...sizes));
-        if (props.innerWidth < 992) ind = 0;
+        if (galleryWidth < 992) ind = 0;
 
         const photoProps = {
         key: i,
@@ -49,7 +66,7 @@ const Gallery = (props: GalleryProps) => {
         img: x.path,
         carrouselId: i,
         id: x.imageId,
-        selectImageFunction: props.selectImageFunction,
+        selectImageFunction: selectPhoto,
         select: props.selectFunction,
         };
 

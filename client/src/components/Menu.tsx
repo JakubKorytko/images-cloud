@@ -9,16 +9,18 @@ import '../scss/App.scss';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import DropdownToggle from 'react-bootstrap/DropdownToggle';
-import { MenuProps } from '../types/menu';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../app/store';
 import { setShowUploadModal, setShowDeleteModal } from "../features/componentsVisibility";
-import { setSortBy, setSortReverse, setSelected } from "../features/images";
+import images, { setSortBy, setSortReverse, setSelected } from "../features/images";
+import Token from "../utils/token.util";
+import {selectAllImages} from "../utils/GalleryRoute/selecting.util";
 
-const Menu = (props: MenuProps) => {
+const Menu = () => {
     const display = useSelector((state: RootState) => state.componentsVisibility.showMenu);
     const reverse = useSelector((state: RootState) => state.images.sortReverse);
     const sortBy = useSelector((state: RootState) => state.images.sortBy);
+    const images = useSelector((state: any) => state.images.list);
     const selectedImages = useSelector((state: RootState) => state.images.selected);
 
     const btnClass = `d-${selectedImages.length > 0 ? 'flex' : 'none'}`;
@@ -26,6 +28,18 @@ const Menu = (props: MenuProps) => {
     const displayClassName = display ? 'block' : 'none';
 
     const dispatch = useDispatch();
+
+    const logOut = (): void => {
+        Token.remove();
+        window.location.href = '/login';
+    };
+
+    const selectAllPhotos = (): void => {
+        const imgs = images;
+        const selected = selectedImages;
+        const newSelectedArray = selectAllImages(imgs, selected);
+        dispatch(setSelected(newSelectedArray));
+    }
 
     return (
         <header className={`sticky-top d-${displayClassName}`}>
@@ -40,7 +54,7 @@ const Menu = (props: MenuProps) => {
             <Navbar.Collapse>
                 <Nav>
                 <Nav.Item className="text-white mx-2">
-                    <Button variant="light" className="nav-button shadow-none nw" onClick={props.logOut}>
+                    <Button variant="light" className="nav-button shadow-none nw" onClick={logOut}>
                     Logout
                     <BoxArrowRight id="logout-icon" />
                     </Button>
@@ -73,7 +87,7 @@ const Menu = (props: MenuProps) => {
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>
-                    <Button variant="light" className="nav-button shadow-none nw" onClick={props.selectAllPhotos}>Select all</Button>
+                    <Button variant="light" className="nav-button shadow-none nw" onClick={selectAllPhotos}>Select all</Button>
                 </Nav.Item>
 
                     <Nav.Item className={`mx-2 ${btnClass}`}>
