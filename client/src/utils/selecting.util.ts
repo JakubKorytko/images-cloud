@@ -1,4 +1,4 @@
-import {Photo} from "../../components/images/PhotoObject.type";
+import {Photo} from "../components/images/PhotoObject.type";
 
 export function selectAllImages(imgs: Photo[], imgsSelected: number[]): number[] {
   const newImgsSelected: number[] = [...imgsSelected];

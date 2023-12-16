@@ -1,23 +1,23 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Flickity from 'react-flickity-component';
-import '../flickity/flickity.scss';
+import '../../flickity/flickity.scss';
 import 'flickity-fullscreen/fullscreen.css';
 import 'flickity-fullscreen';
 import { Container, Navbar } from 'react-bootstrap';
 import {
   CloudDownloadFill, PencilFill, TrashFill, XCircleFill,
 } from 'react-bootstrap-icons';
-import flickityOptions from '../flickity/options';
-import flkty from '../flickity/methods'
-import { Photo } from './images/PhotoObject.type';
-import AuthorizedImage from './images/AuthorizedImage';
+import flickityOptions from '../../flickity/options';
+import flkty from '../../flickity/methods'
+import { Photo } from '../images/PhotoObject.type';
+import AuthorizedImage from '../images/AuthorizedImage';
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../app/store";
-import {setShowCarousel, setShowMenu, setShowDeleteModal, setShowImageEditor} from "../features/componentsVisibility";
-import {deleteImage, downloadImage, editImageUrl, fetchImages} from "../utils/GalleryRoute/images.util";
-import ImageEditor from "./tools/ImageEditor";
-import {setImages} from "../features/images";
-import DeleteModal from "./modals/DeleteModal";
+import { RootState } from "../../app/store";
+import {setShowCarousel, setShowMenu, setShowDeleteModal, setShowImageEditor} from "../../features/componentsVisibility";
+import {deleteImage, downloadImage, editImageUrl, fetchImages} from "../../utils/images.util";
+import ImageEditor from "../editor/ImageEditor";
+import {setImages} from "../../features/images";
+import DeleteModal from "../modals/DeleteModal";
 import Gallery from "./Gallery";
 import './Carousel.scss'
 

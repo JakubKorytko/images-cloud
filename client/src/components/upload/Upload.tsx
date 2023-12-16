@@ -5,10 +5,10 @@ import './Upload.scss';
 import { UploadProps } from './Upload.type';
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../app/store";
-import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from "../../../features/componentsVisibility";
-import {setImages} from "../../../features/images";
-import {fetchImages, sendImage} from "../../../utils/GalleryRoute/images.util";
+import { RootState } from "../../app/store";
+import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from "../../features/componentsVisibility";
+import {setImages} from "../../features/images";
+import {fetchImages, sendImage} from "../../utils/images.util";
 import {AxiosProgressEvent} from "axios/index";
 import Progress from "./Progress";
 

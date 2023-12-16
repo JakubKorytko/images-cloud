@@ -2,10 +2,10 @@ import { Modal, ProgressBar } from 'react-bootstrap';
 import './Upload.scss';
 import { ProgressProps } from './Progress.type';
 import { useSelector } from "react-redux";
-import { RootState } from "../../../app/store";
-import {setImages} from "../../../features/images";
-import {fetchImages} from "../../../utils/GalleryRoute/images.util";
-import {setShowProgressModal} from "../../../features/componentsVisibility";
+import { RootState } from "../../app/store";
+import {setImages} from "../../features/images";
+import {fetchImages} from "../../utils/images.util";
+import {setShowProgressModal} from "../../features/componentsVisibility";
 import './Progress.scss';
 
 const Progress = (props: ProgressProps) => {

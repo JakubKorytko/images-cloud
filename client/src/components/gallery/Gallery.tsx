@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import Photo from './images/Photo';
-import { Photo as PhotoType } from './images/PhotoObject.type';
+import Photo from '../images/Photo';
+import { Photo as PhotoType } from '../images/PhotoObject.type';
 import { GalleryProps } from './Gallery.type';
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../app/store";
-import {selectImage} from "../utils/GalleryRoute/selecting.util";
-import {setSelected} from "../features/images";
+import { RootState } from "../../app/store";
+import {selectImage} from "../../utils/selecting.util";
+import {setSelected} from "../../features/images";
 
 const Gallery = (props: GalleryProps) => {
 

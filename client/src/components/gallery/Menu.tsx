@@ -9,11 +9,11 @@ import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import DropdownToggle from 'react-bootstrap/DropdownToggle';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '../app/store';
-import { setShowUploadModal, setShowDeleteModal } from "../features/componentsVisibility";
-import images, { setSortBy, setSortReverse, setSelected } from "../features/images";
-import Token from "../utils/token.util";
-import {selectAllImages} from "../utils/GalleryRoute/selecting.util";
+import { RootState } from '../../app/store';
+import { setShowUploadModal, setShowDeleteModal } from "../../features/componentsVisibility";
+import images, { setSortBy, setSortReverse, setSelected } from "../../features/images";
+import Token from "../../utils/token.util";
+import {selectAllImages} from "../../utils/selecting.util";
 import './Menu.scss';
 
 const Menu = () => {

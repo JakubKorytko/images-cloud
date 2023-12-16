@@ -1,8 +1,8 @@
 import axios, {AxiosProgressEvent} from 'axios';
-import Token from '../token.util';
-import fetchB from '../fetchBlob.util';
-import download from '../download.util';
-import {Photo} from '../../components/images/PhotoObject.type';
+import Token from './token.util';
+import fetchB from './fetchBlob.util';
+import download from './download.util';
+import {Photo} from '../components/images/PhotoObject.type';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 

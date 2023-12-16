@@ -1,4 +1,4 @@
-import { Photo } from '../images/PhotoObject.type';
+import { Photo } from '../../images/PhotoObject.type';
 
 const pseudoRandom = (i: number, j: number): number => {
   if (i % 2) return Math.round(1 / ++i * j);

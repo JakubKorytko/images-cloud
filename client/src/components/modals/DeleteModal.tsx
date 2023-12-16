@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
 import { setShowDeleteModal } from "../../features/componentsVisibility";
 import {setImages, setSelected} from "../../features/images";
-import {deleteImages, fetchImages} from "../../utils/GalleryRoute/images.util";
+import {deleteImages, fetchImages} from "../../utils/images.util";
 
 const DeleteModal = (props: DeleteModalProps) => {
 

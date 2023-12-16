@@ -1,11 +1,11 @@
 import React, {Component, useEffect, useState} from 'react';
-import Carousel from '../components/Carousel';
-import Menu from '../components/Menu';
-import Upload from '../components/modals/upload/Upload';
+import Carousel from '../components/gallery/Carousel';
+import Menu from '../components/gallery/Menu';
+import Upload from '../components/upload/Upload';
 import {authTest} from '../utils/connectionTest.util';
 import {
     fetchImages,
-} from '../utils/GalleryRoute/images.util';
+} from '../utils/images.util';
 import UploadMimeType from '../components/modals/UploadMimeType';
 import {connect, useSelector, useDispatch} from "react-redux";
 import {setImages, setSelected, sortImages} from "../features/images";
