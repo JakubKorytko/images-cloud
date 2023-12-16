@@ -4,6 +4,7 @@ import ProgressiveImage from './ProgressiveImage';
 import { PhotoProps } from './Photo.type';
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
+import "./Photo.scss"
 
 const Photo = (props: PhotoProps) => {
   const [checkMarkDisplay, displayCheckMark] = useState(false);

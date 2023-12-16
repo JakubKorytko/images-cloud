@@ -1,0 +1,90 @@
+.nav-arrow {
+  background-color: transparent;
+  border: 0;
+  border-bottom: 1px solid white;
+  border-radius: 0;
+}
+
+.nav-select {
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-bottom: 1px solid white;
+  border-radius: 0;
+}
+
+.nav-button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  border-radius: 0;
+}
+
+.nav-select:hover,
+.nav-select:active,
+.nav-select:focus,
+.nav-arrow:hover,
+.nav-arrow:active,
+.nav-arrow:focus,
+.nav-button:hover,
+.nav-button:active,
+.nav-button:focus {
+  background-color: transparent;
+  color: white;
+  box-shadow: none;
+  border-color: white;
+  outline: 0;
+}
+
+.nav-button:hover,
+.nav-arrow:hover,
+.nav-select:hover {
+  border-bottom-color: blue;
+}
+
+.nav-button:active,
+.nav-arrow:active,
+.nav-select:active {
+  border-bottom-color: aqua;
+}
+
+.dropdown-toggle::after {
+  margin-left: 1.3em;
+}
+
+.dropdown-select .dropdown-menu {
+  background-color: transparent;
+  border: none;
+}
+
+.dropdown-select .dropdown-item {
+  background-color: rgb(33 37 41);
+  color: white;
+  border-bottom: white 1px solid;
+}
+
+.dropdown-select .dropdown-item:hover {
+  border-color: blue;
+}
+
+.dropdown-select .dropdown-item:active {
+  border-color: aqua;
+}
+
+.sort-label {
+  padding: 0.375rem 0 0.375rem 0.75rem;
+  border-bottom: 1px solid white;
+  margin-right: 0;
+}
+
+.nw {
+  word-break: keep-all;
+  white-space: nowrap;
+}
+
+#logout-icon {
+  margin-left: 4px;
+  vertical-align: sub;
+  width: 20px;
+  height: 20px;
+}

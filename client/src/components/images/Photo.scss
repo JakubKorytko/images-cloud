@@ -1,0 +1,35 @@
+.selection>input {
+  border-radius: 3rem !important;
+}
+
+.selection {
+  background-color: transparent;
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  width: 30px;
+  cursor: pointer;
+  height: 30px;
+  border-radius: 3rem;
+  z-index: 1;
+}
+
+.photo-icon-checked {
+  filter: drop-shadow(1px 1px 6px white);
+  color: blue;
+}
+
+.photo-icon {
+  filter: drop-shadow(1px 1px 6px black);
+  color: white;
+}
+
+.photo-checked {
+  position: relative;
+  transform: scale(0.985);
+  border: 3px solid blue;
+}
+
+.photo {
+  position: relative;
+}

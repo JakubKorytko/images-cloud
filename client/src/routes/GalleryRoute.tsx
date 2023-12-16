@@ -1,6 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
 import Carousel from '../components/Carousel';
-import '../scss/App.scss';
 import Menu from '../components/Menu';
 import Upload from '../components/modals/upload/Upload';
 import {authTest} from '../utils/connectionTest.util';

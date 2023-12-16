@@ -3,6 +3,7 @@ import { Navigate } from 'react-router';
 import { Rings } from 'react-loader-spinner';
 import Token from '../utils/token.util';
 import { authTest } from '../utils/connectionTest.util';
+import './Authorization.scss'
 
 const Authorization = (props: { loginPage: boolean, path: JSX.Element }) => {
     const [res, setRes] = useState<boolean | undefined>(undefined);

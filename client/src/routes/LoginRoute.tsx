@@ -1,6 +1,5 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
-import '../scss/App.scss';
-import '../scss/login.scss';
+import './LoginRoute.scss';
 import {
   Container, Row, Col, Form, Button, InputGroup, NavbarBrand,
 } from 'react-bootstrap';

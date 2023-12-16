@@ -4,6 +4,7 @@ import download from '../../utils/download.util';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
 import { setShowImageEditor } from "../../features/componentsVisibility";
+import './ImageEditor.scss';
 
 const ImageEditor = (props: ImageEditorProps) => {
     const display = useSelector((state: RootState) => state.componentsVisibility.showImageEditor);

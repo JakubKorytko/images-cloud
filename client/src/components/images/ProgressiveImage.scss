@@ -1,0 +1,22 @@
+.progressive-image {
+  margin-bottom: 0.5rem;
+  transition: opacity .15s linear;
+  box-shadow: 0 0 10px 4px rgb(202 202 202 / 100%);
+}
+
+.progressive-image-checked {
+  margin-bottom: 0;
+  transform: none;
+  box-shadow: none;
+  transition: opacity .15s linear;
+}
+
+.thumbnail {
+  cursor: pointer;
+}
+
+.thumbnail:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 9px 7px rgb(255 255 255 / 100%);
+  z-index: 2;
+}

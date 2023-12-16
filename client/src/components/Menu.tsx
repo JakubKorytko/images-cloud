@@ -5,7 +5,6 @@ import {
 import {
   ArrowUp, CloudFill, ArrowDown, BoxArrowRight,
 } from 'react-bootstrap-icons';
-import '../scss/App.scss';
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import DropdownToggle from 'react-bootstrap/DropdownToggle';
@@ -15,6 +14,7 @@ import { setShowUploadModal, setShowDeleteModal } from "../features/componentsVi
 import images, { setSortBy, setSortReverse, setSelected } from "../features/images";
 import Token from "../utils/token.util";
 import {selectAllImages} from "../utils/GalleryRoute/selecting.util";
+import './Menu.scss';
 
 const Menu = () => {
     const display = useSelector((state: RootState) => state.componentsVisibility.showMenu);

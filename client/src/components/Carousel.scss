@@ -1,0 +1,105 @@
+.carousel {
+  background: #FAFAFA;
+  display: none;
+}
+
+.carousel-cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 66%;
+  height: 400px;
+  margin-right: 10px;
+  background: #333;
+}
+
+.carousel-cell-image {
+  display: block;
+  max-height: 100%;
+  margin: 0 auto;
+  max-width: 100%;
+  transition: opacity 0.4s;
+}
+
+.carousel.is-fullscreen .carousel-cell {
+  height: 100%;
+}
+
+.carousel.is-fullscreen {
+  display: block;
+}
+
+#carousel-custom-buttons {
+  color: hsl(0deg 0% 100% / 75%);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2;
+  font-size: 44px;
+  white-space: nowrap;
+  background-color: black;
+  padding: 0.15rem;
+  opacity: 0.8;
+  user-select: none;
+}
+
+.carousel-button {
+  display: inline-block;
+}
+
+#carousel-close-button>div:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.carousel-button:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+
+.flickity-button {
+  left: unset !important;
+  right: unset !important;
+  display: inline-block;
+  position: relative;
+  transform: unset;
+  top: unset;
+}
+
+#carousel-close-button {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 2;
+  font-size: 44px;
+  opacity: 0.8;
+  color: hsl(0deg 0% 100% / 75%);
+  user-select: none;
+}
+
+@media only screen and (width <= 992px) {
+  #carousel-custom-buttons {
+    font-size: 38px;
+  }
+
+  .flickity-button {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media only screen and (width <= 768px) {
+  #carousel-custom-buttons {
+    font-size: 34px;
+  }
+
+  .flickity-button {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.flickity-fullscreen-button {
+  display: none !important;
+}

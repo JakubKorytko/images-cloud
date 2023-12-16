@@ -1,6 +1,6 @@
 import React, {useState, useRef, useEffect} from 'react';
 import Flickity from 'react-flickity-component';
-import '../scss/flickity.scss';
+import '../flickity/flickity.scss';
 import 'flickity-fullscreen/fullscreen.css';
 import 'flickity-fullscreen';
 import { Container, Navbar } from 'react-bootstrap';
@@ -19,6 +19,7 @@ import ImageEditor from "./tools/ImageEditor";
 import {setImages} from "../features/images";
 import DeleteModal from "./modals/DeleteModal";
 import Gallery from "./Gallery";
+import './Carousel.scss'
 
 const Carousel = () => {
 

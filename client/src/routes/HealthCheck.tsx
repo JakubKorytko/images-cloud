@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import { CircleFill } from 'react-bootstrap-icons';
 import HealthCheckModal from '../components/modals/HealthCheckModal';
-import '../scss/App.scss';
+import './Healthcheck.scss';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
