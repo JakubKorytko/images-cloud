@@ -1,6 +1,6 @@
 import { Modal, ProgressBar } from 'react-bootstrap';
 import '../../../scss/upload.scss';
-import { ProgressProps } from '../../../types/progress';
+import { ProgressProps } from './Progress.type';
 import { useSelector } from "react-redux";
 import { RootState } from "../../../app/store";
 import {setImages} from "../../../features/images";

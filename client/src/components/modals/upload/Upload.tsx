@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FileDrop } from 'react-file-drop';
 import { Modal, Button } from 'react-bootstrap';
 import '../../../scss/upload.scss';
-import { UploadProps } from '../../../types/upload';
+import { UploadProps } from './Upload.type';
 
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../app/store";

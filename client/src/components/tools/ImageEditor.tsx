@@ -1,5 +1,5 @@
 import FilerobotImageEditor from 'react-filerobot-image-editor';
-import { ImageEditorProps } from '../../types/imageEditor';
+import { ImageEditorProps } from './ImageEditor.type';
 import download from '../../utils/download.util';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";

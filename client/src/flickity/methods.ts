@@ -1,4 +1,4 @@
-import {FlktyObject} from "../types/flickity";
+import {FlktyObject} from "./flickity.type";
 
 export default {
     ref: null,

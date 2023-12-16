@@ -1,3 +1,5 @@
+import {MouseEventHandler} from "react";
+
 export type ProgressiveImageData = {
   id: number,
   name: string,

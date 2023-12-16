@@ -8,5 +8,5 @@ export type FlktyObject = {
     exitFullscreen: Function,
     show: Function,
     currentName: () => string | false,
-    setFullscreenEventListener: (Function) => boolean,
+    setFullscreenEventListener: (arg: Function) => boolean,
 }

@@ -9,8 +9,7 @@ import {
 } from 'react-bootstrap-icons';
 import flickityOptions from '../flickity/options';
 import flkty from '../flickity/methods'
-import { Photo } from '../types/photoObject';
-import { CarouselProps } from '../types/carousel';
+import { Photo } from './images/PhotoObject.type';
 import AuthorizedImage from './images/AuthorizedImage';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../app/store";
@@ -21,7 +20,7 @@ import {setImages} from "../features/images";
 import DeleteModal from "./modals/DeleteModal";
 import Gallery from "./Gallery";
 
-const Carousel = (props: CarouselProps) => {
+const Carousel = () => {
 
   const [imageEditorSrc, setImageEditorSrc] = useState('');
 
@@ -79,7 +78,7 @@ const Carousel = (props: CarouselProps) => {
     return true;
   };
 
-  useEffect(() => {flkty.setFullscreenEventListener(toggleMenuAndCarouselDisplay)}, [props]);
+  useEffect(() => {flkty.setFullscreenEventListener(toggleMenuAndCarouselDisplay)}, []);
 
 
   const showCarousel = (x: number): void => {

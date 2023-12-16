@@ -6,7 +6,6 @@ import {
 } from 'react-bootstrap';
 import { CloudFill } from 'react-bootstrap-icons';
 import { authTest } from '../utils/connectionTest.util';
-import { LoginRouteProps, LoginRouteState } from '../types/loginRoute';
 import Token from '../utils/token.util';
 import InvalidLoginData from '../components/modals/InvalidLoginData';
 import SessionExpired from '../components/modals/SessionExpired';
@@ -14,7 +13,7 @@ import SessionExpired from '../components/modals/SessionExpired';
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
-const App = (props: LoginRouteProps) => {
+const App = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [usernameValid, setUsernameValid] = useState(true);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ProgressiveImageProps } from '../../types/progressiveImage';
+import { ProgressiveImageProps } from './ProgressiveImage.type';
 import fetchB from '../../utils/fetchBlob.util';
 import Token from '../../utils/token.util';
 

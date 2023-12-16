@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
 import ProgressiveImage from './ProgressiveImage';
-import { PhotoProps } from '../../types/photo';
+import { PhotoProps } from './Photo.type';
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 

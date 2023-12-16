@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
-import {Photo} from "../types/photoObject";
+import {Photo} from "../components/images/PhotoObject.type";
 
 export interface ImagesState {
     list: Photo[],

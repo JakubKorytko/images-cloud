@@ -7,15 +7,14 @@ import {authTest} from '../utils/connectionTest.util';
 import {
     fetchImages,
 } from '../utils/GalleryRoute/images.util';
-import {GalleryRouteProps, GalleryRouteState} from '../types/galleryRoute';
 import UploadMimeType from '../components/modals/UploadMimeType';
 import {connect, useSelector, useDispatch} from "react-redux";
 import {setImages, setSelected, sortImages} from "../features/images";
-import {Photo} from "../types/photoObject";
+import {Photo} from "../components/images/PhotoObject.type";
 
 const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
-const GalleryRoute = (props: GalleryRouteProps) => {
+const GalleryRoute = () => {
 
     const dispatch = useDispatch();
 

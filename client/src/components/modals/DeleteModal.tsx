@@ -1,5 +1,5 @@
 import { Button, Modal } from 'react-bootstrap';
-import { DeleteModalProps } from '../../types/deleteModal';
+import { DeleteModalProps } from './DeleteModal.type';
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../app/store";
 import { setShowDeleteModal } from "../../features/componentsVisibility";
