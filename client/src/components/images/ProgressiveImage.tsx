@@ -71,7 +71,7 @@ function ProgressiveImage(props: ProgressiveImageProps) {
       src={imgSrc.url}
       className={imgClassNames.join(' ')}
       onClick={click}
-      data-testid="proggresive_img"
+      data-testid="progressive_img"
       data-imageid={id}
       alt={name}
     />

@@ -39,7 +39,7 @@ test('Gallery should render images properly based on object info', () => {
     />,
   );
 
-  const photos = getAllByTestId('proggresive_img');
+  const photos = getAllByTestId('progressive_img');
 
   photos.forEach((photo): void => {
     const photoData = {
