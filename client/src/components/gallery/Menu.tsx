@@ -82,15 +82,15 @@ function Menu() {
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>
-                  <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={() => dispatch(setShowDeleteModal(true))}>Delete</Button>
+                  <Button variant="light" className="nav-button shadow-none nw" onClick={() => dispatch(setSelected([]))}>Cancel selection</Button>
                 </Nav.Item>
 
-                <Nav.Item className={`mx-2 ${btnClass}`}>
+                <Nav.Item className="mx-2">
                   <Button variant="light" className="nav-button shadow-none nw" onClick={selectAllImages}>Select all</Button>
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>
-                  <Button variant="light" className="nav-button shadow-none nw" onClick={() => dispatch(setSelected([]))}>Cancel selection</Button>
+                  <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={() => dispatch(setShowDeleteModal(true))}>Delete</Button>
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 text-light d-flex justify-content-center align-items-center nw ${btnClass}`}>
