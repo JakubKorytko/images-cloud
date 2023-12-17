@@ -4,7 +4,7 @@ import {
   Container, Row, Col, Form, Button, InputGroup, NavbarBrand,
 } from 'react-bootstrap';
 import { CloudFill } from 'react-bootstrap-icons';
-import { authTest } from '../utils/connectionTest.util';
+import { authTest } from '../utils/testConnection.util';
 import Token from '../utils/token.util';
 import InvalidLoginData from '../components/modals/InvalidLoginData';
 import SessionExpired from '../components/modals/SessionExpired';

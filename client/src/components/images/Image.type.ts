@@ -1,4 +1,4 @@
-export type PhotoProps = {
+export type ImageProps = {
   carrouselId: number,
   checkedState: boolean,
   img: string,

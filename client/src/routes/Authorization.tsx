@@ -2,7 +2,7 @@ import React, { useState, useEffect, ReactElement } from 'react';
 import { Navigate } from 'react-router';
 import { Rings } from 'react-loader-spinner';
 import Token from '../utils/token.util';
-import { authTest } from '../utils/connectionTest.util';
+import { authTest } from '../utils/testConnection.util';
 import './Authorization.scss';
 
 function Authorization(props: { loginPage: boolean, path: ReactElement | null }) {

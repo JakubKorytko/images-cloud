@@ -5,7 +5,7 @@ import { DeleteModalProps } from './DeleteModal.type';
 import { RootState } from '../../app/store';
 import { setShowDeleteModal } from '../../features/componentsVisibility';
 import { setImages, setSelected } from '../../features/images';
-import { deleteImages, fetchImages } from '../../utils/images.util';
+import FetchImageUtil from '../../utils/fetchImage.util';
 
 function DeleteModal(props: DeleteModalProps) {
   const display = useSelector((state: RootState) => state.componentsVisibility.showDeleteModal);
@@ -15,17 +15,17 @@ function DeleteModal(props: DeleteModalProps) {
   const dispatch = useDispatch();
   const hide = () => dispatch(setShowDeleteModal(false));
 
-  const deletePhotos = async (): Promise<void> => {
+  const deleteImages = async (): Promise<void> => {
     const selected = selectedImages;
     dispatch(setSelected([]));
 
-    await deleteImages(images, selected);
+    await FetchImageUtil.deleteMany(images, selected);
 
-    dispatch(setImages(await fetchImages()));
+    dispatch(setImages(await FetchImageUtil.getList()));
     dispatch(setShowDeleteModal(false));
   };
 
-  const { deletePhoto } = props;
+  const { deleteImage } = props;
 
   return (
     <Modal
@@ -44,7 +44,7 @@ function DeleteModal(props: DeleteModalProps) {
         ? You can&apos;t undo this action.
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="danger" onClick={selectedImages.length > 0 ? deletePhotos : deletePhoto}>
+        <Button variant="danger" onClick={selectedImages.length > 0 ? deleteImages : deleteImage}>
           Delete
         </Button>
         <Button variant="secondary" onClick={hide}>Don&apos;t delete it!</Button>

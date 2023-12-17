@@ -1,14 +1,14 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { Photo } from '../../images/PhotoObject.type';
+import { Image } from '../../images/ImageObject.type';
 
 import Carousel from '../Carousel';
 
-const testImages = require('../__tests_helpers__/generatePhotos');
+const testImages = require('../__tests_helpers__/generateImages');
 
 const numberOfImages = 6;
 
-const images: Photo[] = testImages(numberOfImages);
+const images: Image[] = testImages(numberOfImages);
 
 const empty = (): false => false;
 
@@ -16,7 +16,7 @@ test('Carousel buttons displays properly', () => {
   const { getByLabelText } = render(
     <Carousel
       deleteModal={empty}
-      editPhoto={empty}
+      editImage={empty}
       download={empty}
       images={images}
       buttonsDisplay={empty}
@@ -33,11 +33,11 @@ test('Carousel buttons displays properly', () => {
   // console.log(getByLabelText("Next"))
 });
 
-test('Carousel should render photos components based on array', () => {
+test('Carousel should render images components based on array', () => {
   const { getAllByTestId } = render(
     <Carousel
       deleteModal={empty}
-      editPhoto={empty}
+      editImage={empty}
       download={empty}
       images={images}
       buttonsDisplay={empty}
@@ -45,5 +45,5 @@ test('Carousel should render photos components based on array', () => {
     />,
   );
 
-  expect(getAllByTestId('carousel-photo')).toHaveLength(numberOfImages);
+  expect(getAllByTestId('carousel-image')).toHaveLength(numberOfImages);
 });

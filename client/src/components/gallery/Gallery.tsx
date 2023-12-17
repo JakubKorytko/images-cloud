@@ -1,18 +1,18 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import Photo from '../images/Photo';
-import { Photo as PhotoType } from '../images/PhotoObject.type';
+import Image from '../images/Image';
+import { Image as ImageType } from '../images/ImageObject.type';
 import { GalleryProps } from './Gallery.type';
 import { RootState } from '../../app/store';
-import { selectImage } from '../../utils/selecting.util';
+import SelectImageUtil from '../../utils/selectImage.util';
 import { setSelected } from '../../features/images';
 
 function Gallery(props: GalleryProps) {
   const [galleryWidth, setGalleryWidth] = useState(window.innerWidth);
 
   const selectedImages = useSelector((state: RootState) => state.images.selected);
-  const photoChecked = (id: number): boolean => selectedImages.includes(id);
+  const imageChecked = (id: number): boolean => selectedImages.includes(id);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,8 +21,8 @@ function Gallery(props: GalleryProps) {
     });
   }, []);
 
-  const selectPhoto = (id: number, action: boolean): void => {
-    const newSelected = selectImage(id, action, selectedImages);
+  const selectImage = (id: number, action: boolean): void => {
+    const newSelected = SelectImageUtil.selectOne(id, action, selectedImages);
     dispatch(setSelected(newSelected));
   };
 
@@ -33,7 +33,7 @@ function Gallery(props: GalleryProps) {
     original_height: number,
   };
 
-  const placeholderSize = (image: PhotoType): PlaceholderSize => {
+  const placeholderSize = (image: ImageType): PlaceholderSize => {
     const placeholder = {
       width: image.width,
       height: image.height,
@@ -55,7 +55,7 @@ function Gallery(props: GalleryProps) {
 
   const { selectFunction } = props;
 
-  imagesArray.forEach((x: PhotoType, i: number): void => {
+  imagesArray.forEach((x: ImageType, i: number): void => {
     const placeholder = placeholderSize(x);
     const imageSize = `${placeholder.width}x${placeholder.height}?text=${placeholder.original_width}%20x%20${placeholder.original_height}`;
 
@@ -63,9 +63,9 @@ function Gallery(props: GalleryProps) {
     if (galleryWidth < 992) ind = 0;
 
     arr[ind].push(
-      <Photo
+      <Image
         key={x.imageId}
-        checkedState={photoChecked(x.imageId)}
+        checkedState={imageChecked(x.imageId)}
         selectedImages={selectedImages}
         imageSize={imageSize}
         name={x.name}
@@ -74,7 +74,7 @@ function Gallery(props: GalleryProps) {
         img={x.path}
         carrouselId={i}
         id={x.imageId}
-        selectImageFunction={selectPhoto}
+        selectImageFunction={selectImage}
         select={selectFunction}
       />,
     );

@@ -10,15 +10,13 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import flickityOptions from '../../flickity/options';
 import FlickityInstance from '../../flickity/methods';
-import { Photo } from '../images/PhotoObject.type';
+import { Image } from '../images/ImageObject.type';
 import AuthorizedImage from '../images/AuthorizedImage';
 import { RootState } from '../../app/store';
 import {
   setShowCarousel, setShowMenu, setShowDeleteModal, setShowImageEditor,
 } from '../../features/componentsVisibility';
-import {
-  deleteImage, downloadImage, editImageUrl, fetchImages,
-} from '../../utils/images.util';
+import FetchImageUtil from '../../utils/fetchImage.util';
 import ImageEditor from '../editor/ImageEditor';
 import { setImages } from '../../features/images';
 import DeleteModal from '../modals/DeleteModal';
@@ -50,18 +48,18 @@ function Carousel() {
     return false;
   };
 
-  const downloadPhoto = async (): Promise<boolean> => {
-    const photo = carouselCurrent();
-    if (photo) {
-      return downloadImage(photo);
+  const downloadImage = async (): Promise<boolean> => {
+    const image = carouselCurrent();
+    if (image) {
+      return FetchImageUtil.saveToDisk(image);
     }
     return false;
   };
 
-  const editPhoto = async (): Promise<boolean> => {
-    const photo = carouselCurrent();
-    if (!photo) return false;
-    const url = await editImageUrl(photo);
+  const editImage = async (): Promise<boolean> => {
+    const image = carouselCurrent();
+    if (!image) return false;
+    const url = await FetchImageUtil.getEditUrl(image);
     if (url !== '') {
       setImageEditorSrc(url);
       dispatch(setShowImageEditor(true));
@@ -70,15 +68,15 @@ function Carousel() {
     return false;
   };
 
-  const deletePhoto = async (): Promise<boolean> => {
-    const photo = carouselCurrent();
-    if (!photo) return false;
+  const deleteImage = async (): Promise<boolean> => {
+    const image = carouselCurrent();
+    if (!image) return false;
 
     dispatch(setShowDeleteModal(false));
     if (FlickityInstance) FlickityInstance.exitFullscreen();
 
-    await deleteImage(photo);
-    dispatch(setImages(await fetchImages()));
+    await FetchImageUtil.deleteOne(image);
+    dispatch(setImages(await FetchImageUtil.getList()));
     return true;
   };
 
@@ -94,9 +92,9 @@ function Carousel() {
 
   const imagesArray = useSelector((state: RootState) => state.images.list);
 
-  const imagesList = imagesArray.map((x: Photo): ReactElement | null => (
+  const imagesList = imagesArray.map((x: Image): ReactElement | null => (
     <div
-      data-testid="carousel-photo"
+      data-testid="carousel-image"
       key={x.imageId}
       data-name={x.name}
       className="carousel-cell"
@@ -121,9 +119,9 @@ function Carousel() {
 
             <TrashFill className="carousel-button" aria-label="Delete image" onClick={() => dispatch(setShowDeleteModal(true))} />
 
-            <CloudDownloadFill className="carousel-button" aria-label="Download image" onClick={downloadPhoto} />
+            <CloudDownloadFill className="carousel-button" aria-label="Download image" onClick={downloadImage} />
 
-            <PencilFill className="carousel-button" aria-label="Edit image" onClick={editPhoto} />
+            <PencilFill className="carousel-button" aria-label="Edit image" onClick={editImage} />
 
             <button className="flickity-button flickity-prev-next-button next" type="button" aria-label="Next" onClick={() => FlickityInstance.next()}>
               <svg className="flickity-button-icon" viewBox="0 0 100 100">
@@ -138,7 +136,7 @@ function Carousel() {
       </div>
 
       <ImageEditor src={imageEditorSrc} />
-      <DeleteModal deletePhoto={deletePhoto} />
+      <DeleteModal deleteImage={deleteImage} />
       <Gallery selectFunction={showCarousel} />
     </>
   );

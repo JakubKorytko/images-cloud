@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
 import { useSelector } from 'react-redux';
 import ProgressiveImage from './ProgressiveImage';
-import { PhotoProps } from './Photo.type';
+import { ImageProps } from './Image.type';
 import { RootState } from '../../app/store';
-import './Photo.scss';
+import './Image.scss';
 
-function Photo(props: PhotoProps) {
+function Image(props: ImageProps) {
   const [checkMarkDisplay, displayCheckMark] = useState(false);
 
   const selectedImages = useSelector((state: RootState) => state.images.selected);
@@ -17,7 +17,7 @@ function Photo(props: PhotoProps) {
 
   const imageData = {
     id,
-    name: `User photo ${id}`,
+    name: `User image ${id}`,
     size: imageSize,
     placeholder: progressiveThumbPath,
     src: thumbPath,
@@ -41,16 +41,16 @@ function Photo(props: PhotoProps) {
   const hideCM = () => displayCheckMark(false);
 
   const circleClassNames = [
-    'selection photo-icon',
+    `selection image-icon${checked}`,
     `d-${iconDisplay}`,
   ].join(' ');
 
   return (
-    <div className={`photo${checked}`} data-testid="photo" onFocus={displayCM} onMouseOver={displayCM} onBlur={hideCM} onMouseOut={hideCM}>
+    <div className={`image${checked}`} data-testid="image" onFocus={displayCM} onMouseOver={displayCM} onBlur={hideCM} onMouseOut={hideCM}>
       <CheckCircleFill aria-label="Select image" data-testid="imageSelectIcon" className={circleClassNames} onClick={selectImage} />
       <ProgressiveImage data={imageData} checkState={checkedState} click={openImage} />
     </div>
   );
 }
 
-export default Photo;
+export default Image;

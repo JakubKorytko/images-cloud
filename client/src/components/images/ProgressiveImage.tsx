@@ -19,7 +19,7 @@ function ProgressiveImage(props: ProgressiveImageProps) {
 
   const { checkState, click } = props;
 
-  const refreshPhoto = (): void => {
+  const refreshImage = (): void => {
     const requestHeaders: HeadersInit = new Headers();
     requestHeaders.set('Authorization', `Bearer ${Token.value}`);
 
@@ -51,7 +51,7 @@ function ProgressiveImage(props: ProgressiveImageProps) {
       fetchB(placeholder).then(
         (blob) => {
           setImgSrc({ ...imgSrc, url: blob });
-          refreshPhoto();
+          refreshImage();
         },
 
       );

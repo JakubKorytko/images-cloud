@@ -1,22 +1,22 @@
 import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { Photo } from '../../images/PhotoObject.type';
+import { Image } from '../../images/ImageObject.type';
 
 import Gallery from '../Gallery';
 
-const testImages = require('../__tests_helpers__/generatePhotos');
+const testImages = require('../__tests_helpers__/generateImages');
 
 const numberOfImages = 6;
 
-const images: Photo[] = testImages(numberOfImages);
+const images: Image[] = testImages(numberOfImages);
 
 const empty = (): false => false;
 
-test('Gallery should render photos components based on array', () => {
+test('Gallery should render images components based on array', () => {
   const { getAllByTestId } = render(
     <Gallery
       innerWidth={1920}
-      photoSelected={empty}
+      imageSelected={empty}
       images={images}
       selectFunction={empty}
       selectImageFunction={empty}
@@ -24,14 +24,14 @@ test('Gallery should render photos components based on array', () => {
     />,
   );
 
-  expect(getAllByTestId('photo')).toHaveLength(numberOfImages);
+  expect(getAllByTestId('image')).toHaveLength(numberOfImages);
 });
 
 test('Gallery should render images properly based on object info', () => {
   const { getAllByTestId } = render(
     <Gallery
       innerWidth={1920}
-      photoSelected={empty}
+      imageSelected={empty}
       images={images}
       selectFunction={empty}
       selectImageFunction={empty}
@@ -39,17 +39,17 @@ test('Gallery should render images properly based on object info', () => {
     />,
   );
 
-  const photos = getAllByTestId('progressive_img');
+  const foundImages = getAllByTestId('progressive_img');
 
-  photos.forEach((photo): void => {
-    const photoData = {
-      id: Number(photo.getAttribute('data-imageid')),
-      alt: photo.getAttribute('alt'),
-      src: photo.getAttribute('src'),
+  foundImages.forEach((image): void => {
+    const imageData = {
+      id: Number(image.getAttribute('data-imageid')),
+      alt: image.getAttribute('alt'),
+      src: image.getAttribute('src'),
     };
 
-    expect(images[photoData.id].path).toBe(photoData.src);
-    expect(photoData.alt).toBe('User image thumbnail');
+    expect(images[imageData.id].path).toBe(imageData.src);
+    expect(imageData.alt).toBe('User image thumbnail');
   });
 });
 
@@ -60,12 +60,12 @@ test('Selecting images should change its icon', () => {
     selected.push(id);
   };
 
-  const photoSelected = (id: number): boolean => selected.includes(id);
+  const imageSelected = (id: number): boolean => selected.includes(id);
 
   const { getAllByTestId, unmount } = render(
     <Gallery
       innerWidth={1920}
-      photoSelected={photoSelected}
+      imageSelected={imageSelected}
       images={images}
       selectFunction={empty}
       selectImageFunction={selectImage}
@@ -74,10 +74,10 @@ test('Selecting images should change its icon', () => {
   );
 
   const icons = getAllByTestId('imageSelectIcon');
-  const photosBeforeSelecting = getAllByTestId('photo');
+  const imagesBeforeSelecting = getAllByTestId('image');
 
-  photosBeforeSelecting.forEach((photo): void => {
-    expect(photo).not.toHaveClass('photo-checked');
+  imagesBeforeSelecting.forEach((image): void => {
+    expect(image).not.toHaveClass('image-checked');
   });
 
   icons.forEach((icon): void => {
@@ -89,7 +89,7 @@ test('Selecting images should change its icon', () => {
   const component = render(
     <Gallery
       innerWidth={1920}
-      photoSelected={photoSelected}
+      imageSelected={imageSelected}
       images={images}
       selectFunction={empty}
       selectImageFunction={selectImage}
@@ -97,9 +97,9 @@ test('Selecting images should change its icon', () => {
     />,
   );
 
-  const photosAfterSelecting = component.getAllByTestId('photo');
+  const imagesAfterSelecting = component.getAllByTestId('image');
 
-  photosAfterSelecting.forEach((photo): void => {
-    expect(photo).toHaveClass('photo-checked');
+  imagesAfterSelecting.forEach((image): void => {
+    expect(image).toHaveClass('image-checked');
   });
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import FilerobotImageEditor from 'react-filerobot-image-editor';
 import { useSelector, useDispatch } from 'react-redux';
 import { ImageEditorProps, SavedImageData } from './ImageEditor.type';
-import download from '../../utils/download.util';
+import download from '../../utils/downloadFile.util';
 import { RootState } from '../../app/store';
 import { setShowImageEditor } from '../../features/componentsVisibility';
 import './ImageEditor.scss';

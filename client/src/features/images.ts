@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { Photo } from '../components/images/PhotoObject.type';
+import { Image } from '../components/images/ImageObject.type';
 
 export interface ImagesState {
-  list: Photo[],
+  list: Image[],
   selected: number[],
   sortBy: string,
   sortReverse: boolean,
@@ -16,15 +16,15 @@ const initialState: ImagesState = {
   sortReverse: true,
 };
 
-function sortImagesHelper(images: Photo[], x: string, reverse: boolean = false): Photo[] {
-  let sorted: Photo[] = [];
+function sortImagesHelper(images: Image[], x: string, reverse: boolean = false): Image[] {
+  let sorted: Image[] = [];
   switch (x.toLowerCase()) {
-    case 'size': sorted = images.sort((a: Photo, b: Photo): number => b.size - a.size); break;
+    case 'size': sorted = images.sort((a: Image, b: Image): number => b.size - a.size); break;
     case 'date':
-      sorted = images.sort((a: Photo, b: Photo): number => b.date - a.date);
+      sorted = images.sort((a: Image, b: Image): number => b.date - a.date);
       break;
     case 'name':
-      sorted = images.sort((a: Photo, b: Photo): number => a.name.localeCompare(b.name));
+      sorted = images.sort((a: Image, b: Image): number => a.name.localeCompare(b.name));
       break;
     default:
       return images;
@@ -37,7 +37,7 @@ export const imagesSlice = createSlice({
   name: 'images',
   initialState,
   reducers: {
-    setImages: (state, action: PayloadAction<Photo[]>) => {
+    setImages: (state, action: PayloadAction<Image[]>) => {
       state.list = sortImagesHelper(action.payload, state.sortBy, state.sortReverse);
     },
     setSelected: (state, action: PayloadAction<number[]>) => {

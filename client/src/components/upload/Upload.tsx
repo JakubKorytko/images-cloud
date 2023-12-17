@@ -4,11 +4,10 @@ import { Modal, Button } from 'react-bootstrap';
 import './Upload.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { AxiosProgressEvent } from 'axios';
-
 import { RootState } from '../../app/store';
 import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from '../../features/componentsVisibility';
 import { setImages } from '../../features/images';
-import { fetchImages, sendImage } from '../../utils/images.util';
+import FetchImageUtil from '../../utils/fetchImage.util';
 import Progress from './Progress';
 
 function Upload() {
@@ -34,20 +33,20 @@ function Upload() {
   const setProgress = async (x: number): Promise<void> => {
     setUploadingPercentage(x);
     if (x === 100) {
-      dispatch(setImages(await fetchImages()));
+      dispatch(setImages(await FetchImageUtil.getList()));
       setTimeout((): void => {
         dispatch(setShowProgressModal(false));
       }, 300);
     }
   };
 
-  const sendPhoto = async (fileToSend: File): Promise<boolean> => {
+  const sendImage = async (fileToSend: File): Promise<boolean> => {
     const updateProgress = (data: AxiosProgressEvent): void => {
       const total = data.total ? data.total : 1;
       setProgress(Math.round(100 * (data.loaded / total)));
     };
-    await sendImage(fileToSend, updateProgress);
-    const images = await fetchImages();
+    await FetchImageUtil.sendToServer(fileToSend, updateProgress);
+    const images = await FetchImageUtil.getList();
     dispatch(setImages(images));
     return true;
   };
@@ -56,7 +55,7 @@ function Upload() {
     if (!file) return;
     dispatch(setShowUploadModal(false));
     dispatch(setShowProgressModal(true));
-    const res = await sendPhoto(file);
+    const res = await sendImage(file);
     if (!res) {
       dispatch(setShowUploadMimeTypeModal(true));
     }

@@ -13,7 +13,7 @@ import { RootState } from '../../app/store';
 import { setShowDeleteModal, setShowUploadModal } from '../../features/componentsVisibility';
 import { setSelected, setSortBy, setSortReverse } from '../../features/images';
 import Token from '../../utils/token.util';
-import { selectAllImages } from '../../utils/selecting.util';
+import SelectImageUtil from '../../utils/selectImage.util';
 import './Menu.scss';
 
 function Menu() {
@@ -34,8 +34,8 @@ function Menu() {
     window.location.href = '/login';
   };
 
-  const selectAllPhotos = (): void => {
-    const newSelectedArray = selectAllImages(images, selectedImages);
+  const selectAllImages = (): void => {
+    const newSelectedArray = SelectImageUtil.selectAll(images, selectedImages);
     dispatch(setSelected(newSelectedArray));
   };
 
@@ -85,7 +85,7 @@ function Menu() {
               </Nav.Item>
 
               <Nav.Item className={`mx-2 ${btnClass}`}>
-                <Button variant="light" className="nav-button shadow-none nw" onClick={selectAllPhotos}>Select all</Button>
+                <Button variant="light" className="nav-button shadow-none nw" onClick={selectAllImages}>Select all</Button>
               </Nav.Item>
 
               <Nav.Item className={`mx-2 ${btnClass}`}>

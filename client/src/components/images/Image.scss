@@ -14,22 +14,22 @@
   z-index: 1;
 }
 
-.photo-icon-checked {
+.image-icon-checked {
   filter: drop-shadow(1px 1px 6px white);
   color: blue;
 }
 
-.photo-icon {
+.image-icon {
   filter: drop-shadow(1px 1px 6px black);
   color: white;
 }
 
-.photo-checked {
+.image-checked {
   position: relative;
   transform: scale(0.985);
   border: 3px solid blue;
 }
 
-.photo {
+.image {
   position: relative;
 }

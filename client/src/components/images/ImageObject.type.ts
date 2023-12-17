@@ -1,4 +1,4 @@
-export type Photo = {
+export type Image = {
   imageId: number,
   name: string,
   size: number,
