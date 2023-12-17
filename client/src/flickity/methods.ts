@@ -1,7 +1,8 @@
+import Flickity from 'react-flickity-component';
 import { FlickityObject, ElementWithAttributeGetter } from './flickity.type';
 
-export default {
-  ref: null,
+export default (reference: Flickity): FlickityObject => ({
+  ref: reference,
   listener: false,
   next() {
     if (this.ref) {
@@ -56,4 +57,4 @@ export default {
     }
     return !!this.ref;
   },
-} as FlickityObject;
+});

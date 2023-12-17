@@ -1,7 +1,7 @@
 import Flickity from 'react-flickity-component';
 
 export type FlickityObject = {
-  ref: Flickity | null,
+  ref: Flickity,
   listener: boolean,
   next: () => void,
   previous: () => void,

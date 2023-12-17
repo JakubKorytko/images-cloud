@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import flickityOptions from '../../flickity/options';
-import FlickityInstance from '../../flickity/methods';
+import GenerateFlickity from '../../flickity/methods';
 import { Image } from '../images/ImageObject.type';
 import AuthorizedImage from '../images/AuthorizedImage';
 import { RootState } from '../../app/store';
@@ -22,10 +22,12 @@ import { setImages } from '../../features/images';
 import DeleteModal from '../modals/DeleteModal';
 import Gallery from './Gallery';
 import './Carousel.scss';
+import { FlickityObject } from '../../flickity/flickity.type';
 
 function Carousel() {
   const [imageEditorSrc, setImageEditorSrc] = useState('');
 
+  const [FlickityInstance, setFlickityInstance] = useState<FlickityObject | null>(null);
   const display = useSelector((state: RootState) => state.componentsVisibility.showCarousel);
   const displayClassName = display ? 'block' : 'none';
   const dispatch = useDispatch();
@@ -36,6 +38,7 @@ function Carousel() {
   };
 
   const downloadImage = async (): Promise<boolean> => {
+    if (!FlickityInstance) return false;
     const image = FlickityInstance.currentName();
     if (image) {
       return FetchImageUtil.saveToDisk(image);
@@ -44,6 +47,7 @@ function Carousel() {
   };
 
   const editImage = async (): Promise<boolean> => {
+    if (!FlickityInstance) return false;
     const image = FlickityInstance.currentName();
     if (!image) return false;
     const url = await FetchImageUtil.getEditUrl(image);
@@ -56,6 +60,7 @@ function Carousel() {
   };
 
   const deleteImage = async (): Promise<boolean> => {
+    if (!FlickityInstance) return false;
     const image = FlickityInstance.currentName();
     if (!image) return false;
 
@@ -68,8 +73,10 @@ function Carousel() {
   };
 
   useEffect(() => {
-    FlickityInstance.setFullscreenEventListener(toggleMenuAndCarouselDisplay);
-  }, []);
+    if (FlickityInstance) {
+      FlickityInstance.setFullscreenEventListener(toggleMenuAndCarouselDisplay);
+    }
+  }, [FlickityInstance]);
 
   const showCarousel = (x: number): void => {
     if (FlickityInstance) {
@@ -93,12 +100,12 @@ function Carousel() {
   return (
     <>
       <div>
-        <Flickity flickityRef={(c) => { FlickityInstance.ref = c; }} aria-label="Gallery" className="carousel" options={flickityOptions}>
+        <Flickity flickityRef={(c) => { setFlickityInstance(GenerateFlickity(c)); }} aria-label="Gallery" className="carousel" options={flickityOptions}>
           {imagesList}
         </Flickity>
         <Navbar id="carousel-custom-buttons" className={`d-${displayClassName}`}>
           <Container fluid>
-            <button className="flickity-button flickity-prev-next-button previous" type="button" aria-label="Previous" onClick={() => FlickityInstance.previous()}>
+            <button className="flickity-button flickity-prev-next-button previous" type="button" aria-label="Previous" onClick={() => FlickityInstance?.previous()}>
               <svg className="flickity-button-icon" viewBox="0 0 100 100">
                 <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" className="arrow" />
               </svg>
@@ -110,13 +117,13 @@ function Carousel() {
 
             <PencilFill className="carousel-button" aria-label="Edit image" onClick={editImage} />
 
-            <button className="flickity-button flickity-prev-next-button next" type="button" aria-label="Next" onClick={() => FlickityInstance.next()}>
+            <button className="flickity-button flickity-prev-next-button next" type="button" aria-label="Next" onClick={() => FlickityInstance?.next()}>
               <svg className="flickity-button-icon" viewBox="0 0 100 100">
                 <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" className="arrow" transform="translate(100, 100) rotate(180) " />
               </svg>
             </button>
 
-            <XCircleFill className="carousel-button" id="closeFullscren" aria-label="Close image" onClick={() => FlickityInstance.exitFullscreen()} />
+            <XCircleFill className="carousel-button" id="closeFullscren" aria-label="Close image" onClick={() => FlickityInstance?.exitFullscreen()} />
 
           </Container>
         </Navbar>
