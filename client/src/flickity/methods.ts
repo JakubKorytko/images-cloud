@@ -1,4 +1,4 @@
-import { FlickityObject } from './flickity.type';
+import { FlickityObject, ElementWithAttributeGetter } from './flickity.type';
 
 export default {
   ref: null,
@@ -36,7 +36,6 @@ export default {
     if (this.ref) {
       const element: unknown = this.ref.selectedElement;
 
-      type ElementWithAttributeGetter = unknown & { getAttribute: (x: string) => string | null };
       const elementWithAttributeGetter = element as ElementWithAttributeGetter;
       if (elementWithAttributeGetter.getAttribute !== undefined) {
         const name = elementWithAttributeGetter.getAttribute('data-name');

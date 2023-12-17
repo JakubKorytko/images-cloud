@@ -1,7 +1,8 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { DefaultModalProps } from './Modal.type';
 
-function InvalidLoginData(props: { show: boolean, closeHandler: () => void }) {
+function InvalidLoginData(props: DefaultModalProps) {
   const { show, closeHandler } = props;
 
   return (

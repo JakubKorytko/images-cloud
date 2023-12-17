@@ -10,3 +10,7 @@ export type FlickityObject = {
   currentName: () => string | false,
   setFullscreenEventListener: (arg: Function) => boolean,
 };
+
+export type ElementWithAttributeGetter = unknown & {
+  getAttribute: (x: string) => string | null
+};

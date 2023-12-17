@@ -3,7 +3,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Image from '../images/Image';
 import { Image as ImageType } from '../images/ImageObject.type';
-import { GalleryProps } from './Gallery.type';
+import { GalleryProps, PlaceholderSize } from './Gallery.type';
 import { RootState } from '../../app/store';
 import SelectImageUtil from '../../utils/selectImage.util';
 import { setSelected } from '../../features/images';
@@ -26,15 +26,8 @@ function Gallery(props: GalleryProps) {
     dispatch(setSelected(newSelected));
   };
 
-  type PlaceholderSize = {
-    width: number,
-    height: number,
-    original_width: number,
-    original_height: number,
-  };
-
   const placeholderSize = (image: ImageType): PlaceholderSize => {
-    const placeholder = {
+    const placeholder: PlaceholderSize = {
       width: image.width,
       height: image.height,
       original_width: image.width,

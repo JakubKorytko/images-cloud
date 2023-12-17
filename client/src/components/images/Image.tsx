@@ -5,6 +5,7 @@ import ProgressiveImage from './ProgressiveImage';
 import { ImageProps } from './Image.type';
 import { RootState } from '../../app/store';
 import './Image.scss';
+import { ProgressiveImageData } from './ProgressiveImage.type';
 
 function Image(props: ImageProps) {
   const [checkMarkDisplay, displayCheckMark] = useState(false);
@@ -15,7 +16,7 @@ function Image(props: ImageProps) {
     id, imageSize, progressiveThumbPath, thumbPath,
   } = props;
 
-  const imageData = {
+  const imageData: ProgressiveImageData = {
     id,
     name: `User image ${id}`,
     size: imageSize,
