@@ -8,8 +8,6 @@ const authorization = function (req: Request, res: Response, next: NextFunction)
     const token:string | undefined = req.headers.authorization;
 
     const authData = decode(secret)(token);
-    // console.log(authData);
-    // console.log(req.url);
     if (authData == false) {
       res.status(401).send("Not authorized or wrong token given");
       return false;

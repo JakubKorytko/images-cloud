@@ -1,49 +1,54 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
+import { useSelector } from 'react-redux';
 import ProgressiveImage from './ProgressiveImage';
 import { PhotoProps } from './Photo.type';
-import { useSelector } from "react-redux";
-import { RootState } from "../../app/store";
-import "./Photo.scss"
+import { RootState } from '../../app/store';
+import './Photo.scss';
 
-const Photo = (props: PhotoProps) => {
+function Photo(props: PhotoProps) {
   const [checkMarkDisplay, displayCheckMark] = useState(false);
 
   const selectedImages = useSelector((state: RootState) => state.images.selected);
 
+  const {
+    id, imageSize, progressiveThumbPath, thumbPath,
+  } = props;
+
   const imageData = {
-    id: props.id,
-    name: `User photo ${props.id}`,
-    size: props.imageSize,
-    placeholder: props.progressiveThumbPath,
-    src: props.thumbPath,
+    id,
+    name: `User photo ${id}`,
+    size: imageSize,
+    placeholder: progressiveThumbPath,
+    src: thumbPath,
   };
 
-  const selectImage = () => props.selectImageFunction(props.id, !props.checkedState);
+  const {
+    select, selectImageFunction, carrouselId, checkedState,
+  } = props;
+
+  const selectImage = () => selectImageFunction(id, !checkedState);
 
   const openImage = () => {
-    if (selectedImages.length === 0) props.select(props.carrouselId);
+    if (selectedImages.length === 0) select(carrouselId);
     else selectImage();
   };
 
-  const checked = (props.checkedState) ? '-checked' : '';
-  const iconDisplay = (checkMarkDisplay || props.checkedState) ? 'block' : 'none';
+  const checked = (checkedState) ? '-checked' : '';
+  const iconDisplay = (checkMarkDisplay || checkedState) ? 'block' : 'none';
 
-  const circleAttributes = {
-    'data-testid': 'imageSelectIcon',
-    'aria-label': 'Select image',
-    className: [`selection photo-icon${checked}`, `d-${iconDisplay}`].join(' '),
-  };
+  const displayCM = () => displayCheckMark(true);
+  const hideCM = () => displayCheckMark(false);
 
-  const divAttributes = {
-    'data-testid': 'photo',
-    className: `photo${checked}`,
-  };
+  const circleClassNames = [
+    'selection photo-icon',
+    `d-${iconDisplay}`,
+  ].join(' ');
 
   return (
-    <div {...divAttributes} onMouseOver={() => displayCheckMark(true)} onMouseOut={() => displayCheckMark(false)}>
-      <CheckCircleFill {...circleAttributes} onClick={selectImage} />
-      <ProgressiveImage data={imageData} checkState={props.checkedState} click={openImage} />
+    <div className={`photo${checked}`} data-testid="photo" onFocus={displayCM} onMouseOver={displayCM} onBlur={hideCM} onMouseOut={hideCM}>
+      <CheckCircleFill aria-label="Select image" data-testid="imageSelectIcon" className={circleClassNames} onClick={selectImage} />
+      <ProgressiveImage data={imageData} checkState={checkedState} click={openImage} />
     </div>
   );
 }

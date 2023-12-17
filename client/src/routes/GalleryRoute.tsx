@@ -1,47 +1,45 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 import Carousel from '../components/gallery/Carousel';
 import Menu from '../components/gallery/Menu';
 import Upload from '../components/upload/Upload';
-import {authTest} from '../utils/connectionTest.util';
+import { authTest } from '../utils/connectionTest.util';
 import {
-    fetchImages,
+  fetchImages,
 } from '../utils/images.util';
 import UploadMimeType from '../components/modals/UploadMimeType';
-import {connect, useSelector, useDispatch} from "react-redux";
-import {setImages, setSelected, sortImages} from "../features/images";
-import {Photo} from "../components/images/PhotoObject.type";
+import { setImages } from '../features/images';
+import { Photo } from '../components/images/PhotoObject.type';
 
-const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
+const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
-const GalleryRoute = () => {
+function GalleryRoute() {
+  const dispatch = useDispatch();
 
-    const dispatch = useDispatch();
+  useEffect(() => {
+    setInterval((): void => {
+      authTest().then((res): void => {
+        if (res.resCode === 'AUTH_ERROR' || res.resCode === 'SERVER_DOWN' || res.resCode === 'UN_AUTH') window.location.href = res.redirect;
+      });
+    }, CONNECTION_TEST_INTERVAL);
+    fetchImages().then((images: Photo[]): void => {
+      dispatch(setImages(images));
+    });
+  }, []);
 
-    useEffect(() => {
-        setInterval((): void => {
-            authTest().then((res): void => {
-                if (res.resCode === 'AUTH_ERROR' || res.resCode === 'SERVER_DOWN' || res.resCode === 'UNAUTH') window.location.href = res.redirect;
-            });
-        }, connection_test_interval);
-        fetchImages().then((images: Photo[]): void => {
-            dispatch(setImages(images));
-        });
-    }, []);
+  return (
+    <div className="app">
 
+      <Menu />
 
-    return (
-        <div className="app">
+      <Carousel />
 
-            <Menu />
+      <Upload />
 
-            <Carousel />
+      <UploadMimeType />
 
-            <Upload />
-
-            <UploadMimeType/>
-
-        </div>
-    );
+    </div>
+  );
 }
 
 export default GalleryRoute;

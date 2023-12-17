@@ -2,80 +2,75 @@ import React, { useState } from 'react';
 import { FileDrop } from 'react-file-drop';
 import { Modal, Button } from 'react-bootstrap';
 import './Upload.scss';
-import { UploadProps } from './Upload.type';
+import { useSelector, useDispatch } from 'react-redux';
+import { AxiosProgressEvent } from 'axios';
 
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../app/store";
-import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from "../../features/componentsVisibility";
-import {setImages} from "../../features/images";
-import {fetchImages, sendImage} from "../../utils/images.util";
-import {AxiosProgressEvent} from "axios/index";
-import Progress from "./Progress";
+import { RootState } from '../../app/store';
+import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from '../../features/componentsVisibility';
+import { setImages } from '../../features/images';
+import { fetchImages, sendImage } from '../../utils/images.util';
+import Progress from './Progress';
 
-const Upload = () => {
-    const [fileAttached, setFileAttached] = useState(false);
-    const [file, setFile] = useState<File | undefined>(undefined);
-    const [uploadingPercentage, setUploadingPercentage] = useState(0);
+function Upload() {
+  const [fileAttached, setFileAttached] = useState(false);
+  const [file, setFile] = useState<File | undefined>(undefined);
+  const [uploadingPercentage, setUploadingPercentage] = useState(0);
 
-    const show = useSelector((state: RootState) => state.componentsVisibility.showUploadModal);
-    const dispatch = useDispatch();
+  const show = useSelector((state: RootState) => state.componentsVisibility.showUploadModal);
+  const dispatch = useDispatch();
 
-    const transferFile = (x: FileList | null): void => {
-      if (x) {
-        setFile(x[0]);
-        setFileAttached(true);
-      }
-    };
+  const transferFile = (x: FileList | null): void => {
+    if (x) {
+      setFile(x[0]);
+      setFileAttached(true);
+    }
+  };
 
-    const cancelFile = (): void => {
-      setFile(undefined);
-      setFileAttached(false);
-    };
+  const cancelFile = (): void => {
+    setFile(undefined);
+    setFileAttached(false);
+  };
 
-    const uploadFile = async (): Promise<void> => {
-      if (!file) return;
-      dispatch(setShowUploadModal(false));
-      dispatch(setShowProgressModal(true));
-      console.log(file);
-      debugger;
-      const res = await sendPhoto(file);
-      if (!res) {
-        dispatch(setShowUploadMimeTypeModal(true));
-      }
-      cancelFile();
-    };
+  const setProgress = async (x: number): Promise<void> => {
+    setUploadingPercentage(x);
+    if (x === 100) {
+      dispatch(setImages(await fetchImages()));
+      setTimeout((): void => {
+        dispatch(setShowProgressModal(false));
+      }, 300);
+    }
+  };
 
-
-    const setProgress = async (x: number): Promise<void> => {
-      await setUploadingPercentage(x);
-      if (x === 100) {
-        dispatch(setImages(await fetchImages()));
-        setTimeout((): void => {
-          dispatch(setShowProgressModal(false));
-        }, 300);
-      }
-    };
-
-    const resetProgress = (): void => setUploadingPercentage(0);
-
-
-  const sendPhoto = async (file: File): Promise<boolean> => {
+  const sendPhoto = async (fileToSend: File): Promise<boolean> => {
     const updateProgress = (data: AxiosProgressEvent): void => {
       const total = data.total ? data.total : 1;
       setProgress(Math.round(100 * (data.loaded / total)));
-    }
-    await sendImage(file, updateProgress);
+    };
+    await sendImage(fileToSend, updateProgress);
     const images = await fetchImages();
     dispatch(setImages(images));
     return true;
-  }
+  };
 
-    const transferDisplay = fileAttached ? 'flex' : 'none';
-    const cardDisplay = fileAttached ? 'none' : 'flex';
-    const bodyHeight = fileAttached ? 'fit' : '110px';
+  const uploadFile = async (): Promise<void> => {
+    if (!file) return;
+    dispatch(setShowUploadModal(false));
+    dispatch(setShowProgressModal(true));
+    const res = await sendPhoto(file);
+    if (!res) {
+      dispatch(setShowUploadMimeTypeModal(true));
+    }
+    cancelFile();
+  };
 
-    return (
-        <>
+  const resetProgress = (): void => setUploadingPercentage(0);
+
+  const transferDisplay = fileAttached ? 'flex' : 'none';
+  const cardDisplay = fileAttached ? 'none' : 'flex';
+  const bodyHeight = fileAttached ? 'fit' : '110px';
+
+  return (
+    <>
       <Modal
         backdrop="static"
         show={show}
@@ -94,7 +89,17 @@ const Upload = () => {
 
                   <div className="no-file">
                     <legend>Drop a file inside&hellip;</legend>
-                    <input data-testid="upload" className="text-last-center" onChange={(ev): void => { transferFile(ev.target.files); ev.target.value = ''; }} aria-label="Select file to upload" type="file" />
+                    <input
+                      data-testid="upload"
+                      className="text-last-center"
+                      onChange={(event): void => {
+                        const ev = event;
+                        transferFile(ev.target.files);
+                        ev.target.value = '';
+                      }}
+                      aria-label="Select file to upload"
+                      type="file"
+                    />
                     <p>
                       Or click button to
                       <em>Browse</em>
@@ -129,9 +134,9 @@ const Upload = () => {
           </div>
         </Modal.Body>
       </Modal>
-          <Progress value={uploadingPercentage} reset={resetProgress}/>
-          </>
-    );
+      <Progress value={uploadingPercentage} reset={resetProgress} />
+    </>
+  );
 }
 
 export default Upload;

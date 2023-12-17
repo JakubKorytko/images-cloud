@@ -16,7 +16,7 @@ const Folders = {
         const folders = ["/", "/photos", "/photos_thumb", "/progressive_thumb"];
         for (let i = 0; i < 4; i++) {
             const src = path.join(__dirname, "..", `/images/${username}${folders[i]}`);
-            if (!fs.existsSync(src)) {fs.mkdirSync(src); created++};
+            if (!fs.existsSync(src)) {fs.mkdirSync(src); created++}
         }
         return created>0;
     },

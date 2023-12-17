@@ -5,7 +5,7 @@ const serverUrl = process.env.REACT_APP_SERVER_URL;
 //  ===================================================
 //                    RESPONSE CODES
 //  ===================================================
-//   UNAUTH - Unauthorized or token expired
+//   UN_AUTH - Unauthorized or token expired
 //   AUTH_ERROR - Error while trying to authenticate
 //   SERVER_DOWN - Server is down
 //   AUTH_OK - Auth test passed along with server test
@@ -79,7 +79,7 @@ export function authTest(): Promise<{
         if (!json || !json.res) {
           Token.remove();
           resolve({
-            resCode: 'UNAUTH', msg: 'Unauthorized or token expired', res: false, redirect: '/login?redirected',
+            resCode: 'UN_AUTH', msg: 'Unauthorized or token expired', res: false, redirect: '/login?redirected',
           });
         } else {
           resolve({

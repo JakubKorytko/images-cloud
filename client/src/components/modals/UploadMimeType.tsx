@@ -1,15 +1,17 @@
+import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import type { RootState } from '../../app/store'
-import { useSelector, useDispatch } from 'react-redux'
-import { setShowUploadMimeTypeModal } from "../../features/componentsVisibility";
+import { useSelector, useDispatch } from 'react-redux';
+import type { RootState } from '../../app/store';
+import { setShowUploadMimeTypeModal } from '../../features/componentsVisibility';
 
-const UploadMimeType = () => {
+function UploadMimeType() {
+  const uploadModalShow = useSelector(
+    (state: RootState) => state.componentsVisibility.showUploadMimeTypeModal,
+  );
+  const dispatch = useDispatch();
+  const close = () => dispatch(setShowUploadMimeTypeModal(false));
 
-    const uploadModalShow = useSelector((state: RootState) => state.componentsVisibility.showUploadMimeTypeModal);
-    const dispatch = useDispatch();
-    const close = () => dispatch(setShowUploadMimeTypeModal(false));
-
-    return (
+  return (
     <Modal centered show={uploadModalShow} onHide={close}>
       <Modal.Header closeButton>
         <Modal.Title className="text-danger">Wrong file uploaded!</Modal.Title>

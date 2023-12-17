@@ -1,19 +1,23 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ProgressiveImageProps } from './ProgressiveImage.type';
 import fetchB from '../../utils/fetchBlob.util';
 import Token from '../../utils/token.util';
 import './ProgressiveImage.scss';
 
-const ProgressiveImage = (props: ProgressiveImageProps) => {
+function ProgressiveImage(props: ProgressiveImageProps) {
+  const { data } = props;
+
   const {
     id, name, size, placeholder, src,
-  } = props.data;
+  } = data;
 
   const [imgPlaceholder, setImgPlaceholder] = useState('');
   const [imgSrc, setImgSrc] = useState({
     url: `https://via.placeholder.com/${size}`,
     loading: true,
   });
+
+  const { checkState, click } = props;
 
   const refreshPhoto = (): void => {
     const requestHeaders: HeadersInit = new Headers();
@@ -56,21 +60,21 @@ const ProgressiveImage = (props: ProgressiveImageProps) => {
 
   const imgClassNames = [
     `opacity-${imgSrc.loading ? 50 : 100}`,
-    `progressive-image${props.checkState ? '-checked' : ''}`,
+    `progressive-image${checkState ? '-checked' : ''}`,
     'thumbnail',
     'w-100',
   ];
 
-  const imgAttributes = {
-    src: imgSrc.url,
-    className: imgClassNames.join(' '),
-    onClick: props.click,
-    'data-testid': 'proggresive_img',
-    'image-id': id,
-  };
-
   return (
-    <img {...imgAttributes} alt={name} />
+    <input
+      type="image"
+      src={imgSrc.url}
+      className={imgClassNames.join(' ')}
+      onClick={click}
+      data-testid="proggresive_img"
+      data-imageid={id}
+      alt={name}
+    />
   );
 }
 

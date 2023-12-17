@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
 import HealthCheckModal from '../HealthCheckModal';
@@ -9,7 +10,9 @@ test('Healthcheck modal is closing properly', () => {
     display = false;
   };
 
-  const { getByText, unmount } = render(<HealthCheckModal closeHandler={hideModal} show={display} />);
+  const { getByText, unmount } = render(
+    <HealthCheckModal closeHandler={hideModal} show={display} />,
+  );
 
   expect(getByText('Whoops! Server sent some errors...')).toBeInTheDocument();
 

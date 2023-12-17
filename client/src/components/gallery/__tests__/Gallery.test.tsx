@@ -1,5 +1,6 @@
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { Photo } from '../../types/photoObject';
+import { Photo } from '../../images/PhotoObject.type';
 
 import Gallery from '../Gallery';
 
@@ -11,29 +12,38 @@ const images: Photo[] = testImages(numberOfImages);
 
 const empty = (): false => false;
 
-const props = {
-  innerWidth: 1920,
-  photoSelected: empty,
-  images,
-  selectFunction: empty,
-  selectImageFunction: empty,
-  selectedImages: [],
-};
-
 test('Gallery should render photos components based on array', () => {
-  const { getAllByTestId } = render(<Gallery {...props} />);
+  const { getAllByTestId } = render(
+    <Gallery
+      innerWidth={1920}
+      photoSelected={empty}
+      images={images}
+      selectFunction={empty}
+      selectImageFunction={empty}
+      selectedImages={[]}
+    />,
+  );
 
   expect(getAllByTestId('photo')).toHaveLength(numberOfImages);
 });
 
 test('Gallery should render images properly based on object info', () => {
-  const { getAllByTestId } = render(<Gallery {...props} />);
+  const { getAllByTestId } = render(
+    <Gallery
+      innerWidth={1920}
+      photoSelected={empty}
+      images={images}
+      selectFunction={empty}
+      selectImageFunction={empty}
+      selectedImages={[]}
+    />,
+  );
 
   const photos = getAllByTestId('proggresive_img');
 
   photos.forEach((photo): void => {
     const photoData = {
-      id: Number(photo.getAttribute('image-id')),
+      id: Number(photo.getAttribute('data-imageid')),
       alt: photo.getAttribute('alt'),
       src: photo.getAttribute('src'),
     };
@@ -44,29 +54,29 @@ test('Gallery should render images properly based on object info', () => {
 });
 
 test('Selecting images should change its icon', () => {
+  const selected: number[] = [];
+
   const selectImage = (id: number): void => {
     selected.push(id);
   };
 
   const photoSelected = (id: number): boolean => selected.includes(id);
 
-  const customprops = {
-    innerWidth: 1920,
-    photoSelected,
-    images,
-    selectFunction: empty,
-    selectImageFunction: selectImage,
-    selectedImages: [],
-  };
-
-  let selected: number[] = [];
-
-  const { getAllByTestId, unmount } = render(<Gallery {...customprops} selectedImages={selected} />);
+  const { getAllByTestId, unmount } = render(
+    <Gallery
+      innerWidth={1920}
+      photoSelected={photoSelected}
+      images={images}
+      selectFunction={empty}
+      selectImageFunction={selectImage}
+      selectedImages={selected}
+    />,
+  );
 
   const icons = getAllByTestId('imageSelectIcon');
-  const photos_beforeSelecting = getAllByTestId('photo');
+  const photosBeforeSelecting = getAllByTestId('photo');
 
-  photos_beforeSelecting.forEach((photo): void => {
+  photosBeforeSelecting.forEach((photo): void => {
     expect(photo).not.toHaveClass('photo-checked');
   });
 
@@ -76,11 +86,20 @@ test('Selecting images should change its icon', () => {
 
   unmount();
 
-  const component = render(<Gallery {...customprops} selectedImages={selected} />);
+  const component = render(
+    <Gallery
+      innerWidth={1920}
+      photoSelected={photoSelected}
+      images={images}
+      selectFunction={empty}
+      selectImageFunction={selectImage}
+      selectedImages={selected}
+    />,
+  );
 
-  const photos_afterSelecting = component.getAllByTestId('photo');
+  const photosAfterSelecting = component.getAllByTestId('photo');
 
-  photos_afterSelecting.forEach((photo): void => {
+  photosAfterSelecting.forEach((photo): void => {
     expect(photo).toHaveClass('photo-checked');
   });
 });

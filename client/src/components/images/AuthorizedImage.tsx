@@ -3,15 +3,17 @@ import fetchB from '../../utils/fetchBlob.util';
 
 type Props = { src: string, className: string, alt: string };
 
-const AuthorizedImage = (props: Props) => {
+function AuthorizedImage(props: Props) {
   const [url, setUrl] = useState('');
 
+  const { src, alt, className } = props;
+
   useEffect(() => {
-    fetchB(props.src).then((url) => setUrl(url));
-  }, [props.src]);
+    fetchB(src).then((fetchedUrl) => setUrl(fetchedUrl));
+  }, [src]);
 
   return (
-    <img src={url} alt={props.alt} className={props.className} />
+    <img src={url} alt={alt} className={className} />
   );
 }
 

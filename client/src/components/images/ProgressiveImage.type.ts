@@ -1,4 +1,4 @@
-import {MouseEventHandler} from "react";
+import { MouseEventHandler } from 'react';
 
 export type ProgressiveImageData = {
   id: number,
@@ -9,7 +9,7 @@ export type ProgressiveImageData = {
 };
 
 export type ProgressiveImageProps = {
-  click: MouseEventHandler<HTMLImageElement>,
+  click: MouseEventHandler<HTMLInputElement>,
   checkState: boolean,
   data: ProgressiveImageData,
 };

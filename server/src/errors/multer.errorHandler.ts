@@ -3,7 +3,6 @@ import { Multer, MulterError } from "multer";
 const multer = require('multer');
 
 const multerErrorHandler = (err: MulterError, req: Request, res: Response, next: NextFunction) => {
-    console.log(err);
     if (err instanceof multer.MulterError) {
         res.statusCode = 400;
         res.send({ code: err.code });

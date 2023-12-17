@@ -35,7 +35,6 @@ const decode = (secret: string) => (token: string | undefined) => {
     } catch (error) {
         let message = 'Unknown Error'
         if (error instanceof Error) message = error.message
-        // console.log(error);
         return false;
     }
     if (decoded.error != undefined) return false;

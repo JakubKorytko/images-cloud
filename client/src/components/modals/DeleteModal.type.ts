@@ -1,5 +1,5 @@
-import React from "react";
+import React from 'react';
 
 export type DeleteModalProps = {
-    deletePhoto: React.MouseEventHandler<HTMLButtonElement>
+  deletePhoto: React.MouseEventHandler<HTMLButtonElement>
 };

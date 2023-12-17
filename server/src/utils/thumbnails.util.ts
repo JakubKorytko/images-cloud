@@ -86,7 +86,7 @@ const Thumbnails = {
 
         fs.readdirSync(src).forEach((username: string) => {
             // if its running as test it shouldn't check all users
-            if ((data.test && username != "_test_thumbnails_util_delete") || username == "_test_sample") {return false};
+            if ((data.test && username != "_test_thumbnails_util_delete") || username == "_test_sample") {return false}
             const thumbs_path = path.join(__dirname, "..", `/images/${username}/photos_thumb`);
 
             if (!fs.existsSync(thumbs_path)) Folders.create(username)

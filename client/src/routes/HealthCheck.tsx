@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import {
-  Container, Row, Col, Card,
+  Card, Col, Container, Row,
 } from 'react-bootstrap';
 import { CircleFill } from 'react-bootstrap-icons';
 import HealthCheckModal from '../components/modals/HealthCheckModal';
 import './Healthcheck.scss';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
-const connection_test_interval: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
+const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
 const getTime = (): string => {
   const date = new Date();
@@ -20,20 +20,13 @@ const getTime = (): string => {
   if (m < 10) m = `0${m}`;
   if (s < 10) s = `0${s}`;
 
-  const time = `${h}:${m}:${s}`;
-
-  return time;
+  return `${h}:${m}:${s}`;
 };
 
-const HealthCheck = (): JSX.Element => {
+function HealthCheck(): ReactElement | null {
   const [time, setTime] = useState<string>(getTime());
   const [serverStatus, setServerStatus] = useState<boolean | null>(null);
   const [showModal, setShowModal] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (window.location.search === '?redirected') setShowModal(true);
-    setInterval(authUser, connection_test_interval);
-  }, []);
 
   const handleClose = (): void => {
     setShowModal(false);
@@ -49,12 +42,17 @@ const HealthCheck = (): JSX.Element => {
       if (!response.ok) {
         setStatus(false);
       }
-    }).then((data) => {
+    }).then(() => {
       setStatus(true);
-    }).catch((error) => {
+    }).catch(() => {
       setStatus(false);
     });
   };
+
+  useEffect(() => {
+    if (window.location.search === '?redirected') setShowModal(true);
+    setInterval(authUser, CONNECTION_TEST_INTERVAL);
+  }, []);
 
   let headerBg = 'initial';
   let footerBg = 'initial';
@@ -64,7 +62,13 @@ const HealthCheck = (): JSX.Element => {
     footerBg = serverStatus ? '95ff95' : 'ff9595';
   }
 
-  const statusText = serverStatus !== null ? (serverStatus ? 'Online' : 'Offline') : 'Checking...';
+  const getStatus = (status: boolean | null): string => {
+    if (status === null) return 'Checking...';
+    if (status) return 'Online';
+    return 'Offline';
+  };
+
+  const statusText = getStatus(serverStatus);
   const textColor = serverStatus ? 'green' : 'red';
 
   return (
@@ -79,19 +83,19 @@ const HealthCheck = (): JSX.Element => {
                 {serverStatus !== null ? <CircleFill aria-label="Server status icon" className={`align-baseline c-${textColor}`} /> : null}
                 {' '}
                 {statusText}
-                </Card.Text>
+              </Card.Text>
             </Card.Body>
             <Card.Footer className={`bg-${footerBg} text-muted`}>
               Last checked:
               {time}
             </Card.Footer>
-            </Card>
+          </Card>
         </Col>
-        </Row>
+      </Row>
 
-        <HealthCheckModal show={showModal} closeHandler={handleClose} />
+      <HealthCheckModal show={showModal} closeHandler={handleClose} />
     </Container>
-    );
+  );
 }
 
 export default HealthCheck;

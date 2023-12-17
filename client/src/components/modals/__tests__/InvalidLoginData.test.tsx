@@ -1,3 +1,4 @@
+import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
 
 import InvalidLoginData from '../InvalidLoginData';
@@ -9,7 +10,9 @@ test('Invalid login data modal is closing properly', () => {
     display = false;
   };
 
-  const { getByText, unmount } = render(<InvalidLoginData closeHandler={hideModal} show={display} />);
+  const { getByText, unmount } = render(
+    <InvalidLoginData closeHandler={hideModal} show={display} />,
+  );
 
   expect(getByText('Wrong username or password!')).toBeInTheDocument();
 

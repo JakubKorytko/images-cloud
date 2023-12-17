@@ -1,14 +1,14 @@
-import {Photo} from "../components/images/PhotoObject.type";
+import { Photo } from '../components/images/PhotoObject.type';
 
-export function selectAllImages(imgs: Photo[], imgsSelected: number[]): number[] {
-  const newImgsSelected: number[] = [...imgsSelected];
-  for (let i = 0; i < imgs.length; i++) {
-    const index: number = newImgsSelected.indexOf(i);
+export function selectAllImages(images: Photo[], imagesSelected: number[]): number[] {
+  const newImagesSelected: number[] = [...imagesSelected];
+  for (let i = 0; i < images.length; i += 1) {
+    const index: number = newImagesSelected.indexOf(i);
     if (index === -1) {
-      newImgsSelected.push(i);
+      newImagesSelected.push(i);
     }
   }
-  return newImgsSelected;
+  return newImagesSelected;
 }
 
 export function selectImage(id: number, action: boolean, selectedImages: number[]): number[] {
