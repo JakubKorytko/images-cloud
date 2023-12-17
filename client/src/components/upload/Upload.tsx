@@ -62,6 +62,11 @@ function Upload() {
     cancelFile();
   };
 
+  const hide = (): void => {
+    cancelFile();
+    dispatch(setShowUploadModal(false));
+  };
+
   const resetProgress = (): void => setUploadingPercentage(0);
 
   const transferDisplay = fileAttached ? 'flex' : 'none';
@@ -74,7 +79,7 @@ function Upload() {
         backdrop="static"
         show={show}
         keyboard={false}
-        onHide={() => dispatch(setShowUploadModal(false))}
+        onHide={hide}
         centered
       >
         <Modal.Header closeButton>
