@@ -1,3 +1,3 @@
 export type GalleryProps = {
-  selectFunction: Function,
+  selectFunction: (x: number) => void,
 };
