@@ -39,6 +39,8 @@ function Menu() {
     dispatch(setSelected(newSelectedArray));
   };
 
+  const s = selectedImages.length === 1 ? '' : 's';
+
   return (
     <header className={`sticky-top d-${displayClassName}`}>
       <Navbar data-testid="menu" bg="dark" variant="dark" expand={selectedImages.length > 0 ? 'xl' : 'lg'}>
@@ -98,7 +100,8 @@ function Menu() {
                   {' '}
                   {selectedImages.length}
                   {' '}
-                  items
+                  item
+                  {s}
                 </span>
               </Nav.Item>
 
