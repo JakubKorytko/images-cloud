@@ -35,21 +35,8 @@ function Carousel() {
     dispatch(setShowMenu(!val));
   };
 
-  const carouselCurrent = (): string | false | null => {
-    if (FlickityInstance && FlickityInstance.ref) {
-      const element: unknown = FlickityInstance.ref.selectedElement;
-
-      type ElementWithAttributeGetter = unknown & { getAttribute: (x: string) => string | null };
-      const elementWithAttributeGetter = element as ElementWithAttributeGetter;
-      if (elementWithAttributeGetter.getAttribute !== undefined) {
-        return elementWithAttributeGetter.getAttribute('data-name');
-      }
-    }
-    return false;
-  };
-
   const downloadImage = async (): Promise<boolean> => {
-    const image = carouselCurrent();
+    const image = FlickityInstance.currentName();
     if (image) {
       return FetchImageUtil.saveToDisk(image);
     }
@@ -57,7 +44,7 @@ function Carousel() {
   };
 
   const editImage = async (): Promise<boolean> => {
-    const image = carouselCurrent();
+    const image = FlickityInstance.currentName();
     if (!image) return false;
     const url = await FetchImageUtil.getEditUrl(image);
     if (url !== '') {
@@ -69,7 +56,7 @@ function Carousel() {
   };
 
   const deleteImage = async (): Promise<boolean> => {
-    const image = carouselCurrent();
+    const image = FlickityInstance.currentName();
     if (!image) return false;
 
     dispatch(setShowDeleteModal(false));
