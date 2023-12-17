@@ -25,8 +25,6 @@ function Menu() {
 
   const btnClass = `d-${selectedImages.length > 0 ? 'flex' : 'none'}`;
 
-  const displayClassName = display ? 'block' : 'none';
-
   const dispatch = useDispatch();
 
   const logOut = (): void => {
@@ -42,75 +40,77 @@ function Menu() {
   const s = selectedImages.length === 1 ? '' : 's';
 
   return (
-    <header className={`sticky-top d-${displayClassName}`}>
-      <Navbar data-testid="menu" bg="dark" variant="dark" expand={selectedImages.length > 0 ? 'xl' : 'lg'}>
-        <Container fluid>
-          <Navbar.Brand className="my-1 mx-3" href="#">
-            <CloudFill />
-            {' '}
-            images-cloud
-          </Navbar.Brand>
-          <Navbar.Toggle />
-          <Navbar.Collapse>
-            <Nav>
-              <Nav.Item className="text-white mx-2">
-                <Button variant="light" className="nav-button shadow-none nw" onClick={logOut}>
-                  Logout
-                  <BoxArrowRight id="logout-icon" />
-                </Button>
-              </Nav.Item>
-              <Nav.Item className="mx-2">
-                <Stack direction="horizontal" id="sort-by-menu" className="text-light">
-                  <FormLabel className="ml-2 mb-0 sort-label nw">Sort by:</FormLabel>
-                  <Dropdown className="dropdown-select">
-                    <DropdownToggle className="w-auto d-inline-block nav-select shadow-none">
-                      {sortBy}
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      <DropdownItem onClick={async (): Promise<void> => { dispatch(setSortBy('Date')); }}>Date</DropdownItem>
-                      <DropdownItem onClick={async (): Promise<void> => { dispatch(setSortBy('Name')); }}>Name</DropdownItem>
-                      <DropdownItem onClick={async (): Promise<void> => { dispatch(setSortBy('Size')); }}>Size</DropdownItem>
-                    </DropdownMenu>
-                  </Dropdown>
-                  <Button className="nav-arrow shadow-none" onClick={() => dispatch(setSortReverse(!reverse))}>
-                    {' '}
-                    {reverse ? <ArrowDown /> : <ArrowUp />}
+    display ? (
+      <header className="sticky-top">
+        <Navbar data-testid="menu" bg="dark" variant="dark" expand={selectedImages.length > 0 ? 'xl' : 'lg'}>
+          <Container fluid>
+            <Navbar.Brand className="my-1 mx-3" href="#">
+              <CloudFill />
+              {' '}
+              images-cloud
+            </Navbar.Brand>
+            <Navbar.Toggle />
+            <Navbar.Collapse>
+              <Nav>
+                <Nav.Item className="text-white mx-2">
+                  <Button variant="light" className="nav-button shadow-none nw" onClick={logOut}>
+                    Logout
+                    <BoxArrowRight id="logout-icon" />
                   </Button>
-                </Stack>
-              </Nav.Item>
-              <Nav.Item className="mx-2">
-                <Button variant="light" onClick={() => dispatch(setShowUploadModal(true))} className="nav-button shadow-none nw">Upload new image</Button>
-              </Nav.Item>
+                </Nav.Item>
+                <Nav.Item className="mx-2">
+                  <Stack direction="horizontal" id="sort-by-menu" className="text-light">
+                    <FormLabel className="ml-2 mb-0 sort-label nw">Sort by:</FormLabel>
+                    <Dropdown className="dropdown-select">
+                      <DropdownToggle className="w-auto d-inline-block nav-select shadow-none">
+                        {sortBy}
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        <DropdownItem onClick={async (): Promise<void> => { dispatch(setSortBy('Date')); }}>Date</DropdownItem>
+                        <DropdownItem onClick={async (): Promise<void> => { dispatch(setSortBy('Name')); }}>Name</DropdownItem>
+                        <DropdownItem onClick={async (): Promise<void> => { dispatch(setSortBy('Size')); }}>Size</DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                    <Button className="nav-arrow shadow-none" onClick={() => dispatch(setSortReverse(!reverse))}>
+                      {' '}
+                      {reverse ? <ArrowDown /> : <ArrowUp />}
+                    </Button>
+                  </Stack>
+                </Nav.Item>
+                <Nav.Item className="mx-2">
+                  <Button variant="light" onClick={() => dispatch(setShowUploadModal(true))} className="nav-button shadow-none nw">Upload new image</Button>
+                </Nav.Item>
 
-              <Nav.Item className={`mx-2 ${btnClass}`}>
-                <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={() => dispatch(setShowDeleteModal(true))}>Delete</Button>
-              </Nav.Item>
+                <Nav.Item className={`mx-2 ${btnClass}`}>
+                  <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={() => dispatch(setShowDeleteModal(true))}>Delete</Button>
+                </Nav.Item>
 
-              <Nav.Item className={`mx-2 ${btnClass}`}>
-                <Button variant="light" className="nav-button shadow-none nw" onClick={selectAllImages}>Select all</Button>
-              </Nav.Item>
+                <Nav.Item className={`mx-2 ${btnClass}`}>
+                  <Button variant="light" className="nav-button shadow-none nw" onClick={selectAllImages}>Select all</Button>
+                </Nav.Item>
 
-              <Nav.Item className={`mx-2 ${btnClass}`}>
-                <Button variant="light" className="nav-button shadow-none nw" onClick={() => dispatch(setSelected([]))}>Cancel selection</Button>
-              </Nav.Item>
+                <Nav.Item className={`mx-2 ${btnClass}`}>
+                  <Button variant="light" className="nav-button shadow-none nw" onClick={() => dispatch(setSelected([]))}>Cancel selection</Button>
+                </Nav.Item>
 
-              <Nav.Item className={`mx-2 text-light d-flex justify-content-center align-items-center nw ${btnClass}`}>
-                <span>
-                  Selected
-                  {' '}
-                  {selectedImages.length}
-                  {' '}
-                  item
-                  {s}
-                </span>
-              </Nav.Item>
+                <Nav.Item className={`mx-2 text-light d-flex justify-content-center align-items-center nw ${btnClass}`}>
+                  <span>
+                    Selected
+                    {' '}
+                    {selectedImages.length}
+                    {' '}
+                    item
+                    {s}
+                  </span>
+                </Nav.Item>
 
-            </Nav>
-          </Navbar.Collapse>
+              </Nav>
+            </Navbar.Collapse>
 
-        </Container>
-      </Navbar>
-    </header>
+          </Container>
+        </Navbar>
+      </header>
+    ) : null
   );
 }
 

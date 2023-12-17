@@ -29,7 +29,6 @@ function Carousel() {
 
   const [FlickityInstance, setFlickityInstance] = useState<FlickityObject | null>(null);
   const display = useSelector((state: RootState) => state.componentsVisibility.showCarousel);
-  const displayClassName = display ? 'block' : 'none';
   const dispatch = useDispatch();
 
   const toggleMenuAndCarouselDisplay = (val: boolean) => {
@@ -103,30 +102,32 @@ function Carousel() {
         <Flickity flickityRef={(c) => { setFlickityInstance(GenerateFlickity(c)); }} aria-label="Gallery" className="carousel" options={flickityOptions}>
           {imagesList}
         </Flickity>
-        <Navbar id="carousel-custom-buttons" className={`d-${displayClassName}`}>
-          <Container fluid>
-            <button className="flickity-button flickity-prev-next-button previous" type="button" aria-label="Previous" onClick={() => FlickityInstance?.previous()}>
-              <svg className="flickity-button-icon" viewBox="0 0 100 100">
-                <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" className="arrow" />
-              </svg>
-            </button>
+        {display ? (
+          <Navbar id="carousel-custom-buttons">
+            <Container fluid>
+              <button className="flickity-button flickity-prev-next-button previous" type="button" aria-label="Previous" onClick={() => FlickityInstance?.previous()}>
+                <svg className="flickity-button-icon" viewBox="0 0 100 100">
+                  <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" className="arrow" />
+                </svg>
+              </button>
 
-            <TrashFill className="carousel-button" aria-label="Delete image" onClick={() => dispatch(setShowDeleteModal(true))} />
+              <TrashFill className="carousel-button" aria-label="Delete image" onClick={() => dispatch(setShowDeleteModal(true))} />
 
-            <CloudDownloadFill className="carousel-button" aria-label="Download image" onClick={downloadImage} />
+              <CloudDownloadFill className="carousel-button" aria-label="Download image" onClick={downloadImage} />
 
-            <PencilFill className="carousel-button" aria-label="Edit image" onClick={editImage} />
+              <PencilFill className="carousel-button" aria-label="Edit image" onClick={editImage} />
 
-            <button className="flickity-button flickity-prev-next-button next" type="button" aria-label="Next" onClick={() => FlickityInstance?.next()}>
-              <svg className="flickity-button-icon" viewBox="0 0 100 100">
-                <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" className="arrow" transform="translate(100, 100) rotate(180) " />
-              </svg>
-            </button>
+              <button className="flickity-button flickity-prev-next-button next" type="button" aria-label="Next" onClick={() => FlickityInstance?.next()}>
+                <svg className="flickity-button-icon" viewBox="0 0 100 100">
+                  <path d="M 10,50 L 60,100 L 70,90 L 30,50  L 70,10 L 60,0 Z" className="arrow" transform="translate(100, 100) rotate(180) " />
+                </svg>
+              </button>
 
-            <XCircleFill className="carousel-button" id="closeFullscren" aria-label="Close image" onClick={() => FlickityInstance?.exitFullscreen()} />
+              <XCircleFill className="carousel-button" id="closeFullscren" aria-label="Close image" onClick={() => FlickityInstance?.exitFullscreen()} />
 
-          </Container>
-        </Navbar>
+            </Container>
+          </Navbar>
+        ) : null}
       </div>
 
       <ImageEditor src={imageEditorSrc} />

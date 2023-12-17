@@ -11,8 +11,6 @@ function ImageEditor(props: ImageEditorProps) {
   const display = useSelector((state: RootState) => state.componentsVisibility.showImageEditor);
   const dispatch = useDispatch();
 
-  const editorDisplay = display ? 'block' : 'none';
-
   const saveImage = async (file: SavedImageData): Promise<boolean> => {
     if (file.imageBase64 && file.fullName) {
       return download(file.imageBase64, file.fullName);
@@ -36,9 +34,11 @@ function ImageEditor(props: ImageEditorProps) {
   }
 
   return (
-    <div id="image-editor" className={`d-${editorDisplay}`}>
-      {renderItem}
-    </div>
+    display ? (
+      <div id="image-editor">
+        {renderItem}
+      </div>
+    ) : null
   );
 }
 
