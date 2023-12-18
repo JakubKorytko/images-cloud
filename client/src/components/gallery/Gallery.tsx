@@ -1,19 +1,18 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
 import Image from '../images/Image';
 import { Image as ImageType } from '../images/ImageObject.type';
 import { GalleryProps, PlaceholderSize } from './Gallery.type';
-import { RootState } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import SelectImageUtil from '../../utils/selectImage.util';
 import { setSelected } from '../../features/images';
 
 function Gallery(props: GalleryProps) {
   const [galleryWidth, setGalleryWidth] = useState(window.innerWidth);
 
-  const selectedImages = useSelector((state: RootState) => state.images.selected);
+  const selectedImages = useAppSelector((state) => state.images.selected);
   const imageChecked = (id: number): boolean => selectedImages.includes(id);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     window.addEventListener('resize', (): void => {
@@ -42,7 +41,7 @@ function Gallery(props: GalleryProps) {
     return placeholder;
   };
 
-  const imagesArray = useSelector((state: RootState) => state.images.list);
+  const imagesArray = useAppSelector((state) => state.images.list);
   const arr: (ReactElement | null)[][] = [[], [], [], []];
   const sizes = [0, 0, 0, 0];
 

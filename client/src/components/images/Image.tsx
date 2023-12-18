@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
-import { useSelector } from 'react-redux';
 import ProgressiveImage from './ProgressiveImage';
 import { ImageProps } from './Image.type';
-import { RootState } from '../../app/store';
+import { useAppSelector } from '../../app/hooks';
 import { ProgressiveImageData } from './ProgressiveImage.type';
 import styles from './Image.module.scss';
 
 function Image(props: ImageProps) {
   const [checkMarkDisplay, displayCheckMark] = useState(false);
 
-  const selectedImages = useSelector((state: RootState) => state.images.selected);
+  const selectedImages = useAppSelector((state) => state.images.selected);
 
   const {
     id, imageSize, progressiveThumbPath, thumbPath,

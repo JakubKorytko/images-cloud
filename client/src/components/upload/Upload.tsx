@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { FileDrop } from 'react-file-drop';
 import { Modal, Button } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
 import { AxiosProgressEvent } from 'axios';
-import { RootState } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from '../../features/componentsVisibility';
 import { setImages } from '../../features/images';
 import FetchImageUtil from '../../utils/fetchImage.util';
@@ -16,8 +15,8 @@ function Upload() {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [uploadingPercentage, setUploadingPercentage] = useState(0);
 
-  const show = useSelector((state: RootState) => state.componentsVisibility.showUploadModal);
-  const dispatch = useDispatch();
+  const show = useAppSelector((state) => state.componentsVisibility.showUploadModal);
+  const dispatch = useAppDispatch();
 
   const transferFile = (x: FileList | null): void => {
     if (x) {

@@ -1,15 +1,15 @@
 import React from 'react';
 import FilerobotImageEditor from 'react-filerobot-image-editor';
-import { useSelector, useDispatch } from 'react-redux';
 import { ImageEditorProps, SavedImageData } from './ImageEditor.type';
 import download from '../../utils/downloadFile.util';
-import { RootState } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+
 import { setShowImageEditor } from '../../features/componentsVisibility';
 import styles from './ImageEditor.module.scss';
 
 function ImageEditor(props: ImageEditorProps) {
-  const display = useSelector((state: RootState) => state.componentsVisibility.showImageEditor);
-  const dispatch = useDispatch();
+  const display = useAppSelector((state) => state.componentsVisibility.showImageEditor);
+  const dispatch = useAppDispatch();
 
   const saveImage = async (file: SavedImageData): Promise<boolean> => {
     if (file.imageBase64 && file.fullName) {

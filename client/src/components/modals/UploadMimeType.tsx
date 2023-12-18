@@ -1,14 +1,14 @@
 import React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
-import type { RootState } from '../../app/store';
 import { setShowUploadMimeTypeModal } from '../../features/componentsVisibility';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
 function UploadMimeType() {
-  const uploadModalShow = useSelector(
-    (state: RootState) => state.componentsVisibility.showUploadMimeTypeModal,
+  const uploadModalShow = useAppSelector(
+    (state) => state.componentsVisibility.showUploadMimeTypeModal,
   );
-  const dispatch = useDispatch();
+
+  const dispatch = useAppDispatch();
   const close = () => dispatch(setShowUploadMimeTypeModal(false));
 
   return (

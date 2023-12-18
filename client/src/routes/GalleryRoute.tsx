@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../app/hooks';
 import Carousel from '../components/gallery/Carousel';
 import Menu from '../components/gallery/Menu';
 import Upload from '../components/upload/Upload';
@@ -13,7 +13,7 @@ import { Image } from '../components/images/ImageObject.type';
 const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 
 function GalleryRoute() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setInterval((): void => {

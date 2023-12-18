@@ -1,12 +1,11 @@
 import React from 'react';
 import { Modal, ProgressBar } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 import styles from './Progress.module.scss';
 import { ProgressProps } from './Progress.type';
-import { RootState } from '../../app/store';
+import { useAppSelector } from '../../app/hooks';
 
 function Progress(props: ProgressProps) {
-  const show = useSelector((state: RootState) => state.componentsVisibility.showProgressModal);
+  const show = useAppSelector((state) => state.componentsVisibility.showProgressModal);
 
   const { reset, value } = props;
 

@@ -7,12 +7,11 @@ import { Container, Navbar } from 'react-bootstrap';
 import {
   CloudDownloadFill, PencilFill, TrashFill, XCircleFill,
 } from 'react-bootstrap-icons';
-import { useSelector, useDispatch } from 'react-redux';
 import flickityOptions from '../../flickity/options';
 import GenerateFlickity from '../../flickity/methods';
 import { Image } from '../images/ImageObject.type';
 import AuthorizedImage from '../images/AuthorizedImage';
-import { RootState } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import {
   setShowCarousel, setShowMenu, setShowDeleteModal, setShowImageEditor,
 } from '../../features/componentsVisibility';
@@ -28,8 +27,9 @@ function Carousel() {
   const [imageEditorSrc, setImageEditorSrc] = useState('');
 
   const [FlickityInstance, setFlickityInstance] = useState<FlickityObject | null>(null);
-  const display = useSelector((state: RootState) => state.componentsVisibility.showCarousel);
-  const dispatch = useDispatch();
+
+  const display = useAppSelector((state) => state.componentsVisibility.showCarousel);
+  const dispatch = useAppDispatch();
 
   const toggleMenuAndCarouselDisplay = (val: boolean) => {
     dispatch(setShowCarousel(val));
@@ -83,7 +83,7 @@ function Carousel() {
     }
   };
 
-  const imagesArray = useSelector((state: RootState) => state.images.list);
+  const imagesArray = useAppSelector((state) => state.images.list);
 
   const imagesList = imagesArray.map((x: Image): ReactElement | null => (
     <div

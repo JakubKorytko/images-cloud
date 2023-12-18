@@ -1,18 +1,17 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { useSelector, useDispatch } from 'react-redux';
 import { DeleteModalProps } from './DeleteModal.type';
-import { RootState } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setShowDeleteModal } from '../../features/componentsVisibility';
 import { setImages, setSelected } from '../../features/images';
 import FetchImageUtil from '../../utils/fetchImage.util';
 
 function DeleteModal(props: DeleteModalProps) {
-  const display = useSelector((state: RootState) => state.componentsVisibility.showDeleteModal);
-  const images = useSelector((state: any) => state.images.list);
-  const selectedImages = useSelector((state: RootState) => state.images.selected);
+  const display = useAppSelector((state) => state.componentsVisibility.showDeleteModal);
+  const images = useAppSelector((state) => state.images.list);
+  const selectedImages = useAppSelector((state) => state.images.selected);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const hide = () => dispatch(setShowDeleteModal(false));
 
   const deleteImages = async (): Promise<void> => {

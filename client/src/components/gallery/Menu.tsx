@@ -8,8 +8,7 @@ import {
 import DropdownMenu from 'react-bootstrap/DropdownMenu';
 import DropdownItem from 'react-bootstrap/DropdownItem';
 import DropdownToggle from 'react-bootstrap/DropdownToggle';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../app/store';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { setShowDeleteModal, setShowUploadModal } from '../../features/componentsVisibility';
 import { setSelected, setSortBy, setSortReverse } from '../../features/images';
 import Token from '../../utils/token.util';
@@ -17,15 +16,15 @@ import SelectImageUtil from '../../utils/selectImage.util';
 import styles from './Menu.module.scss';
 
 function Menu() {
-  const display = useSelector((state: RootState) => state.componentsVisibility.showMenu);
-  const reverse = useSelector((state: RootState) => state.images.sortReverse);
-  const sortBy = useSelector((state: RootState) => state.images.sortBy);
-  const images = useSelector((state: any) => state.images.list);
-  const selectedImages = useSelector((state: RootState) => state.images.selected);
+  const display = useAppSelector((state) => state.componentsVisibility.showMenu);
+  const reverse = useAppSelector((state) => state.images.sortReverse);
+  const sortBy = useAppSelector((state) => state.images.sortBy);
+  const images = useAppSelector((state) => state.images.list);
+  const selectedImages = useAppSelector((state) => state.images.selected);
 
   const btnClass = `d-${selectedImages.length > 0 ? 'flex' : 'none'}`;
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const logOut = (): void => {
     Token.remove();
