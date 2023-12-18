@@ -13,6 +13,13 @@
   border-radius: 0;
 }
 
+.sort-by-menu .dropdown-menu {
+  position: absolute;
+  right: 0;
+  left: auto;
+  margin-top:0;
+}
+
 .nav-button {
   background-color: transparent;
   border: none;
@@ -82,7 +89,7 @@
   white-space: nowrap;
 }
 
-#logout-icon {
+.logout-icon {
   margin-left: 4px;
   vertical-align: sub;
   width: 20px;

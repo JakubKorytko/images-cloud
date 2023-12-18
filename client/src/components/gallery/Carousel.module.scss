@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   width: 66%;
-  height: 400px;
+  height: 100%;
   margin-right: 10px;
   background: #333;
 }
@@ -21,15 +21,7 @@
   transition: opacity 0.4s;
 }
 
-.carousel.is-fullscreen .carousel-cell {
-  height: 100%;
-}
-
-.carousel.is-fullscreen {
-  display: block;
-}
-
-#carousel-custom-buttons {
+.carousel-custom-buttons {
   color: hsl(0deg 0% 100% / 75%);
   position: fixed;
   width: 100%;
@@ -47,16 +39,10 @@
   display: inline-block;
 }
 
-#carousel-close-button>div:hover {
-  cursor: pointer;
-  color: #fff;
-}
-
 .carousel-button:hover {
   cursor: pointer;
   color: #fff;
 }
-
 
 .flickity-button {
   left: unset !important;
@@ -67,19 +53,8 @@
   top: unset;
 }
 
-#carousel-close-button {
-  position: fixed;
-  top: 25px;
-  right: 25px;
-  z-index: 2;
-  font-size: 44px;
-  opacity: 0.8;
-  color: hsl(0deg 0% 100% / 75%);
-  user-select: none;
-}
-
 @media only screen and (width <= 992px) {
-  #carousel-custom-buttons {
+  .carousel-custom-buttons {
     font-size: 38px;
   }
 
@@ -90,7 +65,7 @@
 }
 
 @media only screen and (width <= 768px) {
-  #carousel-custom-buttons {
+  .carousel-custom-buttons {
     font-size: 34px;
   }
 
@@ -98,8 +73,4 @@
     width: 34px;
     height: 34px;
   }
-}
-
-.flickity-fullscreen-button {
-  display: none !important;
 }

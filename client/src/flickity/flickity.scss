@@ -133,3 +133,29 @@ https://flickity.metafizzy.co
 .flickity-page-dots .dot.is-selected {
   opacity: 1;
 }
+
+/* ---- custom settings ---- */
+
+.flickity-fullscreen-button {
+  display: none !important;
+}
+
+.carousel-close-button {
+  position: fixed;
+  top: 25px;
+  right: 25px;
+  z-index: 2;
+  font-size: 44px;
+  opacity: 0.8;
+  color: hsl(0deg 0% 100% / 75%);
+  user-select: none;
+}
+
+.carousel-close-button>div:hover {
+  cursor: pointer;
+  color: #fff;
+}
+
+.is-fullscreen {
+  display: block !important;
+}

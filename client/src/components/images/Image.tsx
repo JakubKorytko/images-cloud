@@ -4,8 +4,8 @@ import { useSelector } from 'react-redux';
 import ProgressiveImage from './ProgressiveImage';
 import { ImageProps } from './Image.type';
 import { RootState } from '../../app/store';
-import './Image.scss';
 import { ProgressiveImageData } from './ProgressiveImage.type';
+import styles from './Image.module.scss';
 
 function Image(props: ImageProps) {
   const [checkMarkDisplay, displayCheckMark] = useState(false);
@@ -42,12 +42,13 @@ function Image(props: ImageProps) {
   const hideCM = () => displayCheckMark(false);
 
   const circleClassNames = [
-    `selection image-icon${checked}`,
+    styles.selection,
+    styles[`image-icon${checked}`],
     `d-${iconDisplay}`,
   ].join(' ');
 
   return (
-    <div className={`image${checked}`} data-testid="image" onFocus={displayCM} onMouseOver={displayCM} onBlur={hideCM} onMouseOut={hideCM}>
+    <div className={styles[`image${checked}`]} data-testid="image" onFocus={displayCM} onMouseOver={displayCM} onBlur={hideCM} onMouseOut={hideCM}>
       <CheckCircleFill aria-label="Select image" data-testid="imageSelectIcon" className={circleClassNames} onClick={selectImage} />
       <ProgressiveImage data={imageData} checkState={checkedState} click={openImage} />
     </div>

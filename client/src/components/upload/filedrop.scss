@@ -1,0 +1,25 @@
+.file-drop > .file-drop-target.file-drop-dragging-over-frame .file-hold {
+  display: block;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-frame .file-over,
+.file-drop > .file-drop-target.file-drop-dragging-over-frame .no-file {
+  display: none;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-target .file-over {
+  display: block;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-target .file-hold,
+.file-drop > .file-drop-target.file-drop-dragging-over-target .no-file {
+  display: none;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-frame .card-img-overlay {
+  border: 3px dotted red;
+}
+
+.file-drop > .file-drop-target.file-drop-dragging-over-target .card-img-overlay {
+  border: 3px dashed lime;
+}

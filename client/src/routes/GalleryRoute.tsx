@@ -5,6 +5,7 @@ import Menu from '../components/gallery/Menu';
 import Upload from '../components/upload/Upload';
 import { authTest } from '../utils/testConnection.util';
 import FetchImageUtil from '../utils/fetchImage.util';
+import styles from './GalleryRoute.module.scss';
 import UploadMimeType from '../components/modals/UploadMimeType';
 import { setImages } from '../features/images';
 import { Image } from '../components/images/ImageObject.type';
@@ -26,7 +27,7 @@ function GalleryRoute() {
   }, []);
 
   return (
-    <div className="app">
+    <div className={styles.app}>
 
       <Menu />
 

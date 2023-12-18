@@ -5,7 +5,7 @@ import { ImageEditorProps, SavedImageData } from './ImageEditor.type';
 import download from '../../utils/downloadFile.util';
 import { RootState } from '../../app/store';
 import { setShowImageEditor } from '../../features/componentsVisibility';
-import './ImageEditor.scss';
+import styles from './ImageEditor.module.scss';
 
 function ImageEditor(props: ImageEditorProps) {
   const display = useSelector((state: RootState) => state.componentsVisibility.showImageEditor);
@@ -35,7 +35,7 @@ function ImageEditor(props: ImageEditorProps) {
 
   return (
     display ? (
-      <div id="image-editor">
+      <div className={styles['image-editor']}>
         {renderItem}
       </div>
     ) : null

@@ -3,8 +3,8 @@ import {
   Card, Col, Container, Row,
 } from 'react-bootstrap';
 import { CircleFill } from 'react-bootstrap-icons';
+import styles from './Healthcheck.module.scss';
 import HealthCheckModal from '../components/modals/HealthCheckModal';
-import './Healthcheck.scss';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
@@ -72,20 +72,20 @@ function HealthCheck(): ReactElement | null {
   const textColor = serverStatus ? 'green' : 'red';
 
   return (
-    <Container className="center wh-100">
+    <Container className={`${styles.center} ${styles['wh-100']}`}>
       <Row>
         <Col>
           <Card className="text-center">
-            <Card.Header className={`bg-${headerBg}`}>On this site you can check if server is down</Card.Header>
+            <Card.Header className={styles[`bg-${headerBg}`]}>On this site you can check if server is down</Card.Header>
             <Card.Body>
               <Card.Title>Server status</Card.Title>
               <Card.Text aria-label="Server status">
-                {serverStatus !== null ? <CircleFill aria-label="Server status icon" className={`align-baseline c-${textColor}`} /> : null}
+                {serverStatus !== null ? <CircleFill aria-label="Server status icon" className={`align-baseline ${styles[`c-${textColor}`]}`} /> : null}
                 {' '}
                 {statusText}
               </Card.Text>
             </Card.Body>
-            <Card.Footer className={`bg-${footerBg} text-muted`}>
+            <Card.Footer className={`${styles[`bg-${footerBg}`]} text-muted`}>
               Last checked:
               {time}
             </Card.Footer>

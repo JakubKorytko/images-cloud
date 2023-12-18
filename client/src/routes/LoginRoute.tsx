@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useState, useEffect } from 'react';
-import './LoginRoute.scss';
 import {
   Container, Row, Col, Form, Button, InputGroup, NavbarBrand,
 } from 'react-bootstrap';
 import { CloudFill } from 'react-bootstrap-icons';
+import styles from './LoginRoute.module.scss';
 import { authTest } from '../utils/testConnection.util';
 import Token from '../utils/token.util';
 import InvalidLoginData from '../components/modals/InvalidLoginData';
@@ -126,12 +126,12 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <div className="center wh-100">
-        <Container className="center bg-dark" id="login-container">
+    <div className={styles.app}>
+      <div className={`${styles.center} ${styles['wh-100']}`}>
+        <Container className={`${styles.center} bg-dark ${styles['login-container']}`}>
           <div>
-            <Row id="login-row">
-              <Col id="login-col" className="mb-4">
+            <Row className={styles['login-row']}>
+              <Col className={`mb-4 ${styles['login-col']}`}>
                 <NavbarBrand>
                   <CloudFill />
                   {' '}
@@ -145,8 +145,8 @@ function App() {
                 <Form noValidate onSubmit={handleSubmit}>
                   <Form.Group>
                     <InputGroup hasValidation>
-                      <Form.Control required isInvalid={!usernameValid} type="text" aria-label="Username" className="form-control w-250px" placeholder="Username" value={username} onChange={updateUsername} />
-                      <Form.Control.Feedback className="c-ffd3d3" type="invalid">
+                      <Form.Control required isInvalid={!usernameValid} type="text" aria-label="Username" className={`form-control ${styles['w-250px']}`} placeholder="Username" value={username} onChange={updateUsername} />
+                      <Form.Control.Feedback className={styles['c-ffd3d3']} type="invalid">
                         Please choose a username.
                       </Form.Control.Feedback>
                     </InputGroup>
@@ -155,8 +155,8 @@ function App() {
 
                   <Form.Group>
                     <InputGroup hasValidation>
-                      <Form.Control required isInvalid={!passwordValid} type="password" aria-label="Password" className="form-control w-250px" placeholder="Password" value={password} onChange={updatePassword} />
-                      <Form.Control.Feedback className="c-ffd3d3" type="invalid">
+                      <Form.Control required isInvalid={!passwordValid} type="password" aria-label="Password" className={`form-control ${styles['w-250px']}`} placeholder="Password" value={password} onChange={updatePassword} />
+                      <Form.Control.Feedback className={styles['c-ffd3d3']} type="invalid">
                         Please choose a password.
                       </Form.Control.Feedback>
                     </InputGroup>

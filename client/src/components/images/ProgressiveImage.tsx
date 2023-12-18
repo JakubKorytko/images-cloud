@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ProgressiveImageProps } from './ProgressiveImage.type';
 import fetchB from '../../utils/fetchBlob.util';
 import Token from '../../utils/token.util';
-import './ProgressiveImage.scss';
+import styles from './ProgressiveImage.module.scss';
 
 function ProgressiveImage(props: ProgressiveImageProps) {
   const { data } = props;
@@ -60,9 +60,9 @@ function ProgressiveImage(props: ProgressiveImageProps) {
 
   const imgClassNames = [
     `opacity-${imgSrc.loading ? 50 : 100}`,
-    `progressive-image${checkState ? '-checked' : ''}`,
-    'thumbnail',
-    'w-100',
+    styles[`progressive-image${checkState ? '-checked' : ''}`],
+    styles.thumbnail,
+    styles['wh-100'],
   ];
 
   return (

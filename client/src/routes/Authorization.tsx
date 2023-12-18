@@ -3,7 +3,7 @@ import { Navigate } from 'react-router';
 import { Rings } from 'react-loader-spinner';
 import Token from '../utils/token.util';
 import { authTest } from '../utils/testConnection.util';
-import './Authorization.scss';
+import styles from './Authorization.module.scss';
 
 function Authorization(props: { loginPage: boolean, path: ReactElement | null }) {
   const [res, setRes] = useState<boolean | undefined>(undefined);
@@ -26,7 +26,7 @@ function Authorization(props: { loginPage: boolean, path: ReactElement | null })
 
   const x = res;
 
-  const loader = (<div className="loader"><Rings height="200" width="200" color="grey" ariaLabel="loading" /></div>);
+  const loader = (<div className={styles.loader}><Rings height="200" width="200" color="grey" ariaLabel="loading" /></div>);
 
   if (loginPage) {
     if (x === false) { return path; }

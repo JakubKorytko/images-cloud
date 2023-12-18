@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { FileDrop } from 'react-file-drop';
 import { Modal, Button } from 'react-bootstrap';
-import './Upload.scss';
 import { useSelector, useDispatch } from 'react-redux';
 import { AxiosProgressEvent } from 'axios';
 import { RootState } from '../../app/store';
@@ -9,6 +8,8 @@ import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } 
 import { setImages } from '../../features/images';
 import FetchImageUtil from '../../utils/fetchImage.util';
 import Progress from './Progress';
+import styles from './Upload.module.scss';
+import './filedrop.scss';
 
 function Upload() {
   const [fileAttached, setFileAttached] = useState(false);
@@ -86,16 +87,16 @@ function Upload() {
           <Modal.Title>Upload image (png/jpg/jpeg)</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className={`h-${bodyHeight}`}>
+          <div className={styles[`h-${bodyHeight}`]}>
             <FileDrop onDrop={transferFile}>
-              <div className={`card-img-overlay center d-${cardDisplay} text-center`}>
-                <fieldset id="zone">
+              <div className={`card-img-overlay ${styles.center} d-${cardDisplay} text-center`}>
+                <fieldset className={styles.zone}>
 
                   <div className="no-file">
                     <legend>Drop a file inside&hellip;</legend>
                     <input
                       data-testid="upload"
-                      className="text-last-center"
+                      className={styles['text-last-center']}
                       onChange={(event): void => {
                         const ev = event;
                         transferFile(ev.target.files);
@@ -106,32 +107,33 @@ function Upload() {
                     />
                     <p>
                       Or click button to
+                      {' '}
                       <em>Browse</em>
                       ..
                     </p>
                   </div>
 
-                  <div className="file-hold">
+                  <div className={styles['file-hold']}>
                     <legend>Drop here!</legend>
                   </div>
 
-                  <div className="file-over">
+                  <div className={styles['file-over']}>
                     <legend>Drop now!</legend>
                   </div>
 
                 </fieldset>
               </div>
             </FileDrop>
-            <div id="transfer-file" className={`d-${transferDisplay}`}>
+            <div className={`${styles['transfer-file']} d-${transferDisplay}`}>
               <div className="m-2">
                 File selected! Click button below to transfer file
               </div>
-              <div id="upload-select-buttons">
+              <div className={styles['upload-select-buttons']}>
                 <Button onClick={uploadFile} className="m-2" variant="primary" disabled={!fileAttached}>
-                  <span className="no-break">Upload file</span>
+                  <span className={styles['no-break']}>Upload file</span>
                 </Button>
                 <Button onClick={cancelFile} className="m-2" variant="primary" disabled={!fileAttached}>
-                  <span className="no-break">Select other file</span>
+                  <span className={styles['no-break']}>Select other file</span>
                 </Button>
               </div>
             </div>

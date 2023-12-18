@@ -14,7 +14,7 @@ import { setShowDeleteModal, setShowUploadModal } from '../../features/component
 import { setSelected, setSortBy, setSortReverse } from '../../features/images';
 import Token from '../../utils/token.util';
 import SelectImageUtil from '../../utils/selectImage.util';
-import './Menu.scss';
+import styles from './Menu.module.scss';
 
 function Menu() {
   const display = useSelector((state: RootState) => state.componentsVisibility.showMenu);
@@ -53,16 +53,16 @@ function Menu() {
             <Navbar.Collapse>
               <Nav>
                 <Nav.Item className="text-white mx-2">
-                  <Button variant="light" className="nav-button shadow-none nw" onClick={logOut}>
+                  <Button variant="light" className={`${styles['nav-button']} shadow-none ${styles.nw}`} onClick={logOut}>
                     Logout
-                    <BoxArrowRight id="logout-icon" />
+                    <BoxArrowRight className={styles['logout-icon']} />
                   </Button>
                 </Nav.Item>
                 <Nav.Item className="mx-2">
-                  <Stack direction="horizontal" id="sort-by-menu" className="text-light">
-                    <FormLabel className="ml-2 mb-0 sort-label nw">Sort by:</FormLabel>
-                    <Dropdown className="dropdown-select">
-                      <DropdownToggle className="w-auto d-inline-block nav-select shadow-none">
+                  <Stack direction="horizontal" className={`${styles['sort-by-menu']} text-light`}>
+                    <FormLabel className={`ml-2 mb-0 ${styles['sort-label']} ${styles.nw}`}>Sort by:</FormLabel>
+                    <Dropdown className={styles['dropdown-select']}>
+                      <DropdownToggle className={`w-auto d-inline-block ${styles['nav-select']} shadow-none`}>
                         {sortBy}
                       </DropdownToggle>
                       <DropdownMenu>
@@ -71,29 +71,37 @@ function Menu() {
                         <DropdownItem onClick={async (): Promise<void> => { dispatch(setSortBy('Size')); }}>Size</DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
-                    <Button className="nav-arrow shadow-none" onClick={() => dispatch(setSortReverse(!reverse))}>
+                    <Button className={`${styles['nav-arrow']} shadow-none`} onClick={() => dispatch(setSortReverse(!reverse))}>
                       {' '}
                       {reverse ? <ArrowDown /> : <ArrowUp />}
                     </Button>
                   </Stack>
                 </Nav.Item>
                 <Nav.Item className="mx-2">
-                  <Button variant="light" onClick={() => dispatch(setShowUploadModal(true))} className="nav-button shadow-none nw">Upload new image</Button>
+                  <Button variant="light" onClick={() => dispatch(setShowUploadModal(true))} className={`${styles['nav-button']} shadow-none ${styles.nw}`}>
+                    Upload new image
+                  </Button>
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>
-                  <Button variant="light" className="nav-button shadow-none nw" onClick={() => dispatch(setSelected([]))}>Cancel selection</Button>
+                  <Button variant="light" className={`${styles['nav-button']} shadow-none ${styles.nw}`} onClick={() => dispatch(setSelected([]))}>
+                    Cancel selection
+                  </Button>
                 </Nav.Item>
 
                 <Nav.Item className="mx-2">
-                  <Button variant="light" className="nav-button shadow-none nw" onClick={selectAllImages}>Select all</Button>
+                  <Button variant="light" className={`${styles['nav-button']} shadow-none ${styles.nw}`} onClick={selectAllImages}>
+                    Select all
+                  </Button>
                 </Nav.Item>
 
                 <Nav.Item className={`mx-2 ${btnClass}`}>
-                  <Button variant="danger" className="nav-button shadow-none nw" aria-label="Delete selected" onClick={() => dispatch(setShowDeleteModal(true))}>Delete</Button>
+                  <Button variant="danger" className={`${styles['nav-button']} shadow-none ${styles.nw}`} aria-label="Delete selected" onClick={() => dispatch(setShowDeleteModal(true))}>
+                    Delete
+                  </Button>
                 </Nav.Item>
 
-                <Nav.Item className={`mx-2 text-light d-flex justify-content-center align-items-center nw ${btnClass}`}>
+                <Nav.Item className={`mx-2 text-light d-flex justify-content-center align-items-center ${styles.nw} ${btnClass}`}>
                   <span>
                     Selected
                     {' '}

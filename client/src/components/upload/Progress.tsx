@@ -1,10 +1,9 @@
 import React from 'react';
 import { Modal, ProgressBar } from 'react-bootstrap';
-import './Upload.scss';
 import { useSelector } from 'react-redux';
+import styles from './Progress.module.scss';
 import { ProgressProps } from './Progress.type';
 import { RootState } from '../../app/store';
-import './Progress.scss';
 
 function Progress(props: ProgressProps) {
   const show = useSelector((state: RootState) => state.componentsVisibility.showProgressModal);
@@ -23,8 +22,8 @@ function Progress(props: ProgressProps) {
         <Modal.Title>Uploading in progress...</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="progress-div">
-          <ProgressBar id="progress-bar" aria-label="Progress bar" now={value} label={`${value}%`} />
+        <div className={styles['progress-div']}>
+          <ProgressBar className={styles['progress-bar']} aria-label="Progress bar" now={value} label={`${value}%`} />
         </div>
       </Modal.Body>
     </Modal>
