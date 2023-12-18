@@ -1,10 +1,10 @@
-import React from 'react';
 import { render } from '@testing-library/react';
-import { Image } from '../../images/ImageObject.type';
+import React from 'react';
 
-import Carousel from '../Carousel';
+import Carousel from 'components/gallery/Carousel';
+import testImages from 'components/gallery/__tests_helpers__/generateImages';
 
-const testImages = require('../__tests_helpers__/generateImages');
+import type { Image } from 'components/images/ImageObject.type';
 
 const numberOfImages = 6;
 

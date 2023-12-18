@@ -1,17 +1,19 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import './index.scss';
+import 'index.scss';
+import { Provider } from 'react-redux';
 import {
   BrowserRouter,
-  Routes,
   Route,
+  Routes,
 } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { store } from './app/store';
-import Authorization from './routes/Authorization';
-import GalleryRoute from './routes/GalleryRoute';
-import LoginRoute from './routes/LoginRoute';
-import HealthCheck from './routes/HealthCheck';
+
+import { store } from 'app/store';
+
+import Authorization from 'routes/Authorization';
+import GalleryRoute from 'routes/GalleryRoute';
+import HealthCheck from 'routes/HealthCheck';
+import LoginRoute from 'routes/LoginRoute';
 
 const root = createRoot(document.getElementById('root') as Element);
 root.render(

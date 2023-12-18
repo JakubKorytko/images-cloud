@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { CheckCircleFill } from 'react-bootstrap-icons';
-import ProgressiveImage from './ProgressiveImage';
-import { ImageProps } from './Image.type';
-import { useAppSelector } from '../../app/hooks';
-import { ProgressiveImageData } from './ProgressiveImage.type';
-import styles from './Image.module.scss';
+
+import { useAppSelector } from 'app/hooks';
+
+import ProgressiveImage from 'components/images/ProgressiveImage';
+
+import type { ImageProps } from 'components/images/Image.type';
+import type { ProgressiveImageData } from 'components/images/ProgressiveImage.type';
+
+import styles from 'components/images/Image.module.scss';
 
 function Image(props: ImageProps) {
   const [checkMarkDisplay, displayCheckMark] = useState(false);

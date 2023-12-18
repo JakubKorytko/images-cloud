@@ -1,9 +1,11 @@
-import React, { useState, useEffect, ReactElement } from 'react';
-import { Navigate } from 'react-router';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { Rings } from 'react-loader-spinner';
-import Token from '../utils/token.util';
-import { authTest } from '../utils/testConnection.util';
-import styles from './Authorization.module.scss';
+import { Navigate } from 'react-router';
+
+import { authTest } from 'utils/testConnection.util';
+import Token from 'utils/token.util';
+
+import styles from 'routes/Authorization.module.scss';
 
 function Authorization(props: { loginPage: boolean, path: ReactElement | null }) {
   const [res, setRes] = useState<boolean | undefined>(undefined);

@@ -1,10 +1,14 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { DeleteModalProps } from './DeleteModal.type';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setShowDeleteModal } from '../../features/componentsVisibility';
-import { setImages, setSelected } from '../../features/images';
-import FetchImageUtil from '../../utils/fetchImage.util';
+
+import FetchImageUtil from 'utils/fetchImage.util';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { setShowDeleteModal } from 'features/componentsVisibility';
+import { setImages, setSelected } from 'features/images';
+
+import type { DeleteModalProps } from 'components/modals/DeleteModal.type';
 
 function DeleteModal(props: DeleteModalProps) {
   const display = useAppSelector((state) => state.componentsVisibility.showDeleteModal);

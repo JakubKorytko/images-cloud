@@ -1,5 +1,6 @@
 import Flickity from 'react-flickity-component';
-import { FlickityObject, ElementWithAttributeGetter } from './flickity.type';
+
+import type { ElementWithAttributeGetter, FlickityObject } from 'flickity/flickity.type';
 
 export default (reference: Flickity): FlickityObject => ({
   ref: reference,

@@ -1,14 +1,20 @@
-import React, { useState } from 'react';
-import { FileDrop } from 'react-file-drop';
-import { Modal, Button } from 'react-bootstrap';
 import { AxiosProgressEvent } from 'axios';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setShowUploadMimeTypeModal, setShowProgressModal, setShowUploadModal } from '../../features/componentsVisibility';
-import { setImages } from '../../features/images';
-import FetchImageUtil from '../../utils/fetchImage.util';
-import Progress from './Progress';
-import styles from './Upload.module.scss';
-import './filedrop.scss';
+import React, { useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { FileDrop } from 'react-file-drop';
+
+import FetchImageUtil from 'utils/fetchImage.util';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import Progress from 'components/upload/Progress';
+
+import { setShowProgressModal, setShowUploadMimeTypeModal, setShowUploadModal } from 'features/componentsVisibility';
+import { setImages } from 'features/images';
+
+import styles from 'components/upload/Upload.module.scss';
+
+import 'components/upload/filedrop.scss';
 
 function Upload() {
   const [fileAttached, setFileAttached] = useState(false);

@@ -1,11 +1,15 @@
 import React from 'react';
 import FilerobotImageEditor from 'react-filerobot-image-editor';
-import { ImageEditorProps, SavedImageData } from './ImageEditor.type';
-import download from '../../utils/downloadFile.util';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
 
-import { setShowImageEditor } from '../../features/componentsVisibility';
-import styles from './ImageEditor.module.scss';
+import download from 'utils/downloadFile.util';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { setShowImageEditor } from 'features/componentsVisibility';
+
+import type { ImageEditorProps, SavedImageData } from 'components/editor/ImageEditor.type';
+
+import styles from 'components/editor/ImageEditor.module.scss';
 
 function ImageEditor(props: ImageEditorProps) {
   const display = useAppSelector((state) => state.componentsVisibility.showImageEditor);

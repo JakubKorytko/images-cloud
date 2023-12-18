@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { ProgressiveImageProps } from './ProgressiveImage.type';
-import fetchB from '../../utils/fetchBlob.util';
-import Token from '../../utils/token.util';
-import styles from './ProgressiveImage.module.scss';
+
+import fetchB from 'utils/fetchBlob.util';
+import Token from 'utils/token.util';
+
+import type { ProgressiveImageProps } from 'components/images/ProgressiveImage.type';
+
+import styles from 'components/images/ProgressiveImage.module.scss';
 
 function ProgressiveImage(props: ProgressiveImageProps) {
   const { data } = props;

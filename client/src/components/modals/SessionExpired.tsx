@@ -1,6 +1,7 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import { DefaultModalProps } from './Modal.type';
+import { Button, Modal } from 'react-bootstrap';
+
+import type { DefaultModalProps } from 'components/modals/Modal.type';
 
 function SessionExpired(props: DefaultModalProps) {
   const { show, closeHandler } = props;

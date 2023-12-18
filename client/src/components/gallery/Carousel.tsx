@@ -1,27 +1,33 @@
-import React, { useState, useEffect, ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import Flickity from 'react-flickity-component';
-import '../../flickity/flickity.scss';
-import 'flickity-fullscreen/fullscreen.css';
+import 'flickity/flickity.scss';
 import 'flickity-fullscreen';
 import { Container, Navbar } from 'react-bootstrap';
 import {
   CloudDownloadFill, PencilFill, TrashFill, XCircleFill,
 } from 'react-bootstrap-icons';
-import flickityOptions from '../../flickity/options';
-import GenerateFlickity from '../../flickity/methods';
-import { Image } from '../images/ImageObject.type';
-import AuthorizedImage from '../images/AuthorizedImage';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+
+import FetchImageUtil from 'utils/fetchImage.util';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import ImageEditor from 'components/editor/ImageEditor';
+import AuthorizedImage from 'components/images/AuthorizedImage';
+import DeleteModal from 'components/modals/DeleteModal';
+import Gallery from 'components/gallery/Gallery';
+
+import flickityOptions from 'flickity/options';
+import GenerateFlickity from 'flickity/methods';
+
 import {
-  setShowCarousel, setShowMenu, setShowDeleteModal, setShowImageEditor,
-} from '../../features/componentsVisibility';
-import FetchImageUtil from '../../utils/fetchImage.util';
-import ImageEditor from '../editor/ImageEditor';
-import { setImages } from '../../features/images';
-import DeleteModal from '../modals/DeleteModal';
-import Gallery from './Gallery';
-import { FlickityObject } from '../../flickity/flickity.type';
-import styles from './Carousel.module.scss';
+  setShowCarousel, setShowDeleteModal, setShowImageEditor, setShowMenu,
+} from 'features/componentsVisibility';
+import { setImages } from 'features/images';
+
+import type { Image } from 'components/images/ImageObject.type';
+import type { FlickityObject } from 'flickity/flickity.type';
+
+import styles from 'components/gallery/Carousel.module.scss';
 
 function Carousel() {
   const [imageEditorSrc, setImageEditorSrc] = useState('');

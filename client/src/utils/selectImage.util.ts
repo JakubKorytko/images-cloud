@@ -1,4 +1,4 @@
-import { Image } from '../components/images/ImageObject.type';
+import type { Image } from 'components/images/ImageObject.type';
 
 namespace SelectImageUtil {
 

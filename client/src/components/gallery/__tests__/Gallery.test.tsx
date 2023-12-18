@@ -1,10 +1,10 @@
-import React from 'react';
 import { fireEvent, render } from '@testing-library/react';
-import { Image } from '../../images/ImageObject.type';
+import React from 'react';
 
-import Gallery from '../Gallery';
+import Gallery from 'components/gallery/Gallery';
+import testImages from 'components/gallery/__tests_helpers__/generateImages';
 
-const testImages = require('../__tests_helpers__/generateImages');
+import type { Image } from 'components/images/ImageObject.type';
 
 const numberOfImages = 6;
 

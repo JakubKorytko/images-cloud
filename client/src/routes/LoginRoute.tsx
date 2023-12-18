@@ -1,13 +1,16 @@
-import React, { ChangeEvent, useState, useEffect } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import {
-  Container, Row, Col, Form, Button, InputGroup, NavbarBrand,
+  Button, Col, Container, Form, InputGroup, NavbarBrand, Row,
 } from 'react-bootstrap';
 import { CloudFill } from 'react-bootstrap-icons';
-import styles from './LoginRoute.module.scss';
-import { authTest } from '../utils/testConnection.util';
-import Token from '../utils/token.util';
-import InvalidLoginData from '../components/modals/InvalidLoginData';
-import SessionExpired from '../components/modals/SessionExpired';
+
+import { authTest } from 'utils/testConnection.util';
+import Token from 'utils/token.util';
+
+import InvalidLoginData from 'components/modals/InvalidLoginData';
+import SessionExpired from 'components/modals/SessionExpired';
+
+import styles from 'routes/LoginRoute.module.scss';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);

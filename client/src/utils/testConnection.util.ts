@@ -1,4 +1,4 @@
-import Token from './token.util';
+import Token from 'utils/token.util';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 

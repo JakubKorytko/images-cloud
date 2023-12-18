@@ -2,18 +2,22 @@ import React from 'react';
 import {
   Button, Container, Dropdown, FormLabel, Nav, Navbar, Stack,
 } from 'react-bootstrap';
+import DropdownItem from 'react-bootstrap/DropdownItem';
+import DropdownMenu from 'react-bootstrap/DropdownMenu';
+import DropdownToggle from 'react-bootstrap/DropdownToggle';
 import {
   ArrowDown, ArrowUp, BoxArrowRight, CloudFill,
 } from 'react-bootstrap-icons';
-import DropdownMenu from 'react-bootstrap/DropdownMenu';
-import DropdownItem from 'react-bootstrap/DropdownItem';
-import DropdownToggle from 'react-bootstrap/DropdownToggle';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setShowDeleteModal, setShowUploadModal } from '../../features/componentsVisibility';
-import { setSelected, setSortBy, setSortReverse } from '../../features/images';
-import Token from '../../utils/token.util';
-import SelectImageUtil from '../../utils/selectImage.util';
-import styles from './Menu.module.scss';
+
+import SelectImageUtil from 'utils/selectImage.util';
+import Token from 'utils/token.util';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { setShowDeleteModal, setShowUploadModal } from 'features/componentsVisibility';
+import { setSelected, setSortBy, setSortReverse } from 'features/images';
+
+import styles from 'components/gallery/Menu.module.scss';
 
 function Menu() {
   const display = useAppSelector((state) => state.componentsVisibility.showMenu);

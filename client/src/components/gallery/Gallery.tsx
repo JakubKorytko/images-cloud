@@ -1,11 +1,16 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import Image from '../images/Image';
-import { Image as ImageType } from '../images/ImageObject.type';
-import { GalleryProps, PlaceholderSize } from './Gallery.type';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import SelectImageUtil from '../../utils/selectImage.util';
-import { setSelected } from '../../features/images';
+
+import SelectImageUtil from 'utils/selectImage.util';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import Image from 'components/images/Image';
+
+import { setSelected } from 'features/images';
+
+import type { GalleryProps, PlaceholderSize } from 'components/gallery/Gallery.type';
+import type { Image as ImageType } from 'components/images/ImageObject.type';
 
 function Gallery(props: GalleryProps) {
   const [galleryWidth, setGalleryWidth] = useState(window.innerWidth);

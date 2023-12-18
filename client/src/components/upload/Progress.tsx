@@ -1,8 +1,11 @@
 import React from 'react';
 import { Modal, ProgressBar } from 'react-bootstrap';
-import styles from './Progress.module.scss';
-import { ProgressProps } from './Progress.type';
-import { useAppSelector } from '../../app/hooks';
+
+import { useAppSelector } from 'app/hooks';
+
+import type { ProgressProps } from 'components/upload/Progress.type';
+
+import styles from 'components/upload/Progress.module.scss';
 
 function Progress(props: ProgressProps) {
   const show = useAppSelector((state) => state.componentsVisibility.showProgressModal);

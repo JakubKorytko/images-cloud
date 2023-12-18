@@ -3,8 +3,10 @@ import {
   Card, Col, Container, Row,
 } from 'react-bootstrap';
 import { CircleFill } from 'react-bootstrap-icons';
-import styles from './Healthcheck.module.scss';
-import HealthCheckModal from '../components/modals/HealthCheckModal';
+
+import HealthCheckModal from 'components/modals/HealthCheckModal';
+
+import styles from 'routes/Healthcheck.module.scss';
 
 const serverUrl = process.env.REACT_APP_SERVER_URL;
 const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);

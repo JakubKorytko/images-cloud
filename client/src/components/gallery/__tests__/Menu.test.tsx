@@ -1,7 +1,7 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 
-import Menu from '../Menu';
+import Menu from 'components/gallery/Menu';
 
 const empty = (): true => true;
 

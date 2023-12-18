@@ -1,14 +1,20 @@
 import React, { useEffect } from 'react';
-import { useAppDispatch } from '../app/hooks';
-import Carousel from '../components/gallery/Carousel';
-import Menu from '../components/gallery/Menu';
-import Upload from '../components/upload/Upload';
-import { authTest } from '../utils/testConnection.util';
-import FetchImageUtil from '../utils/fetchImage.util';
-import styles from './GalleryRoute.module.scss';
-import UploadMimeType from '../components/modals/UploadMimeType';
-import { setImages } from '../features/images';
-import { Image } from '../components/images/ImageObject.type';
+
+import FetchImageUtil from 'utils/fetchImage.util';
+import { authTest } from 'utils/testConnection.util';
+
+import { useAppDispatch } from 'app/hooks';
+
+import Carousel from 'components/gallery/Carousel';
+import Menu from 'components/gallery/Menu';
+import UploadMimeType from 'components/modals/UploadMimeType';
+import Upload from 'components/upload/Upload';
+
+import { setImages } from 'features/images';
+
+import type { Image } from 'components/images/ImageObject.type';
+
+import styles from 'routes/GalleryRoute.module.scss';
 
 const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION_TEST_INTERVAL);
 

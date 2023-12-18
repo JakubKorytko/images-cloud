@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import fetchB from '../../utils/fetchBlob.util';
-import { AuthorizedImageProps } from './AuthorizedImage.type';
+
+import fetchB from 'utils/fetchBlob.util';
+
+import type { AuthorizedImageProps } from 'components/images/AuthorizedImage.type';
 
 function AuthorizedImage(props: AuthorizedImageProps) {
   const [url, setUrl] = useState('');

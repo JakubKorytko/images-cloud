@@ -1,4 +1,4 @@
-import { Image } from '../../images/ImageObject.type';
+import type { Image } from 'components/images/ImageObject.type';
 
 const pseudoRandom = (i: number, j: number): number => {
   if (i % 2) return Math.round((1 / (i + 1)) * j);

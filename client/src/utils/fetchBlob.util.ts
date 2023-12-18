@@ -1,4 +1,4 @@
-import Token from './token.util';
+import Token from 'utils/token.util';
 
 // //===================================================\\
 // ||                  FETCH FILE UTIL                  ||

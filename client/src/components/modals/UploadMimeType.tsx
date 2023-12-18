@@ -1,7 +1,9 @@
 import React from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import { setShowUploadMimeTypeModal } from '../../features/componentsVisibility';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { Button, Modal } from 'react-bootstrap';
+
+import { useAppDispatch, useAppSelector } from 'app/hooks';
+
+import { setShowUploadMimeTypeModal } from 'features/componentsVisibility';
 
 function UploadMimeType() {
   const uploadModalShow = useAppSelector(
