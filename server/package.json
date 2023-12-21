@@ -1,10 +1,16 @@
 {
   "name": "images-cloud-server",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Server for images-cloud app",
-  "license": "ISC",
+  "keywords": [
+    "open-source",
+    "jwt",
+    "image-gallery",
+    "mit-license",
+    "file-hosting"
+  ],
+  "license": "MIT",
   "author": "Jakub Korytko",
-  "main": "server.js",
   "scripts": {
     "build": "run-s tsc copy",
     "start": "nodemon -q dist/server.js",
