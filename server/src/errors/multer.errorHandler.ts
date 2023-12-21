@@ -1,20 +1,21 @@
-import { Request, Response, NextFunction } from "express";
-import { Multer, MulterError } from "multer";
-const multer = require('multer');
+import { Request, Response } from 'express';
+import multer, { MulterError } from 'multer';
 
-const multerErrorHandler = (err: MulterError, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof multer.MulterError) {
-        res.statusCode = 400;
-        res.send({ code: err.code });
-    } else if (err) {
-        if (err.message === "FILE_MISSING") {
-            res.statusCode = 400;
-            res.send({ code: "FILE_MISSING" });
-        } else {
-            res.statusCode = 500;
-            res.send({ code: "GENERIC_ERROR" })
-        }
+const multerErrorHandler = (err: MulterError | Error | unknown, _: Request, res: Response) => {
+  const resPointer = res;
+
+  if (err instanceof multer.MulterError) {
+    resPointer.statusCode = 400;
+    res.send({ code: err.code });
+  } else if (err instanceof Error) {
+    if (err.message === 'FILE_MISSING') {
+      resPointer.statusCode = 400;
+      res.send({ code: 'FILE_MISSING' });
+    } else {
+      resPointer.statusCode = 500;
+      res.send({ code: 'GENERIC_ERROR' });
     }
-}
+  }
+};
 
-module.exports = multerErrorHandler;
+export default multerErrorHandler;

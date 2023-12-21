@@ -1,13 +1,13 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
 
-const healthCheck = async (req: Request, res: Response) => {
-    const data = {
-        uptime: process.uptime(),
-        message: 'Server is working properly',
-        date: new Date().toUTCString()
-      }
-    
-      res.status(200).send(data);
-}
+const healthCheck = (_: Request, res: Response) => {
+  const data = {
+    uptime: process.uptime(),
+    message: 'Server is working properly',
+    date: new Date().toUTCString(),
+  };
 
-module.exports = healthCheck;
+  res.status(200).send(data);
+};
+
+export default healthCheck;

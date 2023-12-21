@@ -1,18 +1,16 @@
-import { Response } from "express";
-const fs = require('fs');
-const path = require("path");
+import fs from 'fs';
+import path from 'path';
+
+import { Response } from 'express';
 
 const sendFile = (folder: string, name: string, res: Response) => {
-    const requestedFile = name;
-    // const fileUrl = `./src/images/${res.locals.auth.username}/${folder}/${decodeURI(requestedFile)}`;
-    const fileUrl = path.join(__dirname, "..", `images/${res.locals.auth.username}/${folder}/${decodeURI(requestedFile)}`)
-    if (fs.existsSync(fileUrl)) {
-        res.sendFile(fileUrl);
-        return true;
-    } else {
-        res.status(404).send("Not found");
-        return false;
-    }
-}
+  const fileUrl = path.join(__dirname, '..', `images/${res.locals.auth.username}/${folder}/${decodeURI(name)}`);
+  if (fs.existsSync(fileUrl)) {
+    res.sendFile(fileUrl);
+    return true;
+  }
+  res.status(404).send('Not found');
+  return false;
+};
 
-module.exports = sendFile;
+export default sendFile;

@@ -1,71 +1,67 @@
-import {foldersExists, createFoldersFromArray, deleteFoldersFromArray, getpath, rmIfExists} from "../../testsData";
-const Folders = require("../../../src/utils/folders.util");
-const fs = require("fs");
+import fs from 'fs';
+
+import {
+  createFoldersFromArray, deleteFoldersFromArray, foldersExists, getPath,
+} from '../../testsData';
+import Folders from '../../../src/utils/folders.util';
 
 const foldersToCreate = [
-    "_test_folders_util_delete",
-    "_test_folders_util_check"
-]
+  '_test_folders_util_delete',
+  '_test_folders_util_check',
+];
 
 const foldersToDelete = [
-    "_test_folders_util_create",
-    "_test_folders_util_delete",
-    "_test_folders_util_check"
-]
+  '_test_folders_util_create',
+  '_test_folders_util_delete',
+  '_test_folders_util_check',
+];
 
 beforeAll(() => {
-    deleteFoldersFromArray(foldersToDelete); 
-    createFoldersFromArray(foldersToCreate)
+  deleteFoldersFromArray(foldersToDelete);
+  createFoldersFromArray(foldersToCreate);
 });
 
 afterAll(() => {
-    deleteFoldersFromArray(foldersToDelete)
+  deleteFoldersFromArray(foldersToDelete);
 });
 
-test("Creating user folders", () => {
+test('Creating user folders', () => {
+  const username = '_test_folders_util_create';
 
-    const username = "_test_folders_util_create";
+  const firstCreate = Folders.create(username);
+  const secondCreate = Folders.create(username);
 
-    const firstCreate = Folders.create(username);
-    const secondCreate = Folders.create(username);
+  // it should create folder at first but shouldn't if already exists
 
-    //it should create folder at first but shouldn't if already exists
+  expect(firstCreate).toBe(true);
+  expect(secondCreate).toBe(false);
 
-    expect(firstCreate).toBe(true);
-    expect(secondCreate).toBe(false);
+  const exists = foldersExists(username);
 
-    const exists = foldersExists(username);
+  expect(exists.photos).toBe(true);
+  expect(exists.thumbs).toBe(true);
+  expect(exists.progressive).toBe(true);
+});
 
-    expect(exists.photos).toBe(true);
-    expect(exists.thumbs).toBe(true);
-    expect(exists.progressive).toBe(true);
+test('Deleting user folders', () => {
+  const username = '_test_folders_util_create';
 
-})
+  const response = Folders.delete(username);
 
+  expect(response).toBe(true);
 
-test("Deleting user folders", () => {
+  const exists = foldersExists(username);
 
-    const username = "_test_folders_util_create";
+  expect(exists.photos).toBe(false);
+  expect(exists.thumbs).toBe(false);
+  expect(exists.progressive).toBe(false);
+});
 
-    const response = Folders.delete(username);
+test('Checking if folders exists', () => {
+  const username = '_test_folders_util_check';
 
-    expect(response).toBe(true);
+  const exists = foldersExists(username);
+  const existsFs = fs.existsSync(getPath(username));
 
-    const exists = foldersExists(username);
-
-    expect(exists.photos).toBe(false);
-    expect(exists.thumbs).toBe(false);
-    expect(exists.progressive).toBe(false);
-
-})
-
-test("Checking if folders exists", () => {
-
-    const username = "_test_folders_util_check"
-
-    const exists = foldersExists(username);
-    const existsFs = fs.existsSync(getpath(username));
-
-    expect(exists && existsFs).toBe(true);
-
-})
+  expect(exists && existsFs).toBe(true);
+});

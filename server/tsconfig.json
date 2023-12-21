@@ -10,6 +10,6 @@
     "baseUrl": "./src",
   },
     "include": [
-      "src"
+      "src", "test"
     ],
 }

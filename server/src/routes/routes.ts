@@ -1,33 +1,35 @@
-const controllers = require("./controllersImport");
-const exp = require("express");
+import exp from 'express';
+
+import auth from '../middlewares/authorization';
+
+import controllers from './controllersImport';
+
 const router = exp.Router();
-const auth = require("../middlewares/authorization");
 
 router.post('/upload', auth, controllers.uploadPhoto);
 
-router.get("/download/:photo", auth, controllers.downloadPhoto);
+router.get('/download/:photo', auth, controllers.downloadPhoto);
 
-router.get("/delete/:photo", auth, controllers.deletePhoto);
+router.get('/delete/:photo', auth, controllers.deletePhoto);
 
-router.get("/health", controllers.healthCheck);
+router.get('/health', controllers.healthCheck);
 
-router.get("/", controllers.usersDatabase);
+router.get('/', controllers.usersDatabase);
 
-router.post("/addUser", controllers.addUser);
+router.post('/addUser', controllers.addUser);
 
-router.post("/deleteUser", controllers.deleteUser);
+router.post('/deleteUser', controllers.deleteUser);
 
-router.get("/photo/:photo", auth, controllers.sendPhoto)
+router.get('/photo/:photo', auth, controllers.sendPhoto);
 
-router.get("/thumbnail/:thumb", auth, controllers.sendThumb)
+router.get('/thumbnail/:thumb', auth, controllers.sendThumb);
 
-router.get("/progressive/:thumb", auth, controllers.sendProgressiveThumb)
+router.get('/progressive/:thumb', auth, controllers.sendProgressiveThumb);
 
-router.get("/photos", auth, controllers.sendPhotos)
+router.get('/photos', auth, controllers.sendPhotos);
 
-router.post("/login", controllers.login)
+router.post('/login', controllers.login);
 
-router.post("/auth", controllers.auth)
+router.post('/auth', controllers.auth);
 
-
-module.exports = router;
+export default router;
