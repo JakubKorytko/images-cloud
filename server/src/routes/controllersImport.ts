@@ -1,15 +1,16 @@
 import { Request, Response } from 'express';
 
-import sendFile from '../controllers/sendFile.controller';
-import uploadPhoto from '../controllers/uploadPhoto.controller';
-import deletePhoto from '../controllers/deletePhoto.controller';
-import downloadPhoto from '../controllers/downloadPhoto.controller';
-import healthCheck from '../controllers/healthCheck.controller';
-import addUser from '../controllers/addUser.controller';
-import deleteUser from '../controllers/deleteUser.controller';
-import usersDatabase from '../controllers/usersDatabase.controller';
-import getPhotos from '../utils/photos.util';
-import { decode, encode } from '../utils/auth.util';
+import sendFile from 'controllers/sendFile.controller';
+import uploadPhoto from 'controllers/uploadPhoto.controller';
+import deletePhoto from 'controllers/deletePhoto.controller';
+import downloadPhoto from 'controllers/downloadPhoto.controller';
+import healthCheck from 'controllers/healthCheck.controller';
+import addUser from 'controllers/addUser.controller';
+import deleteUser from 'controllers/deleteUser.controller';
+import usersDatabase from 'controllers/usersDatabase.controller';
+
+import getPhotos from 'utils/photos.util';
+import { decode, encode } from 'utils/auth.util';
 
 require('dotenv').config();
 

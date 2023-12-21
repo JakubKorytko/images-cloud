@@ -3,6 +3,7 @@ import fs from 'fs';
 
 import sharp from 'sharp';
 import sizeOf from 'image-size';
+
 import Folders from 'utils/folders.util';
 
 const Thumbnails = {

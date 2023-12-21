@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import users from 'utils/users.util';
 
 require('dotenv').config();

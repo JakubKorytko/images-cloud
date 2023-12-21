@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 
-import { decode, encode } from '../../../src/utils/auth.util';
+import { decode, encode } from 'utils/auth.util';
 
 require('dotenv').config();
 

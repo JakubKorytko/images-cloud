@@ -1,4 +1,4 @@
-import Users from '../../../src/utils/users.util';
+import Users from 'utils/users.util';
 
 test('Signing in should work if data is valid', async () => {
   const userData = {

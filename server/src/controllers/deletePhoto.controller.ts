@@ -3,7 +3,7 @@ import fs from 'fs';
 
 import { Request, Response } from 'express';
 
-import thumbnails from '../utils/thumbnails.util';
+import thumbnails from 'utils/thumbnails.util';
 
 const deletePhoto = (req: Request, res: Response) => {
   const requestedFile = req.params.photo;

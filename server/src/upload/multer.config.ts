@@ -4,7 +4,7 @@ import { Request } from 'express';
 import multer, { FileFilterCallback } from 'multer';
 import { customAlphabet } from 'nanoid/non-secure';
 
-import { decode } from '../utils/auth.util';
+import { decode } from 'utils/auth.util';
 
 require('dotenv').config();
 

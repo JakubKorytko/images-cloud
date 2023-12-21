@@ -32,7 +32,45 @@ module.exports = {
         ],
         "import/order": [ "error", {
             groups: ["builtin", "external", "internal", "parent", "sibling", "index", "object", "type"],
-            "newlines-between": "always"
+            pathGroups: [
+                {
+                    pattern: "routes/**",
+                    group: "internal",
+                    position: "after"
+                },
+                {
+                    pattern: "controllers/**",
+                    group: "internal",
+                    position: "after"
+                },
+                {
+                    pattern: "middlewares/**",
+                    group: "internal",
+                    position: "after"
+                },
+                {
+                    pattern: "models/**",
+                    group: "internal",
+                    position: "after"
+                },
+                {
+                    pattern: "upload/**",
+                    group: "internal",
+                    position: "after"
+                },
+                {
+                    pattern: "utils/**",
+                    group: "internal",
+                    position: "after"
+                },
+                {
+                    pattern: "testModels/**",
+                    group: "internal",
+                    position: "after"
+                }
+            ],
+            "newlines-between": "always",
+            pathGroupsExcludedImportTypes: ["type"]
         }]
     }
 }

@@ -2,7 +2,7 @@ import path from 'path';
 
 import { Request, Response } from 'express';
 
-import users from '../utils/users.util';
+import users from 'utils/users.util';
 
 const usersDatabase = async (_: Request, res: Response) => {
   const usersArray = await users.getAll();

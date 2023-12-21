@@ -1,10 +1,12 @@
 import fs from 'fs';
 
-import { ExpectedData } from '../../models/expectedData.model';
 import {
   expectedData, getPath, mkdirIfNotExists, rmIfExists, sampleImage,
-} from '../../testsData';
-import getPhotos from '../../../src/utils/photos.util';
+} from 'testsData';
+
+import getPhotos from 'utils/photos.util';
+
+import { ExpectedData } from 'testModels/expectedData.model';
 
 require('dotenv').config();
 

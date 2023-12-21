@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs';
 
 import sizeOf from 'image-size';
+
 import { ImageModel } from 'models/image.model';
 
 require('dotenv').config();

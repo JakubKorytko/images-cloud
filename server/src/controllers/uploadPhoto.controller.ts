@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { MulterError } from 'multer';
 
-import upload from '../configs/multer.config';
-import thumbnails from '../utils/thumbnails.util';
+import upload from 'upload/multer.config';
+
+import thumbnails from 'utils/thumbnails.util';
 
 const uploadPhoto = async (req: Request, res: Response) => {
   const singleFunc = upload.single('image');

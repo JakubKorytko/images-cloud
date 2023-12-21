@@ -2,8 +2,9 @@ import fs from 'fs';
 
 import {
   createFoldersFromArray, deleteFoldersFromArray, foldersExists, getPath,
-} from '../../testsData';
-import Folders from '../../../src/utils/folders.util';
+} from 'testsData';
+
+import Folders from 'utils/folders.util';
 
 const foldersToCreate = [
   '_test_folders_util_delete',

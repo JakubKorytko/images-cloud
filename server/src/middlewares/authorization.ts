@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { decode } from '../utils/auth.util';
+import { decode } from 'utils/auth.util';
 
 require('dotenv').config();
 

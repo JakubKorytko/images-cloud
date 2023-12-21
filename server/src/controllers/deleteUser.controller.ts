@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import folders from '../utils/folders.util';
-import users from '../utils/users.util';
+import folders from 'utils/folders.util';
+import users from 'utils/users.util';
 
 const deleteUser = async (req: Request, res: Response) => {
   if (!req.body) {

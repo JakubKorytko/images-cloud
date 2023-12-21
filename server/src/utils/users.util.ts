@@ -1,5 +1,5 @@
-import Database from 'services/database/database';
-import queries from 'services/database/queries';
+import Database from 'database/database';
+import queries from 'database/queries';
 
 const db = new Database();
 

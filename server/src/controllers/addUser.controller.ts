@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
 
-// import Folders from "../utils/folders.util";
-import folders from '../utils/folders.util';
-import users from '../utils/users.util';
+import folders from 'utils/folders.util';
+import users from 'utils/users.util';
 
 const addUser = async (req: Request, res: Response) => {
   if (!req.body) {

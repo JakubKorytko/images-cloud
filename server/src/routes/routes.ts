@@ -1,8 +1,8 @@
 import exp from 'express';
 
-import auth from '../middlewares/authorization';
+import controllers from 'routes/controllersImport';
 
-import controllers from './controllersImport';
+import auth from 'middlewares/authorization';
 
 const router = exp.Router();
 

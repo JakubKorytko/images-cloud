@@ -4,7 +4,7 @@ const cors = require("cors");
 const app = express();
 const PORT = process.env.PORT;
 const thumbnails = require("./src/utils/thumbnails.util");
-const multerErrorHandler = require("./src/errors/multer.errorHandler");
+const multerErrorHandler = require("./src/multer/multer.errorHandler");
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
