@@ -21,6 +21,12 @@ const CONNECTION_TEST_INTERVAL: number = Number(process.env.REACT_APP_CONNECTION
 function GalleryRoute() {
   const dispatch = useAppDispatch();
 
+  const elementsToChangeHeight: HTMLElement[] = [
+    document.body,
+    document.documentElement,
+    document.getElementById('root') as HTMLElement,
+  ];
+
   useEffect(() => {
     setInterval((): void => {
       authTest().then((res): void => {
@@ -29,6 +35,18 @@ function GalleryRoute() {
     }, CONNECTION_TEST_INTERVAL);
     FetchImageUtil.getList().then((images: Image[]): void => {
       dispatch(setImages(images));
+    });
+
+    elementsToChangeHeight.forEach((el: HTMLElement): void => {
+      const { style } = el;
+      style.height = 'unset';
+    });
+  }, []);
+
+  useEffect(() => (): void => {
+    elementsToChangeHeight.forEach((el: HTMLElement): void => {
+      const { style } = el;
+      style.height = '100%';
     });
   }, []);
 
