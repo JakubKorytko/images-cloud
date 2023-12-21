@@ -8982,10 +8982,10 @@ react-filerobot-image-editor@^4.6.3:
     konva "8.4.3"
     prop-types "15.7.2"
 
-react-flickity-component@^3.6.2:
-  version "3.6.3"
-  resolved "https://registry.yarnpkg.com/react-flickity-component/-/react-flickity-component-3.6.3.tgz#da1ca110dfcaa820fe9d418301d786bc96e749ee"
-  integrity sha512-oLsV0uGLIrRPOaTauI8fnOj1PS4MIL8GrwTXTspRL0ps2QohuW6/3HVt+W0rIC4dYTxh4R++0hWvhYKZz2jyNA==
+react-flickity-component@^4.0.7:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/react-flickity-component/-/react-flickity-component-4.0.7.tgz#e57987988f2bd0df83177fc7545a13ca2b252bad"
+  integrity sha512-Gn+MqLWeW2znG0sPAaaShckXKW1oXVR/RMnJd9EWUuZH33vxRVc7Q1gwpLGDKs0Aiq0D1/cmb8ltepEgDmu7Rw==
   dependencies:
     imagesloaded "^4.1.4"
     prop-types "^15.7.2"
