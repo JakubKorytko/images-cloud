@@ -1,4 +1,4 @@
-FROM node:16.16.0-alpine
+FROM node:20.10.0-alpine
 
 WORKDIR /app/client
 
@@ -6,10 +6,8 @@ COPY package*.json /app/client
 
 COPY ./patches /app/client/patches
 
-RUN npm install
-
-RUN npm run postinstall
+RUN yarn install
 
 COPY . /app/client
 
-CMD ["npm start"]
+CMD ["yarn start"]

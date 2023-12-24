@@ -16,7 +16,7 @@ services:
     volumes:
       - ./server/src:/app/server/src
       - ./server/test:/app/server/test
-    command: npm run dev
+    command: yarn dev
 
   client:
     container_name: client
@@ -34,4 +34,4 @@ services:
       - ./client/public:/app/client/public
     links:
       - server
-    command: npm start
+    command: yarn start
