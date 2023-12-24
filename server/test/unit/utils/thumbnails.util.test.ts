@@ -1,10 +1,10 @@
 import fs from 'fs';
 
+import Thumbnails from 'utils/thumbnails.util';
+
 import {
   createFolders, deleteFoldersFromArray, getPath, sampleImage,
-} from 'testsData';
-
-import Thumbnails from 'utils/thumbnails.util';
+} from 'test/testsData';
 
 require('dotenv').config();
 

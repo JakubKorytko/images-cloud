@@ -1,28 +1,36 @@
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+
+import router from 'routes/routes';
+
+import multerErrorHandler from 'upload/multer.errorHandler';
+
+import thumbnails from 'utils/thumbnails.util';
+import folders from 'utils/folders.util';
+
 require('dotenv').config();
-const express = require("express");
-const cors = require("cors");
+
 const app = express();
-const PORT = process.env.PORT;
-const thumbnails = require("./src/utils/thumbnails.util");
-const multerErrorHandler = require("./src/multer/multer.errorHandler");
-const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+const { PORT } = process.env;
 
-const folders = require("./src/utils/folders.util");
-
-app.set("view-engine", 'ejs');
+app.set('view-engine', 'ejs');
 app.use(bodyParser.json());
 app.use(cors());
-app.use("/", require("./src/routes/routes"));
+app.use('/', router);
+
 app.use(multerErrorHandler);
-app.use(cookieParser);
+app.use(cookieParser());
 
-const server = app.listen(PORT, () => {
-    console.log(`server listening at port ${PORT}`)
-})
+app.listen(PORT, () => {
+  console.log(`server listening at port ${PORT}`);
+});
 
-const autostart = async function (){
-await folders.validate();
-thumbnails.generateAll();
-thumbnails.deleteUnused();
-}()
+const autostart = async function () {
+  await folders.validate();
+  await thumbnails.generateAll();
+  thumbnails.deleteUnused();
+};
+
+autostart();

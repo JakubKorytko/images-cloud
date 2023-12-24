@@ -1,7 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 
-import { ExpectedData } from 'models/expectedData.model';
+import { ExpectedData } from 'test/models/expectedData.model';
 
 require('dotenv').config();
 

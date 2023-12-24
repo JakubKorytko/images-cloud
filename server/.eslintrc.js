@@ -16,6 +16,7 @@ module.exports = {
         "@typescript-eslint"
     ],
     rules: {
+        'no-console': 'off',
         "sort-imports":
         [
             "error",
@@ -58,7 +59,7 @@ module.exports = {
                     position: "after"
                 },
                 {
-                    pattern: "testModels/**",
+                    pattern: "test/**",
                     group: "internal",
                     position: "after"
                 }

@@ -1,21 +1,51 @@
 {
-  "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "skipLibCheck": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "paths": {
-      "*": [
-        "src/*",
+  "compilerOptions":{
+    "target":"es2016",
+    "module":"commonjs",
+    "esModuleInterop":true,
+    "moduleResolution":"node",
+    "sourceMap":true,
+    "forceConsistentCasingInFileNames":true,
+    "strict":true,
+    "skipLibCheck":true,
+    "outDir":"dist",
+    "baseUrl":".",
+    "paths":{
+      "test/*":[
         "test/*"
+      ],
+      "utils/*":[
+        "src/utils/*"
+      ],
+      "controllers/*":[
+        "src/controllers/*"
+      ],
+      "models/*":[
+        "src/models/*"
+      ],
+      "routes/*":[
+        "src/routes/*"
+      ],
+      "database/*":[
+        "src/database/*"
+      ],
+      "middlewares/*":[
+        "src/middlewares/*"
+      ],
+      "images/*":[
+        "src/images/*"
+      ],
+      "upload/*":[
+        "src/upload/*"
       ]
     }
   },
-    "include": [
-      "src", "test"
-    ],
+  "tsc-alias":{
+    "resolveFullPaths":true
+  },
+  "include":[
+    "src/**/*",
+    "test/**/*",
+    "server.ts"
+  ]
 }
