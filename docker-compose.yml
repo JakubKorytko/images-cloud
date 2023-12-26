@@ -3,7 +3,10 @@ services:
 
   server:
     container_name: server
-    build: "./server"
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+      target: development
     expose:
       - ${SERVER_PORT}
     environment:
@@ -16,11 +19,13 @@ services:
     volumes:
       - ./server/src:/app/server/src
       - ./server/test:/app/server/test
-    command: yarn dev
 
   client:
     container_name: client
-    build: "./client"
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+      target: development
     expose:
       - ${CLIENT_PORT}
     environment:
@@ -34,4 +39,3 @@ services:
       - ./client/public:/app/client/public
     links:
       - server
-    command: yarn start
