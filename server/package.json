@@ -18,7 +18,7 @@
     "copy": "copyfiles -e \"./src/**/*.ts\" \"./src/**\" \"./dist\"",
     "watch": "npx tsc-watch --onSuccess \"yarn watchsuccess\"",
     "watchsuccess": "yarn eslint && yarn alias && yarn start",
-    "dev": "yarn eslint && yarn build && yarn start",
+    "dev": "yarn eslint && yarn build && yarn watch",
     "test": "jest",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx src test"
   },
