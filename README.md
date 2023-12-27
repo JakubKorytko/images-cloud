@@ -1,6 +1,6 @@
 # Images Cloud
 
-[![Version](https://img.shields.io/github/package-json/v/JakubKorytko/images-cloud?style=for-the-badge)](https://img.shields.io/github/v/tag/JakubKorytko/images-cloud?style=for-the-badge&label=version)
+[![Version](https://img.shields.io/github/v/tag/JakubKorytko/images-cloud?style=for-the-badge&label=version)](https://img.shields.io/github/v/tag/JakubKorytko/images-cloud?style=for-the-badge&label=version)
 [![License](https://img.shields.io/github/license/JakubKorytko/images-cloud?style=for-the-badge)](https://img.shields.io/github/license/JakubKorytko/images-cloud?style=for-the-badge&label=license)
 
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
