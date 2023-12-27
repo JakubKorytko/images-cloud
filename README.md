@@ -1,256 +1,217 @@
-![Npm version](https://img.shields.io/badge/npm-v17.0.2-blue) ![License](https://img.shields.io/github/license/JakubKorytko/images-cloud) ![Version](https://img.shields.io/github/v/release/JakubKorytko/images-cloud)
+# Images Cloud
 
+[![Version](https://img.shields.io/github/package-json/v/JakubKorytko/images-cloud?style=for-the-badge)](https://img.shields.io/github/v/tag/JakubKorytko/images-cloud?style=for-the-badge&label=version)
+[![License](https://img.shields.io/github/license/JakubKorytko/images-cloud?style=for-the-badge)](https://img.shields.io/github/license/JakubKorytko/images-cloud?style=for-the-badge&label=license)
 
-![Dark mode logo](./logo_dark.png#gh-light-mode-only)
-![Light mode logo](./logo_light.png#gh-dark-mode-only)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Create React App](https://img.shields.io/badge/Create_React_App-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2309D3AC)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
+![React Testing-Library](https://img.shields.io/badge/-React_Testing_Library-%23E33332?style=for-the-badge&logo=testing-library&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![SASS](https://img.shields.io/badge/SASS-hotpink.svg?style=for-the-badge&logo=SASS&logoColor=white)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![Yarn](https://img.shields.io/badge/yarn-%232C8EBB.svg?style=for-the-badge&logo=yarn&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
+![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white)
+![Stylelint](https://img.shields.io/badge/stylelint-%23FFFFFF.svg?style=for-the-badge&logo=stylelint&logoColor=%23000000)
+![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens)
+![EJS](https://img.shields.io/badge/ejs-%233A3A44.svg?style=for-the-badge&logo=ejs&logoColor=%23B53D6B)
 
-Your personal cloud-based images gallery.
+## Table of Contents
 
-- [🔧 Tech Stack](#-tech-stack)
-- [🔍 Demo](#-demo)
-- [🎉 Cool features](#-cool-features)
-- [🔑 Environment Variables](#-environment-variables)
-  - [With docker](#with-docker)
-      - [Create .env file in root directory `images-cloud/`](#create-env-file-in-root-directory-images-cloud)
-  - [Without docker](#without-docker)
-      - [Create .env file in root directory of client `images-cloud/client`](#create-env-file-in-root-directory-of-client-images-cloudclient)
-      - [Create .env file in root directory of server `images-cloud/server`](#create-env-file-in-root-directory-of-server-images-cloudserver)
-- [🏃 Run Locally](#-run-locally)
-  - [Run app with docker](#run-app-with-docker)
-  - [Run app without docker](#run-app-without-docker)
-      - [📟 Server](#-server)
-      - [💻 Client](#-client)
-- [👷 Running Tests](#-running-tests)
-  - [Test app with docker](#test-app-with-docker)
-  - [Test app without docker](#test-app-without-docker)
-- [🔨 Usage](#-usage)
-  - [🏥 Healthcheck](#-healthcheck)
-  - [👨 Users](#-users)
-  - [🔒 Authentication](#-authentication)
-  - [📁 Uploading images](#-uploading-images)
-  - [🔧 Images tools](#-images-tools)
-      - [❌ Deleting](#-deleting)
-      - [⬇️ Downloading](#️-downloading)
-      - [📝 Editing](#-editing)
-- [🔜 Upcoming things](#-upcoming-things)
+- [Images Cloud](#images-cloud)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Endpoints](#endpoints)
+    - [Client endpoints](#client-endpoints)
+    - [Server endpoints](#server-endpoints)
+      - [Server endpoints protected by authentication](#server-endpoints-protected-by-authentication)
+  - [Production build](#production-build)
+  - [Tests](#tests)
+  - [Contributing](#contributing)
+  - [Contact](#contact)
+  - [License](#license)
+  - [TODO / Upcoming features](#todo--upcoming-features)
 
+## Introduction
 
-# 🔧 Tech Stack
+Images Cloud is a cloud-based image gallery application that offers users a comprehensive hosting experience that goes beyond traditional solutions. This versatile platform caters to the needs of both individuals and organizations, presenting itself as a sophisticated answer to the quest for sophisticated image hosting.
 
-**Both**: Typescript, Docker, Docker-Compose, Jest
+In addition, Images Cloud goes beyond mere hosting capabilities by providing robust image manipulation tools. This additional feature enhances the application's utility and allows users to unleash their creative potential in the digital realm.
 
-**Client:** React, React-router, Bootstrap, SCSS
+The application's user-friendly interface has been thoughtfully designed to ensure a seamless experience. This care extends to responsiveness and adaptability, ensuring optimal viewing across devices and screen sizes. In essence, Images Cloud seamlessly blends functionality with user-centric design, setting it apart in the field of cloud-based image hosting solutions.
 
-**Server:** Node, Express, SQLite, EJS
+## Prerequisites
 
-# 🔍 Demo
+**Note:** Versions stated below are the ones used during development.\
+Other versions may work as well, but they have not been tested.
 
-❗ Both demo and "stanley" sample user uses images from https://unsample.net, list of pictures authors [here](./__credits.json) 
+- [Docker](https://www.docker.com/) `v20.10.17`
+- [Docker Compose](https://docs.docker.com/compose/) `v2.6.1`
 
-You can check this app on https://imagescloud.korytko.me
+**This app is designed to work with Docker.**\
+If you want to run it without Docker, you will need to install:
 
-Login data:
-```bash
-username: test
-password: qwerty123
+- [Node.js](https://nodejs.org/en/) `v20.10.0`
+- [Yarn](https://yarnpkg.com/) `v1.22.21`
+
+And check the both Dockerfiles for the steps required to run the app.\
+(You also need to handle the environment variables yourself in this case.)
+
+## Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/JakubKorytko/images-cloud
+    ```
+
+1. Enter the project directory:
+
+    ```bash
+    cd images-cloud
+    ```
+
+1. Create `.env` file in root directory `images-cloud/` (or set environment variables manually):
+
+    ```bash
+    APP_SECRET= # json web token, you can generate one here: https://jwt.io
+    JWT_EXPIRATION= # token expiration time (in minutes)
+    SERVER_URL= # url of the server app (with port), used in the client app
+    PORT= # port of the server app
+    ```
+
+    *Refer to the [`.env.example`](.env.example) file for an example.*
+
+1. Start the application:
+
+    ```bash
+    docker compose up -d --build
+    ```
+
+    *Make sure that docker is running on your machine before executing this command.*
+
+## Endpoints
+
+### Client endpoints
+
+- `GET /` - main page
+- `GET /login` - login page
+- `GET /status` - server status page
+
+The `/` endpoint is protected by authentication. To access it, you need to log in first.
+If you try to access it without logging in, you will be redirected to the login page.
+
+### Server endpoints
+
+The client app uses the server app for authentication and data storage.
+There is no need to use the server app directly, but if you want to (or want to use the API for something else),
+here are the available endpoints:
+
+- `GET /` - database management page
+- `GET /health` - health check endpoint
+- `POST /addUser` - add user endpoint, payload:
+  - `username` - string, length between 6 and 20 characters
+  - `password` - string, length between 6 and 50 characters
+- `POST /deleteUser` - delete user endpoint, payload:
+  - `username` - string
+- `POST /login` - login endpoint, payload:
+  - `username` - string
+  - `password` - string
+
+#### Server endpoints protected by authentication
+
+These endpoints require a valid JWT token to work. The token should be passed in the `Authorization` header with the `Bearer` prefix.
+
+- `POST /auth` - authentication endpoint, returns a username if the token is valid
+- `GET /download/:photo` - download photo from the database, params:
+  - `photo` - string, photo name
+- `GET /delete/:photo` - delete photo from the database, params:
+  - `photo` - string, photo name
+- `GET /photo/:photo` - get photo from the database, params:
+  - `photo` - string, photo name
+- `GET /thumbnail/:thumb` - get thumbnail from the database, params:
+  - `thumb` - string, thumbnail name
+- `GET /progressive/:thumb` - get progressive image from the database, params:
+  - `thumb` - string, progressive image name
+- `GET /photos` - get all photos from the database
+- `POST /upload` - upload photo to the database, payload (form-data):
+  - `image` - file, photo to upload
+  - `name` - string, photo name
+
+## Production build
+
+To run the production version of the app, change the `target` properties in the `docker-compose.yml` file to `production`:
+
+```yml
+client:
+  build:
+    # ...
+    target: production
+# ...
+server:
+  build:
+    # ...
+    target: production
 ```
 
-Deleting and uploading images functions are blocked on demo version for safety reasons
-    
-# 🎉 Cool features
+If you want to build the production version of the app without docker (for example, to deploy it to a hosting service), check the `Dockerfile` files in both `client` and `server` directories for the required steps.
 
-- Images 
-	- Images load in the specific order:
-		- First placeholder is loaded (in the size of image)
-		- Then server sends a very small version of image (few pixels)
-		- And at the end it displays original image
-	- When images are uploaded, server automatically creates thumbnail of image and very small version of it to display when its loading
-	- To see images on your cloud you need to be authenticated, images links are just blobs that can't be shared
-- App is fully responsive
-- Images in gallery fills empty space just like puzzles (hard to describe, just take a look at layout)
-- When server is down, client will automatically redirect user to website where you can check when server will be up again
+## Tests
 
+---
 
-# 🔑 Environment Variables
+<span style="color: red; font-weight: bold">As for the `v0.1.0` version, the tests do not cover the majority of the code, and most of the existing tests do not pass due to changes in the project structure. This will be fixed in the `v0.1.1` or `v0.1.2` patch.
+</span>
 
-To run this project, you will need to add the following environment variables to your .env file or files
+---
 
-## With docker
-
-#### Create .env file in root directory `images-cloud/`
-
-```
-CLIENT_PORT // port of client app
-SERVER_PORT // port of server app
-SERVER_URL // url of server app
-CONNECTION_TEST_INTERVAL // interval of testing if server is working and user is authenticated (in ms)
-JWT_EXPIRATION // time until jwt token expire (in minutes)
-APP_SECRET // jwt web token
-```
-Example (you can copy these values to test things out):
-```
-CLIENT_PORT=3000
-SERVER_PORT=3001
-SERVER_URL=http://localhost:3001
-CONNECTION_TEST_INTERVAL=5000
-JWT_EXPIRATION=30
-APP_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0NDIyNTQyMCwiaWF0IjoxNjQ0MjI1NDIwfQ.zUaDZTIgA0HEiBGzkJXbpcoWq63DoU4gO6wUZo4a_iI
-```
-
-## Without docker
-
-#### Create .env file in root directory of client `images-cloud/client`
-
-```
-REACT_APP_CONNECTION_TEST_INTERVAL // interval of testing if server is working and user is authenticated (in ms)
-REACT_APP_SERVER_URL // url of server app
-PORT // port of client app
-```
-Example (you can copy these values to test things out):
-```
-REACT_APP_CONNECTION_TEST_INTERVAL=5000
-REACT_APP_SERVER_URL=http://localhost:3001
-PORT=3000
-```
-
-#### Create .env file in root directory of server `images-cloud/server`
-
-```
-APP_SECRET // jwt web token
-SERVER_URL // url of server app
-JWT_EXPIRATION // time until jwt token expire (in minutes)
-PORT // port of server app
-```
-Example (you can copy these values to test things out):
-```
-APP_SECRET=eyJhbGciOiJIUzI1NiJ9.eyJSb2xlIjoiQWRtaW4iLCJJc3N1ZXIiOiJJc3N1ZXIiLCJVc2VybmFtZSI6IkphdmFJblVzZSIsImV4cCI6MTY0NDIyNTQyMCwiaWF0IjoxNjQ0MjI1NDIwfQ.zUaDZTIgA0HEiBGzkJXbpcoWq63DoU4gO6wUZo4a_iI
-SERVER_URL=http://localhost:3001
-JWT_EXPIRATION=30
-PORT=3001
-```
-
-# 🏃 Run Locally
-
-Clone the project
-
-```bash
-  git clone https://github.com/JakubKorytko/images-cloud
-```
-
-Go to the project directory
-
-```bash
-  cd images-cloud
-```
-App is dockerized and its supposed to run on docker but you can run it without it
-
-## Run app with docker
-
-Start both server & client
-
-```bash
-  docker-compose up -d --build
-```
-## Run app without docker
-
-Both server and client is needed for app to work properly. You need to run it in separate instances
-
-#### 📟 Server
-
-```bash
-  cd server
-  npm install
-  npm run dev
-```
-#### 💻 Client
-
-```bash
-  cd client
-  npm install
-  npm start
-```
-# 👷 Running Tests
-
-## Test app with docker
-
-Test server
-```bash
-  docker-compose exec server npm test
-```
-Test client
-```bash
-  docker-compose exec client npm test
-```
-## Test app without docker
-
-Run the following command in server or client directory
+To run the tests, use the following command:
 
 ```bash
-  npm run test
+docker compose run --rm app yarn test
 ```
 
-# 🔨 Usage
+Where `app` is the one of the following services:
 
-## 🏥 Healthcheck
+- `client`
+- `server`
 
-You can check if server is up on client side at `/status`
+## Contributing
 
-```bash
-  e.g. http://localhost:3000/status
-```
+If you find issues or have suggestions for improvements,
+feel free to open an issue or submit a pull request.
+Contributions are welcome!
 
-## 👨 Users
+## Contact
 
-❗ Every time you run `npm run build`/`npm run copy`/`npm run dev` it will copy and overwrite sqlite database - if you want to keep created users you need to exclude "data.db" from `copy` script in server package.json
+If you have any questions, feel free to contact me at <jakub@korytko.me>.
 
-To use images-cloud you need to create user. There are two default users in database. One is test user needed for testing purposes - don't delete it or tests will break. The other one is stanley - made to test things out, it even has some images uploaded already.
+## License
 
-| Username             | Password                                                                |
-| ----------------- | ------------------------------------------------------------------ |
-| test user | - |
-| stanley | qwerty123 |
+This project is released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-You can create or delete users at server url
-```bash
-  e.g. http://localhost:3001/
-```
+## TODO / Upcoming features
 
-⚠️ There is not authentication on server side to manipulate users, if you want to deploy this app, you should add some for safety!
+This is a list of features that lead to the `v0.2.0` release:
 
-## 🔒 Authentication
+(This list is not exhaustive and may change at any time.
+Patch versions may and probably will be released in the meantime.
+Keep in mind that the order of the items is not necessarily the order in which they will be implemented.)
 
-In order to use app you need to log in at `/login` client page
-
-```bash
-  e.g. http://localhost:3000/login
-```
-
-This app use JWT to authenticate users. They are valid [`JWT_EXPIRATION env variable`] minutes
-
-## 📁 Uploading images
-
-Every user can upload images to his cloud when logged in.
-There are two requirements to upload a image:
-1. Max size is 20MB (defined by multer - but can be limited by server its hosted on)
-2. File must have a png/jpg/jpeg extension
-
-⚠️ Uploading images in other way than build-in uploader may cause problems (thumbnails will not generate)
-
-## 🔧 Images tools
-
-#### ❌ Deleting
-
-You can delete image from cloud by opening it or multiple images by selecting them in gallery (remember that it can't be undone) 
-
-#### ⬇️ Downloading
-
-You can download images from your cloud.
-
-#### 📝 Editing
-
-Editing is provided by `@toast-ui/react-image-editor`
-
-# 🔜 Upcoming things
-
-- Compression on upload
-- Authentication on server side
+- [ ] Add more tests and fix the existing ones
+- [ ] Improve the existing API structure
+- [ ] Improve the UI
+- [ ] Clean up the code
+- [ ] Add new technologies (for both the client and the server) and refactor the code accordingly
+- [ ] Implement CI/CD
+- [ ] Look for and fix potential security issues, vulnerabilities, and bugs
+- [ ] Protect routes on the server side
