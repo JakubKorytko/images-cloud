@@ -12,13 +12,13 @@
   "license": "MIT",
   "author": "Jakub Korytko",
   "scripts": {
-    "build": "yarn eslint --fix && react-scripts build",
+    "build": "react-scripts build",
     "eject": "react-scripts eject",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx src",
     "postinstall": "patch-package",
-    "start": "yarn eslint --fix && react-scripts start",
+    "start": "react-scripts start",
     "stylelint": "stylelint \"src/**/*.scss\"",
-    "test": "yarn eslint --fix && react-scripts test"
+    "test": "react-scripts test"
   },
   "browserslist": {
     "production": [
