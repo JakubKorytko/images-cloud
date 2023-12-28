@@ -30,6 +30,7 @@
   - [Introduction](#introduction)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
+  - [Sample user](#sample-user)
   - [Endpoints](#endpoints)
     - [Client endpoints](#client-endpoints)
     - [Server endpoints](#server-endpoints)
@@ -98,6 +99,13 @@ And check the both Dockerfiles for the steps required to run the app.\
     ```
 
     *Make sure that docker is running on your machine before executing this command.*
+
+## Sample user
+
+The app comes with a sample user that you can use to log in and test the app.
+
+- username: `stanley`
+- password: `qwerty123`
 
 ## Endpoints
 
