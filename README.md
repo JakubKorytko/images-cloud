@@ -84,10 +84,12 @@ And check the both Dockerfiles for the steps required to run the app.\
 1. Create `.env` file in root directory `images-cloud/` (or set environment variables manually):
 
     ```bash
-    APP_SECRET= # json web token, you can generate one here: https://jwt.io
-    JWT_EXPIRATION= # token expiration time (in minutes)
+    CLIENT_PORT= # port of the client app
+    SERVER_PORT= # port of the server app
     SERVER_URL= # url of the server app (with port), used in the client app
-    PORT= # port of the server app
+    CONNECTION_TEST_INTERVAL= # interval between connection tests (in ms)
+    JWT_EXPIRATION= # token expiration time (in minutes)
+    APP_SECRET= # json web token, you can generate one here: https://jwt.io
     ```
 
     *Refer to the [`.env.example`](.env.example) file for an example.*
