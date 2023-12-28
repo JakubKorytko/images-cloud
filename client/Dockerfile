@@ -12,6 +12,10 @@ RUN yarn install
 
 COPY . /app/client
 
+# just to make sure that the linebreaks are correct
+RUN yarn add --dev eslint-filtered-fix
+RUN yarn eslint-filtered-fix src --ext .js,.jsx,.ts,.tsx --rule linebreak-style
+
 FROM base as development
 CMD ["yarn", "start"]
 
