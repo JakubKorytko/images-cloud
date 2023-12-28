@@ -123,7 +123,9 @@ If you try to access it without logging in, you will be redirected to the login 
 ### Server endpoints
 
 The client app uses the server app for authentication and data storage.
-There is no need to use the server app directly, but if you want to (or want to use the API for something else),
+There is no need to use the server app directly
+(except for the `/` endpoint which is used to manage the database),
+but if you want to (or want to use the API for something else),
 here are the available endpoints:
 
 - `GET /` - database management page
