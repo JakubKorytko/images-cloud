@@ -64,7 +64,7 @@ If you want to run it without Docker, you will need to install:
 - [Node.js](https://nodejs.org/en/) `v20.10.0`
 - [Yarn](https://yarnpkg.com/) `v1.22.21`
 
-And check the both Dockerfiles for the steps required to run the app.\
+And check the both Dockerfiles and the `docker-compose.yml` file for the required steps.\
 (You also need to handle the environment variables yourself in this case.)
 
 ## Installation
@@ -175,7 +175,10 @@ server:
     target: production
 ```
 
-If you want to build the production version of the app without docker (for example, to deploy it to a hosting service), check the `Dockerfile` files in both `client` and `server` directories for the required steps.
+If you want to build the production version of the app without docker (for example, to deploy it to a hosting service),
+check the `Dockerfile` files in both `client` and `server` directories
+and the `docker-compose.yml` file for the required steps.
+(You also need to handle the environment variables and install the dependencies yourself in this case.)
 
 ## Tests
 
