@@ -12,13 +12,13 @@
   "license": "MIT",
   "author": "Jakub Korytko",
   "scripts": {
-    "build": "yarn tsc && yarn alias",
+    "build": "yarn eslint --fix && yarn tsc && yarn alias",
     "alias": "yarn tsc-alias && yarn copy",
     "start": "node dist/server.js",
     "copy": "copyfiles -e \"./src/**/*.ts\" \"./src/**\" \"./dist\"",
     "watch": "yarn tsc-watch --onSuccess \"yarn watchsuccess\"",
     "watchsuccess": "yarn eslint && yarn alias && yarn start",
-    "dev": "yarn eslint && yarn build && yarn watch",
+    "dev": "yarn eslint --fix && yarn build && yarn watch",
     "test": "jest",
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx src test"
   },
