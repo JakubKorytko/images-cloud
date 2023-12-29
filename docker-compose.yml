@@ -7,13 +7,13 @@ services:
       context: ./server
       dockerfile: Dockerfile
       target: development
+      args:
+        - PORT=$SERVER_PORT
+        - SERVER_URL=$SERVER_URL
+        - APP_SECRET=$APP_SECRET
+        - JWT_EXPIRATION=$JWT_EXPIRATION
     expose:
       - ${SERVER_PORT}
-    environment:
-      PORT: ${SERVER_PORT}
-      SERVER_URL: ${SERVER_URL}
-      APP_SECRET: ${APP_SECRET}
-      JWT_EXPIRATION: ${JWT_EXPIRATION}
     ports:
       - ${SERVER_PORT}:${SERVER_PORT}
     volumes:
@@ -26,12 +26,12 @@ services:
       context: ./client
       dockerfile: Dockerfile
       target: development
+      args:
+        - REACT_APP_SERVER_URL=$SERVER_URL
+        - REACT_APP_CONNECTION_TEST_INTERVAL=$CONNECTION_TEST_INTERVAL
+        - PORT=$CLIENT_PORT
     expose:
       - ${CLIENT_PORT}
-    environment:
-      PORT: ${CLIENT_PORT}
-      REACT_APP_CONNECTION_TEST_INTERVAL: ${CONNECTION_TEST_INTERVAL}
-      REACT_APP_SERVER_URL: ${SERVER_URL}
     ports:
       - ${CLIENT_PORT}:${CLIENT_PORT}
     volumes:
