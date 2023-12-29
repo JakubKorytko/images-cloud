@@ -98,7 +98,7 @@ And check the both Dockerfiles and the `docker-compose.yml` file for the require
 1. Start the application:
 
     ```bash
-    docker compose up -d --build
+    docker compose up -d
     ```
 
     *Make sure that docker is running on your machine before executing this command.*
@@ -174,6 +174,12 @@ server:
   build:
     # ...
     target: production
+```
+
+And then run the following command:
+
+```bash
+docker compose up -d
 ```
 
 If you want to build the production version of the app without docker (for example, to deploy it to a hosting service),
